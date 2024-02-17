@@ -1,15 +1,15 @@
 using System.Linq.Expressions;
-using Core.Context;
 using Core.Entities.Abstract;
+using Core.Utilities.IoC;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Core.DataAccess.EntityFramework;
 
-public class EfEntityRepository<TEntity, TContext> : IEntityRepository<TEntity>
+public class EfEntityRepository<TEntity> : IEntityRepository<TEntity>
     where TEntity : class, IEntity, new()
-    where TContext : DbContextBase, new()
 {
-    private readonly TContext _dbContext = new();
+    private readonly DbContext _dbContext = ServiceTool.ServiceProvider.GetService<DbContext>()!;
 
     private DbSet<TEntity> Table => _dbContext.Set<TEntity>();
 
