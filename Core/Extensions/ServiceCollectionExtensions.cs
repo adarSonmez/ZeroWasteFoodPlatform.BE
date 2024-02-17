@@ -1,4 +1,4 @@
-using Core.Utilities.IoC;
+using Core.Utils.IoC;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Core.Extensions;

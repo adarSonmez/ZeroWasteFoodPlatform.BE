@@ -9,7 +9,8 @@ public abstract class Product : EntityBase
 
     [StringLength(1023)] public string Description { get; set; } = default!;
 
-    public string? Photo { get; set; }
+    [StringLength(2047)]
+    public string? Photo { get; set; } = "https://www.4me.com/wp-content/uploads/2018/01/4me-icon-product.png";
 
     public DateTime ExpirationDate { get; set; } = DateTime.Now;
 

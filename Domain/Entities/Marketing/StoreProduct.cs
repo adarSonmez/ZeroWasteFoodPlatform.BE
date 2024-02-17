@@ -6,11 +6,9 @@ namespace Domain.Entities.Marketing;
 [Table("StoreProducts", Schema = "Marketing")]
 public class StoreProduct : Product
 {
-    public decimal OriginalPrice { get; set; } = 0;
+    public decimal OriginalPrice { get; set; }
 
-    public new string Photo { get; set; } = default!;
-
-    public double PercentDiscount { get; set; } = 0;
+    public double PercentDiscount { get; set; }
 
     // Foreign Key
     public Guid BusinessId { get; set; }

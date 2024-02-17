@@ -1,4 +1,4 @@
-using Core.Utilities.IoC;
+using Core.Utils.IoC;
 using DataAccess.Context.EntityFramework;
 using DataAccess.Repositories.Abstract.Analytics;
 using DataAccess.Repositories.Abstract.Association;

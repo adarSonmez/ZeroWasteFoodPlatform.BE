@@ -1,6 +1,6 @@
 using Core.DependencyResolvers;
 using Core.Extensions;
-using Core.Utilities.IoC;
+using Core.Utils.IoC;
 using DataAccess.DependencyResolvers;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -29,6 +29,7 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
+    app.UseSeeder();
 }
 
 app.UseHttpsRedirection();

@@ -19,6 +19,12 @@ public abstract class User : EntityBase
 
     public byte[] PasswordHash { get; set; } = default!;
 
+    public bool UseMultiFactorAuthentication { get; set; }
+
+    public bool EmailVerified { get; set; }
+
+    public bool PhoneNumberVerified { get; set; }
+
     public DateTime LastLoginTime { get; set; }
 
     [StringLength(15)] public string Role { get; set; } = default!;

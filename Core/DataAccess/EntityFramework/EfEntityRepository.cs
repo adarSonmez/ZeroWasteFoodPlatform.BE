@@ -1,6 +1,6 @@
 using System.Linq.Expressions;
 using Core.Entities.Abstract;
-using Core.Utilities.IoC;
+using Core.Utils.IoC;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 

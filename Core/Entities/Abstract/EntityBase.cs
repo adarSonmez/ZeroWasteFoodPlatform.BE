@@ -16,7 +16,7 @@ public abstract class EntityBase : IEntity
 
     public Guid CreatedUserId { get; set; } = Guid.Empty;
 
-    public Guid DeletedUserId { get; set; } = Guid.Empty;
+    public Guid? DeletedUserId { get; set; }
 
-    public Guid UpdatedUserId { get; set; } = Guid.Empty;
+    public Guid? UpdatedUserId { get; set; }
 }

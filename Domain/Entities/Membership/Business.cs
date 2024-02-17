@@ -14,11 +14,12 @@ public class Business : User
 
     [StringLength(127)] public string? Website { get; set; }
 
-    public string? Description { get; set; }
+    [StringLength(2047)] public string? Description { get; set; }
 
-    public string? Logo { get; set; }
+    [StringLength(1023)]
+    public string Logo { get; set; } = "https://png.pngtree.com/element_our/sm/20180418/sm_5ad74b2cb4473.jpg";
 
-    public string? CoverPhoto { get; set; }
+    [StringLength(1023)] public string? CoverPhoto { get; set; }
 
     [StringLength(15)] public new string Role { get; set; } = UserRoles.Business;
 

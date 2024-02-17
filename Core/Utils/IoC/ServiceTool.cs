@@ -1,6 +1,6 @@
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Core.Utilities.IoC;
+namespace Core.Utils.IoC;
 
 public static class ServiceTool
 {
