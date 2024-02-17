@@ -1,10 +1,14 @@
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using Core.Entities.Abstract;
 
 namespace Domain.Entities.Analytics;
 
-public class Report : EntityBase
+[Table("Reports", Schema = "Analytics")]
+public class Report : IEntity
 {
+    [Key] public Guid Id { get; set; } = Guid.NewGuid();
+
     [StringLength(127)] public string ReportName { get; set; } = default!;
 
     public string Content { get; set; } = default!;

@@ -1,7 +1,9 @@
+using System.ComponentModel.DataAnnotations.Schema;
 using Domain.Entities.Membership;
 
 namespace Domain.Entities.Marketing;
 
+[Table("StoreProducts", Schema = "Marketing")]
 public class StoreProduct : Product
 {
     public decimal OriginalPrice { get; set; } = 0;

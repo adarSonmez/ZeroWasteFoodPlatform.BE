@@ -1,7 +1,9 @@
+using System.ComponentModel.DataAnnotations.Schema;
 using Core.Entities.Abstract;
 
 namespace Domain.Entities.Marketing;
 
+[Table("Categories", Schema = "Marketing")]
 public class Category : IEntity
 {
     public Guid Id { get; set; } = Guid.NewGuid();

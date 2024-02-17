@@ -1,8 +1,10 @@
+using System.ComponentModel.DataAnnotations.Schema;
 using Core.Entities.Abstract;
 using Domain.Entities.Marketing;
 
 namespace Domain.Entities.Association;
 
+[Table("CategoryProducts", Schema = "Association")]
 public class CategoryProduct : IEntity
 {
     // Foreign Key
