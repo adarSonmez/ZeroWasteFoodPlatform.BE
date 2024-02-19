@@ -1,4 +1,5 @@
 using Core.Utils.IoC;
+using Core.Utils.Seed;
 using DataAccess.Context.EntityFramework;
 using DataAccess.Repositories.Abstract.Analytics;
 using DataAccess.Repositories.Abstract.Association;
@@ -8,6 +9,7 @@ using DataAccess.Repositories.Concrete.EntityFramework.Analytics;
 using DataAccess.Repositories.Concrete.EntityFramework.Association;
 using DataAccess.Repositories.Concrete.EntityFramework.Marketing;
 using DataAccess.Repositories.Concrete.EntityFramework.Membership;
+using DataAccess.Utils.Seed.EntityFramework;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace DataAccess.DependencyResolvers;
@@ -33,5 +35,11 @@ public class DataAccessModule : IDependencyInjectionModule
         services.AddScoped(typeof(ICustomerDal), typeof(EfCustomerDal));
 
         #endregion Repositories
+
+        #region Utils
+
+        services.AddScoped(typeof(ISeeder), typeof(EfSeeder));
+
+        #endregion Utils
     }
 }
