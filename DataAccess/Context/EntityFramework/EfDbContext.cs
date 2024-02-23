@@ -14,17 +14,33 @@ public sealed class EfDbContext : DbContextBase
         ChangeTracker.LazyLoadingEnabled = false;
     }
 
-    public DbSet<Category> Category { get; set; } = default!;
-    public DbSet<CategoryProduct> CategoryProduct { get; set; } = default!;
-    public DbSet<MonitoredProduct> MonitoredProduct { get; set; } = default!;
-    public DbSet<StoreProduct> StoreProduct { get; set; } = default!;
-    public DbSet<Business> Business { get; set; } = default!;
-    public DbSet<Customer> Customer { get; set; } = default!;
-    public DbSet<Report> Report { get; set; } = default!;
+    public DbSet<Category> Category { get; set; } = null!;
+    public DbSet<Product> Product { get; set; } = null!;
+    public DbSet<CategoryProduct> CategoryProduct { get; set; } = null!;
+    public DbSet<MonitoredProduct> MonitoredProduct { get; set; } = null!;
+    public DbSet<StoreProduct> StoreProduct { get; set; } = null!;
+    public DbSet<User> User { get; set; } = null!;
+    public DbSet<Business> Business { get; set; } = null!;
+    public DbSet<Customer> Customer { get; set; } = null!;
+    public DbSet<Report> Report { get; set; } = null!;
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        base.OnModelCreating(modelBuilder);
+
         modelBuilder.Entity<CategoryProduct>()
-            .HasKey(p => new { p.CategoryId, p.ProductId });
+            .HasKey(cp => new { cp.CategoryId, cp.ProductId });
+
+        modelBuilder.Entity<Customer>()
+            .HasKey(c => c.UserId);
+
+        modelBuilder.Entity<Business>()
+            .HasKey(b => b.UserId);
+
+        modelBuilder.Entity<StoreProduct>()
+            .HasKey(sp => sp.ProductId);
+
+        modelBuilder.Entity<MonitoredProduct>()
+            .HasKey(mp => mp.ProductId);
     }
 }

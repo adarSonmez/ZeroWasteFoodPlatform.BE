@@ -9,7 +9,7 @@ public class Category : IEntity
 {
     public Guid Id { get; set; } = Guid.NewGuid();
 
-    [StringLength(63)] public string Name { get; set; } = default!;
+    [StringLength(63)] public string Name { get; set; } = null!;
 
     [StringLength(2047)] public string? Description { get; set; }
 

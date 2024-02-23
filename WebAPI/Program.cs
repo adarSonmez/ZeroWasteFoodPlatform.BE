@@ -19,8 +19,10 @@ builder.Services.AddDependencyResolvers(new IDependencyInjectionModule[]
 
 builder.Configuration
     .SetBasePath(env.ContentRootPath)
+    .AddEnvironmentVariables()
     .AddJsonFile("appsettings.json", false, true)
-    .AddJsonFile($"appsettings.{env.EnvironmentName}.json", true, true);
+    .AddJsonFile($"appsettings.{env.EnvironmentName}.json", true, true)
+    .AddUserSecrets<Program>();
 
 var app = builder.Build();
 

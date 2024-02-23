@@ -9,15 +9,15 @@ public class Report : IEntity
 {
     [Key] public Guid Id { get; set; } = Guid.NewGuid();
 
-    [StringLength(127)] public string ReportName { get; set; } = default!;
+    [StringLength(127)] public string ReportName { get; set; } = null!;
 
-    public string Content { get; set; } = default!;
+    public string Content { get; set; } = null!;
 
-    [StringLength(127)] public string ProductName { get; set; } = default!;
+    [StringLength(127)] public string ProductName { get; set; } = null!;
 
-    [StringLength(255)] public string Manufacturer { get; set; } = default!;
+    [StringLength(255)] public string Manufacturer { get; set; } = null!;
 
-    [StringLength(255)] public string Location { get; set; } = default!;
+    [StringLength(255)] public string Location { get; set; } = null!;
 
     // Analysis start date
     public DateTime StartDate { get; set; } = DateTime.Now;
