@@ -2,9 +2,7 @@ namespace Core.Constants;
 
 public static class UserRoles
 {
-    public static string Admin => "Admin";
-
-    public static string Customer => "Customer";
-
-    public static string Business => "Business";
+    public const string Admin = "Admin";
+    public const string Customer = "Customer";
+    public const string Business = "Business";
 }
