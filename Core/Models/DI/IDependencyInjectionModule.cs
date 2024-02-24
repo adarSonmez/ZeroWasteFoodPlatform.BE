@@ -1,6 +1,6 @@
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Core.Utils.IoC;
+namespace Core.Models.DI;
 
 public interface IDependencyInjectionModule
 {

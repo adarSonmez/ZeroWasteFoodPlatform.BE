@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Builder;
 
-namespace Core.Utils.Seed;
+namespace Core.Models.Seed;
 
 public interface ISeeder
 {

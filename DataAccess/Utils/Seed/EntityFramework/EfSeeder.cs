@@ -1,6 +1,6 @@
 using Core.Constants;
+using Core.Models.Seed;
 using Core.Utils.Hashing;
-using Core.Utils.Seed;
 using DataAccess.Context.EntityFramework;
 using Domain.Entities.Analytics;
 using Domain.Entities.Association;

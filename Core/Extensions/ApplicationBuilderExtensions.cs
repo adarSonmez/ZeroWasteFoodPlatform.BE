@@ -1,5 +1,5 @@
+using Core.Models.Seed;
 using Core.Utils.IoC;
-using Core.Utils.Seed;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 

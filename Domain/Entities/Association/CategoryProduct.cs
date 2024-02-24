@@ -1,5 +1,5 @@
 using System.ComponentModel.DataAnnotations.Schema;
-using Core.Entities.Abstract;
+using Core.Models.Entities;
 using Domain.Entities.Marketing;
 
 namespace Domain.Entities.Association;

@@ -1,5 +1,5 @@
-using Core.Utils.IoC;
-using Core.Utils.Seed;
+using Core.Models.DI;
+using Core.Models.Seed;
 using DataAccess.Context.EntityFramework;
 using DataAccess.Repositories.Abstract.Analytics;
 using DataAccess.Repositories.Abstract.Association;
@@ -31,6 +31,8 @@ public class DataAccessModule : IDependencyInjectionModule
         services.AddScoped(typeof(ICategoryDal), typeof(EfCategoryDal));
         services.AddScoped(typeof(IMonitoredProductDal), typeof(EfMonitoredProductDal));
         services.AddScoped(typeof(IStoreProductDal), typeof(EfStoreProductDal));
+        services.AddScoped(typeof(IProductDal), typeof(EfProductDal));
+        services.AddScoped(typeof(IUserDal), typeof(EfUserDal));
         services.AddScoped(typeof(IBusinessDal), typeof(EfBusinessDal));
         services.AddScoped(typeof(ICustomerDal), typeof(EfCustomerDal));
 

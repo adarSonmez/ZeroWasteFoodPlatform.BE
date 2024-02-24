@@ -1,10 +1,11 @@
 using Core.DependencyResolvers;
 using Core.Extensions;
-using Core.Utils.IoC;
+using Core.Models.DI;
 using DataAccess.DependencyResolvers;
 
 var builder = WebApplication.CreateBuilder(args);
 var env = builder.Environment;
+const string corsPolicyName = "AllowOrigin";
 
 // Add services to the container.
 builder.Services.AddControllers();
@@ -33,6 +34,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
     app.UseSeeder();
 }
+
+app.UseCors(corsPolicyName);
 
 app.UseHttpsRedirection();
 

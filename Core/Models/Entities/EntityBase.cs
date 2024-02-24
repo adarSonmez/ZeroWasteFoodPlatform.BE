@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace Core.Entities.Abstract;
+namespace Core.Models.Entities;
 
 public abstract class EntityBase : IEntity
 {

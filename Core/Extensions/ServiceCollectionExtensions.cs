@@ -1,3 +1,4 @@
+using Core.Models.DI;
 using Core.Utils.IoC;
 using Microsoft.Extensions.DependencyInjection;
 

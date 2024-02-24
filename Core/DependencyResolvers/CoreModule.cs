@@ -1,5 +1,5 @@
 using System.Diagnostics;
-using Core.Utils.IoC;
+using Core.Models.DI;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 
