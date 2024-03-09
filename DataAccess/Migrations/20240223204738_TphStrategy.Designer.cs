@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DataAccess.Migrations
 {
-    [DbContext(typeof(EfDbContext))]
+    [DbContext(typeof(EfEfDbContext))]
     [Migration("20240223204738_TphStrategy")]
     partial class TphStrategy
     {

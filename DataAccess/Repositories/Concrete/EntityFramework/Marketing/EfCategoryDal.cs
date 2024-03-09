@@ -5,6 +5,6 @@ using Domain.Entities.Marketing;
 
 namespace DataAccess.Repositories.Concrete.EntityFramework.Marketing;
 
-public class EfCategoryDal : EfEntityRepository<Category, EfDbContext>, ICategoryDal
+public class EfCategoryDal : EfEntityRepository<Category, EfEfDbContext>, ICategoryDal
 {
 }

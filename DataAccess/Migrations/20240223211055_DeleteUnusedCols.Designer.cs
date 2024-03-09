@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DataAccess.Migrations
 {
-    [DbContext(typeof(EfDbContext))]
+    [DbContext(typeof(EfEfDbContext))]
     [Migration("20240223211055_DeleteUnusedCols")]
     partial class DeleteUnusedCols
     {

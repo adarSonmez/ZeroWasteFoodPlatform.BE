@@ -5,6 +5,6 @@ using Domain.Entities.Membership;
 
 namespace DataAccess.Repositories.Concrete.EntityFramework.Membership;
 
-public class EfBusinessDal : EfEntityRepository<Business, EfDbContext>, IBusinessDal
+public class EfBusinessDal : EfEntityRepository<Business, EfEfDbContext>, IBusinessDal
 {
 }

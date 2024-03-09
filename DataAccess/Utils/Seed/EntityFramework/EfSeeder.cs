@@ -1,6 +1,6 @@
 using Core.Constants;
-using Core.Models.Seed;
 using Core.Utils.Hashing;
+using Core.Utils.Seed.Abstract;
 using DataAccess.Context.EntityFramework;
 using Domain.Entities.Analytics;
 using Domain.Entities.Association;
@@ -18,7 +18,7 @@ public class EfSeeder : ISeeder
     {
         var context = builder.ApplicationServices
             .CreateScope().ServiceProvider
-            .GetRequiredService<EfDbContext>();
+            .GetRequiredService<EfEfDbContext>();
 
         if (context.Database.GetPendingMigrations().Any())
             context.Database.Migrate();

@@ -5,6 +5,6 @@ using Domain.Entities.Membership;
 
 namespace DataAccess.Repositories.Concrete.EntityFramework.Membership;
 
-public class EfUserDal : EfEntityRepository<User, EfDbContext>, IUserDal
+public class EfUserDal : EfEntityRepository<User, EfEfDbContext>, IUserDal
 {
 }

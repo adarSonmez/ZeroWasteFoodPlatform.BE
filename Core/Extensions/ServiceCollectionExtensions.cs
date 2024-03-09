@@ -1,4 +1,4 @@
-using Core.Models.DI;
+using Core.Utils.DI.Abstact;
 using Core.Utils.IoC;
 using Microsoft.Extensions.DependencyInjection;
 

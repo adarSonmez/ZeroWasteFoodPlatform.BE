@@ -1,7 +1,9 @@
+using Business.DependencyResolvers;
 using Core.DependencyResolvers;
 using Core.Extensions;
-using Core.Models.DI;
+using Core.Utils.DI.Abstact;
 using DataAccess.DependencyResolvers;
+using Domain.DependencyResolvers;
 
 var builder = WebApplication.CreateBuilder(args);
 var env = builder.Environment;
@@ -12,11 +14,14 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddDependencyResolvers(new IDependencyInjectionModule[]
-{
-    new CoreModule(),
-    new DataAccessModule()
-});
+builder.Services.AddDependencyResolvers(
+    new IDependencyInjectionModule[]
+    {
+        new CoreModule(),
+        new DomainModule(),
+        new BusinessModule(),
+        new DataAccessModule()
+    });
 
 builder.Configuration
     .SetBasePath(env.ContentRootPath)
@@ -24,6 +29,8 @@ builder.Configuration
     .AddJsonFile("appsettings.json", false, true)
     .AddJsonFile($"appsettings.{env.EnvironmentName}.json", true, true)
     .AddUserSecrets<Program>();
+
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 var app = builder.Build();
 

@@ -1,4 +1,4 @@
-using Core.DataAccess;
+using Core.DataAccess.Abstract;
 using Domain.Entities.Membership;
 
 namespace DataAccess.Repositories.Abstract.Membership;

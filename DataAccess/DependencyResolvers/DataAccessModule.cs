@@ -1,5 +1,5 @@
-using Core.Models.DI;
-using Core.Models.Seed;
+using Core.Utils.DI.Abstact;
+using Core.Utils.Seed.Abstract;
 using DataAccess.Context.EntityFramework;
 using DataAccess.Repositories.Abstract.Analytics;
 using DataAccess.Repositories.Abstract.Association;
@@ -20,7 +20,7 @@ public class DataAccessModule : IDependencyInjectionModule
     {
         #region DbContext
 
-        services.AddDbContext<EfDbContext>();
+        services.AddDbContext<EfEfDbContext>();
 
         #endregion DbContext
 
