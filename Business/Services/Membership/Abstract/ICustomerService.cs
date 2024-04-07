@@ -1,6 +1,7 @@
 using Core.Services;
 using Core.Services.Result;
 using Domain.DTOs.Membership;
+using Domain.FilterModels.Membership;
 
 namespace Business.Services.Membership.Abstract;
 
@@ -12,7 +13,8 @@ public interface ICustomerService : IService
 
     Task<ServiceObjectResult<CustomerGetDto?>> GetByEmailAsync(string email);
 
-    Task<ServiceCollectionResult<CustomerGetDto>> GetAllAsync();
+    Task<ServiceCollectionResult<CustomerGetDto>>
+        GetListAsync(CustomerFilterModel? filterModel, int page, int pageSize);
 
     Task<ServiceObjectResult<CustomerGetDto?>> UpdateAsync(CustomerUpdateDto customerUpdateDto);
 

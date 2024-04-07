@@ -13,6 +13,7 @@ public class BusinessModule : IDependencyInjectionModule
         # region Membership
 
         services.AddScoped<IBusinessService, BusinessManager>();
+        services.AddScoped<ICustomerService, CustomerManager>();
 
         # endregion Membership
     }
