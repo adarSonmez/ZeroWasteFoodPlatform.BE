@@ -1,6 +1,7 @@
 using AutoMapper;
 using Business.Constants.Messages.Services.Membership;
 using Business.Services.Membership.Abstract;
+using Business.Utils.Validation.FluentValidation.Membership;
 using Core.Aspects.Validation;
 using Core.ExceptionHandling;
 using Core.Extensions;
@@ -97,7 +98,7 @@ public class CustomerManager : ICustomerService
         return result;
     }
 
-    [ValidationAspect(typeof(CustomerUpdateDto))]
+    [ValidationAspect(typeof(CustomerUpdateValidator))]
     public async Task<ServiceObjectResult<CustomerGetDto?>> UpdateAsync(CustomerUpdateDto customerUpdateDto)
     {
         var result = new ServiceObjectResult<CustomerGetDto?>();
@@ -105,7 +106,6 @@ public class CustomerManager : ICustomerService
         try
         {
             BusinessRules.Run(
-                ("CSTM-408256", BusinessRules.CheckId(customerUpdateDto.Id)),
                 ("CSTM-377965", await CheckIfUsernameExists(customerUpdateDto.Username, true)),
                 ("CSTM-842305", await CheckIfEmailExists(customerUpdateDto.Email, true))
             );

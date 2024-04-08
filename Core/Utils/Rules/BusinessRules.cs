@@ -50,13 +50,6 @@ public class BusinessRules
         return null;
     }
 
-    public static string? CheckId(Guid? id, bool allowNull = false)
-    {
-        if (allowNull) return null;
-
-        return id is not null ? null : BusinessRulesMessages.EntityIdCannotBeBlank;
-    }
-
     public static string? CheckId(string? id, bool allowNull = false)
     {
         if (allowNull) return null;

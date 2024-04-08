@@ -1,6 +1,7 @@
 using AutoMapper;
 using Business.Constants.Messages.Services.Membership;
 using Business.Services.Membership.Abstract;
+using Business.Utils.Validation.FluentValidation.Membership;
 using Core.Aspects.Validation;
 using Core.ExceptionHandling;
 using Core.Extensions;
@@ -121,7 +122,7 @@ public class BusinessManager : IBusinessService
         return result;
     }
 
-    [ValidationAspect(typeof(BusinessUpdateDto))]
+    [ValidationAspect(typeof(BusinessUpdateValidator))]
     public async Task<ServiceObjectResult<BusinessGetDto?>> UpdateAsync(BusinessUpdateDto businessUpdateDto)
     {
         var result = new ServiceObjectResult<BusinessGetDto?>();
@@ -129,7 +130,6 @@ public class BusinessManager : IBusinessService
         try
         {
             BusinessRules.Run(
-                ("BSNS-160835", BusinessRules.CheckId(businessUpdateDto.Id)),
                 ("BSNS-445608", await CheckIfUsernameExists(businessUpdateDto.Username, true)),
                 ("BSNS-138922", await CheckIfEmailExists(businessUpdateDto.Email, true))
             );

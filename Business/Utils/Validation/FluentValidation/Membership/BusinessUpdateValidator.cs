@@ -15,7 +15,7 @@ internal class BusinessUpdateValidator : AbstractValidator<BusinessUpdateDto>
 
         # region Optional
 
-        RuleFor(x => x.Name).MinimumLength(3).When(x => x.Name != null)
+        RuleFor(x => x.Name).MinimumLength(3).MinimumLength(127).When(x => x.Name != null)
             .WithMessage("Business name should be at least 3 characters long");
         RuleFor(x => x.Address).MinimumLength(3).When(x => x.Address != null)
             .WithMessage("Business address should be at least 3 characters long");
