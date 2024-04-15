@@ -1,3 +1,5 @@
+using Business.Services.Analytics.Abstract;
+using Business.Services.Analytics.Concrete;
 using Business.Services.Membership.Abstract;
 using Business.Services.Membership.Concrete;
 using Core.Utils.DI.Abstact;
@@ -16,5 +18,11 @@ public class BusinessModule : IDependencyInjectionModule
         services.AddScoped<ICustomerService, CustomerManager>();
 
         # endregion Membership
+
+        # region Analytics
+
+        services.AddScoped<IReportService, ReportManager>();
+
+        # endregion Analytics
     }
 }
