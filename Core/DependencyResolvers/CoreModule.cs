@@ -1,4 +1,6 @@
 using System.Diagnostics;
+using Core.Security.SessionManagement;
+using Core.Security.SessionManagement.Jwt;
 using Core.Utils.DI.Abstact;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
@@ -12,5 +14,6 @@ public class CoreModule : IDependencyInjectionModule
         services.AddMemoryCache();
         services.AddSingleton<Stopwatch>();
         services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+        services.AddSingleton<ITokenHandler, JwtTokenHandler>();
     }
 }

@@ -1,4 +1,5 @@
 using AutoMapper;
+using Domain.DTOs.Authentication;
 using Domain.DTOs.Membership;
 using Domain.Entities.Membership;
 
@@ -12,5 +13,7 @@ public class BusinessProfile : Profile
 
         CreateMap<BusinessUpdateDto, Business>()
             .ForAllMembers(opts => opts.Condition((src, dest, srcMember) => srcMember != null));
+
+        CreateMap<BusinessRegisterDto, Business>();
     }
 }

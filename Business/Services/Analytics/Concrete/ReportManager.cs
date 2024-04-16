@@ -1,5 +1,5 @@
 using AutoMapper;
-using Business.Constants.Messages.Services.Membership;
+using Business.Constants.Messages.Services.Analytics;
 using Business.Services.Analytics.Abstract;
 using Core.ExceptionHandling;
 using Core.Extensions;

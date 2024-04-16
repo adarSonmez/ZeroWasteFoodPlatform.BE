@@ -1,4 +1,4 @@
-namespace Business.Constants.Messages.Services.Membership;
+namespace Business.Constants.Messages.Services.Analytics;
 
 internal static class ReportServiceMessages
 {

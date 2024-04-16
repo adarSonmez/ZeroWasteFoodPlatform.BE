@@ -1,5 +1,9 @@
 using Business.Services.Analytics.Abstract;
 using Business.Services.Analytics.Concrete;
+using Business.Services.Authentication.Abstract;
+using Business.Services.Authentication.Concrete;
+using Business.Services.Communication.Abstract;
+using Business.Services.Communication.Concrete;
 using Business.Services.Membership.Abstract;
 using Business.Services.Membership.Concrete;
 using Core.Utils.DI.Abstact;
@@ -24,5 +28,17 @@ public class BusinessModule : IDependencyInjectionModule
         services.AddScoped<IReportService, ReportManager>();
 
         # endregion Analytics
+
+        # region Communication
+
+        services.AddScoped<IMailingService, MailingManager>();
+
+        # endregion Communication
+
+        # region Authentication
+
+        services.AddScoped<IAuthService, AuthManager>();
+
+        # endregion Authentication
     }
 }
