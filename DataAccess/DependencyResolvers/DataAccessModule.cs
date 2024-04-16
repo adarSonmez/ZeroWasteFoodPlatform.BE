@@ -20,7 +20,7 @@ public class DataAccessModule : IDependencyInjectionModule
     {
         #region DbContext
 
-        services.AddDbContext<EfEfDbContext>();
+        services.AddDbContext<EfDbContext>();
 
         #endregion DbContext
 

@@ -5,6 +5,6 @@ using Domain.Entities.Marketing;
 
 namespace DataAccess.Repositories.Concrete.EntityFramework.Marketing;
 
-public class EfMonitoredProductDal : EfEntityRepository<MonitoredProduct, EfEfDbContext>, IMonitoredProductDal
+public class EfMonitoredProductDal : EfEntityRepository<MonitoredProduct, EfDbContext>, IMonitoredProductDal
 {
 }

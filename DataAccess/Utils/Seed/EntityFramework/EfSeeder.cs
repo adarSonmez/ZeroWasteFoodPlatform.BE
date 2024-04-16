@@ -18,7 +18,7 @@ public class EfSeeder : ISeeder
     {
         var context = builder.ApplicationServices
             .CreateScope().ServiceProvider
-            .GetRequiredService<EfEfDbContext>();
+            .GetRequiredService<EfDbContext>();
 
         if (context.Database.GetPendingMigrations().Any())
             context.Database.Migrate();

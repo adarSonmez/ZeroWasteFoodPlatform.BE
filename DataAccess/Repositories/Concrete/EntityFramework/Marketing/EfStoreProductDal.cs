@@ -5,6 +5,6 @@ using Domain.Entities.Marketing;
 
 namespace DataAccess.Repositories.Concrete.EntityFramework.Marketing;
 
-public class EfStoreProductDal : EfEntityRepository<StoreProduct, EfEfDbContext>, IStoreProductDal
+public class EfStoreProductDal : EfEntityRepository<StoreProduct, EfDbContext>, IStoreProductDal
 {
 }

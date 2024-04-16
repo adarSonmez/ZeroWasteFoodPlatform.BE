@@ -5,6 +5,6 @@ using Domain.Entities.Association;
 
 namespace DataAccess.Repositories.Concrete.EntityFramework.Association;
 
-public class EfCategoryProductDal : EfEntityRepository<CategoryProduct, EfEfDbContext>, ICategoryProductDal
+public class EfCategoryProductDal : EfEntityRepository<CategoryProduct, EfDbContext>, ICategoryProductDal
 {
 }

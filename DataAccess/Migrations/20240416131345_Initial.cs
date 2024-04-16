@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace DataAccess.Migrations
 {
     /// <inheritdoc />
-    public partial class TphStrategy : Migration
+    public partial class Initial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -69,6 +69,7 @@ namespace DataAccess.Migrations
                     Email = table.Column<string>(type: "nvarchar(127)", maxLength: 127, nullable: false),
                     PhoneNumber = table.Column<string>(type: "nvarchar(127)", maxLength: 127, nullable: false),
                     LoginVerificationCode = table.Column<string>(type: "nvarchar(6)", maxLength: 6, nullable: true),
+                    ActiveToken = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     LoginVerificationCodeExpiration = table.Column<DateTime>(type: "datetime2", nullable: true),
                     PasswordSalt = table.Column<byte[]>(type: "varbinary(max)", nullable: false),
                     PasswordHash = table.Column<byte[]>(type: "varbinary(max)", nullable: false),

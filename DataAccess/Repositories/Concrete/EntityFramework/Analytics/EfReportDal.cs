@@ -5,6 +5,6 @@ using Domain.Entities.Analytics;
 
 namespace DataAccess.Repositories.Concrete.EntityFramework.Analytics;
 
-public class EfReportDal : EfEntityRepository<Report, EfEfDbContext>, IReportDal
+public class EfReportDal : EfEntityRepository<Report, EfDbContext>, IReportDal
 {
 }

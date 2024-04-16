@@ -7,9 +7,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DataAccess.Context.EntityFramework;
 
-public sealed class EfEfDbContext : EfDbContextBase
+public sealed class EfDbContext : EfDbContextBase
 {
-    public EfEfDbContext()
+    public EfDbContext()
     {
         ChangeTracker.LazyLoadingEnabled = false;
     }

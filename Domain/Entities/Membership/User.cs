@@ -15,6 +15,8 @@ public class User : EntityBase
 
     [StringLength(6)] public string? LoginVerificationCode { get; set; }
 
+    public string? ActiveToken { get; set; }
+
     public DateTime? LoginVerificationCodeExpiration { get; set; }
 
     public byte[] PasswordSalt { get; set; } = null!;
