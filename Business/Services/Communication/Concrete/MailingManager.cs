@@ -35,7 +35,9 @@ public class MailingManager : IMailingService
 
             var emailSender = new EmailSender(host, port, from, name, password, enableSsl, false);
 
-            emailSender.SendSmtpMail(to, subject, body, MailingServiceMessages.SentSmtp);
+            emailSender.SendSmtpMail(to, subject, body);
+
+            result.Success(MailingServiceMessages.SentSmtp);
         }
         catch (Exception ex)
         {
