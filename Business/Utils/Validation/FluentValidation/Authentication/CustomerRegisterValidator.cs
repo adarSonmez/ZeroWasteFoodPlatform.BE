@@ -3,9 +3,9 @@ using FluentValidation;
 
 namespace Business.Utils.Validation.FluentValidation.Authentication;
 
-public class CustomerRegisterValidator : AbstractValidator<CustomerRegisterDto>
+internal class CustomerRegisterValidator : AbstractValidator<CustomerRegisterDto>
 {
-    public CustomerRegisterValidator()
+    internal CustomerRegisterValidator()
     {
         # region Required
 

@@ -1,6 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Core.Domain.Abstract;
+using Domain.Entities.Marketing;
 
 namespace Domain.Entities.Membership;
 
@@ -32,4 +33,6 @@ public class User : EntityBase
     public DateTime LastLoginTime { get; set; }
 
     [StringLength(15)] public string Role { get; set; } = null!;
+
+    public virtual ICollection<MonitoredProduct> MonitoredProduct { get; set; } = new List<MonitoredProduct>();
 }

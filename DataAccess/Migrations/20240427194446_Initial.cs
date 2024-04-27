@@ -112,6 +112,7 @@ namespace DataAccess.Migrations
                     Photo = table.Column<string>(type: "nvarchar(2047)", maxLength: 2047, nullable: true),
                     ExpirationDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ProductType = table.Column<string>(type: "nvarchar(21)", maxLength: 21, nullable: false),
+                    OwnerId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     OriginalPrice = table.Column<decimal>(type: "decimal(18,2)", precision: 18, scale: 2, nullable: true),
                     PercentDiscount = table.Column<double>(type: "float", nullable: true),
                     BusinessId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
@@ -132,7 +133,14 @@ namespace DataAccess.Migrations
                         principalSchema: "Membership",
                         principalTable: "Users",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Products_Users_OwnerId",
+                        column: x => x.OwnerId,
+                        principalSchema: "Membership",
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -206,6 +214,12 @@ namespace DataAccess.Migrations
                 schema: "Marketing",
                 table: "Products",
                 column: "BusinessId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Products_OwnerId",
+                schema: "Marketing",
+                table: "Products",
+                column: "OwnerId");
         }
 
         /// <inheritdoc />

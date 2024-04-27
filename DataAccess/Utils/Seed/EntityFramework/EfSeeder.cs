@@ -73,6 +73,7 @@ public class EfSeeder : ISeeder
         };
 
         var customers = new List<Customer> { adar, eren, baris };
+        context.User.AddRange(customers);
 
         #endregion Customer
 
@@ -134,6 +135,9 @@ public class EfSeeder : ISeeder
 
         var businesses = new List<Business> { migros, carrefour, bim };
 
+        context.User.AddRange(businesses);
+        context.SaveChanges();
+
         #endregion Business
 
         #region Category
@@ -163,6 +167,10 @@ public class EfSeeder : ISeeder
             diary, meat, fruit, vegetable, bakery, drink, snack, canned, frozen, grain, spice, sauce, oil, egg, dessert,
             seafood, pasta, cereal
         };
+
+
+        context.Category.AddRange(categories);
+        context.SaveChanges();
 
         #endregion Category
 
@@ -586,6 +594,10 @@ public class EfSeeder : ISeeder
             carrefourCannedFish, carrefourCannedSoup, carrefourCannedFruit
         };
 
+
+        context.Product.AddRange(storeProducts);
+        context.SaveChanges();
+
         #endregion Store Product
 
         #region Monitored Product
@@ -596,7 +608,8 @@ public class EfSeeder : ISeeder
             Description =
                 "Milk is a nutrient-rich, white liquid food produced by the mammary glands of mammals. It is the primary source of nutrition for young mammals, including breastfed human infants before they are able to digest solid food.",
             ExpirationDate = DateTime.Now.AddDays(7),
-            CreatedUserId = adar.Id
+            CreatedUserId = adar.Id,
+            OwnerId = adar.Id
         };
 
         var adarsCheese = new MonitoredProduct
@@ -605,7 +618,8 @@ public class EfSeeder : ISeeder
             Description =
                 "Cheese is a dairy product, derived from milk and produced in wide ranges of flavors, textures and forms by coagulation of the milk protein casein.",
             ExpirationDate = DateTime.Now.AddDays(14),
-            CreatedUserId = adar.Id
+            CreatedUserId = adar.Id,
+            OwnerId = adar.Id
         };
 
         var adarsChicken = new MonitoredProduct
@@ -614,7 +628,8 @@ public class EfSeeder : ISeeder
             Description =
                 "The chicken is a type of domesticated fowl, a subspecies of the red junglefowl. It is one of the most common and widespread domestic animals, with a total population of more than 30 billion as of 2020.",
             ExpirationDate = DateTime.Now.AddDays(28),
-            CreatedUserId = adar.Id
+            CreatedUserId = adar.Id,
+            OwnerId = adar.Id
         };
 
         var adarsApple = new MonitoredProduct
@@ -623,7 +638,8 @@ public class EfSeeder : ISeeder
             Description =
                 "An apple is an edible fruit produced by an apple tree. Apple trees are cultivated worldwide and are the most widely grown species in the genus Malus.",
             ExpirationDate = DateTime.Now.AddDays(5),
-            CreatedUserId = adar.Id
+            CreatedUserId = adar.Id,
+            OwnerId = adar.Id
         };
 
         var adarsFish = new MonitoredProduct
@@ -632,7 +648,8 @@ public class EfSeeder : ISeeder
             Description =
                 "Fish are gill-bearing aquatic craniate animals that lack limbs with digits. They form a sister group to the tunicates, together forming the olfactores.",
             ExpirationDate = DateTime.Now.AddDays(28),
-            CreatedUserId = adar.Id
+            CreatedUserId = adar.Id,
+            OwnerId = adar.Id
         };
 
         var adarsPasta = new MonitoredProduct
@@ -641,7 +658,8 @@ public class EfSeeder : ISeeder
             Description =
                 "Pasta is a type of food typically made from an unleavened dough of wheat flour mixed with water or eggs, and formed into sheets or other shapes, then cooked by boiling or baking.",
             ExpirationDate = DateTime.Now.AddDays(20),
-            CreatedUserId = adar.Id
+            CreatedUserId = adar.Id,
+            OwnerId = adar.Id
         };
 
         var adarsRice = new MonitoredProduct
@@ -650,7 +668,8 @@ public class EfSeeder : ISeeder
             Description =
                 "Rice is the seed of the grass species Oryza sativa or less commonly Oryza glaberrima. As a cereal grain, it is the most widely consumed staple food for a large part of the world's human population, especially in Asia.",
             ExpirationDate = DateTime.Now.AddDays(20),
-            CreatedUserId = adar.Id
+            CreatedUserId = adar.Id,
+            OwnerId = adar.Id
         };
 
         var adarsTea = new MonitoredProduct
@@ -659,7 +678,8 @@ public class EfSeeder : ISeeder
             Description =
                 "Tea is a beverage made by steeping processed or fresh tea leaves in water. The term also refers to the plant Camellia sinensis from which the tea is made.",
             ExpirationDate = DateTime.Now.AddDays(35),
-            CreatedUserId = adar.Id
+            CreatedUserId = adar.Id,
+            OwnerId = adar.Id
         };
 
         var adarsCoffee = new MonitoredProduct
@@ -668,7 +688,8 @@ public class EfSeeder : ISeeder
             Description =
                 "Coffee is a brewed drink prepared from roasted coffee beans, the seeds of berries from certain Coffea species.",
             ExpirationDate = DateTime.Now.AddDays(35),
-            CreatedUserId = adar.Id
+            CreatedUserId = adar.Id,
+            OwnerId = adar.Id
         };
 
         var adarsWiskey = new MonitoredProduct
@@ -677,7 +698,8 @@ public class EfSeeder : ISeeder
             Description =
                 "Whisky or whiskey is a type of distilled alcoholic beverage made from fermented grain mash. Various grains are used for different varieties, including barley, corn, rye, and wheat.",
             ExpirationDate = DateTime.Now.AddDays(365),
-            CreatedUserId = adar.Id
+            CreatedUserId = adar.Id,
+            OwnerId = adar.Id
         };
 
         var erensYogurt = new MonitoredProduct
@@ -686,7 +708,8 @@ public class EfSeeder : ISeeder
             Description =
                 "Yogurt, yoghurt or yoghourt is a food produced by bacterial fermentation of milk. The bacteria used to make yogurt are known as yogurt cultures.",
             ExpirationDate = DateTime.Now.AddDays(28),
-            CreatedUserId = eren.Id
+            CreatedUserId = eren.Id,
+            OwnerId = eren.Id
         };
 
         var erensButter = new MonitoredProduct
@@ -695,7 +718,8 @@ public class EfSeeder : ISeeder
             Description =
                 "Butter is a dairy product made from the fat and protein components of milk or cream. It is a semi-solid emulsion at room temperature, consisting of approximately 80% butterfat.",
             ExpirationDate = DateTime.Now.AddDays(21),
-            CreatedUserId = eren.Id
+            CreatedUserId = eren.Id,
+            OwnerId = eren.Id
         };
 
         var erensOrange = new MonitoredProduct
@@ -704,7 +728,8 @@ public class EfSeeder : ISeeder
             Description =
                 "The orange is the fruit of various citrus species in the family Rutaceae; it primarily refers to Citrus × sinensis, which is also called sweet orange, to distinguish it from the related Citrus × aurantium, referred to as bitter orange.",
             ExpirationDate = DateTime.Now.AddDays(3),
-            CreatedUserId = eren.Id
+            CreatedUserId = eren.Id,
+            OwnerId = eren.Id
         };
 
         var erensBanana = new MonitoredProduct
@@ -713,7 +738,8 @@ public class EfSeeder : ISeeder
             Description =
                 "A banana is an elongated, edible fruit – botanically a berry – produced by several kinds of large herbaceous flowering plants in the genus Musa.",
             ExpirationDate = DateTime.Now.AddDays(3),
-            CreatedUserId = eren.Id
+            CreatedUserId = eren.Id,
+            OwnerId = eren.Id
         };
 
         var erensPasta = new MonitoredProduct
@@ -722,7 +748,8 @@ public class EfSeeder : ISeeder
             Description =
                 "Pasta is a type of food typically made from an unleavened dough of wheat flour mixed with water or eggs, and formed into sheets or other shapes, then cooked by boiling or baking.",
             ExpirationDate = DateTime.Now.AddDays(20),
-            CreatedUserId = eren.Id
+            CreatedUserId = eren.Id,
+            OwnerId = eren.Id
         };
 
         var erensRice = new MonitoredProduct
@@ -731,7 +758,8 @@ public class EfSeeder : ISeeder
             Description =
                 "Rice is the seed of the grass species Oryza sativa or less commonly Oryza glaberrima. As a cereal grain, it is the most widely consumed staple food for a large part of the world's human population, especially in Asia.",
             ExpirationDate = DateTime.Now.AddDays(20),
-            CreatedUserId = eren.Id
+            CreatedUserId = eren.Id,
+            OwnerId = eren.Id
         };
 
         var erensVodka = new MonitoredProduct
@@ -740,7 +768,8 @@ public class EfSeeder : ISeeder
             Description =
                 "Vodka is a clear distilled alcoholic beverage with different varieties originating in Poland, Russia, and Sweden. It is composed primarily of water and ethanol, but sometimes with traces of impurities and flavorings.",
             ExpirationDate = DateTime.Now.AddDays(365),
-            CreatedUserId = eren.Id
+            CreatedUserId = eren.Id,
+            OwnerId = eren.Id
         };
 
         var erensTea = new MonitoredProduct
@@ -749,7 +778,8 @@ public class EfSeeder : ISeeder
             Description =
                 "Tea is a beverage made by steeping processed or fresh tea leaves in water. The term also refers to the plant Camellia sinensis from which the tea is made.",
             ExpirationDate = DateTime.Now.AddDays(35),
-            CreatedUserId = eren.Id
+            CreatedUserId = eren.Id,
+            OwnerId = eren.Id
         };
 
         var erensChocolate = new MonitoredProduct
@@ -758,7 +788,8 @@ public class EfSeeder : ISeeder
             Description =
                 "Chocolate is a food product made from roasted and ground cacao seeds that is made in the form of a liquid, paste, or in a block, which may also be used as a flavoring ingredient in other foods.",
             ExpirationDate = DateTime.Now.AddDays(21),
-            CreatedUserId = eren.Id
+            CreatedUserId = eren.Id,
+            OwnerId = eren.Id
         };
 
         var erensBeef = new MonitoredProduct
@@ -767,7 +798,8 @@ public class EfSeeder : ISeeder
             Description =
                 "Beef is the culinary name for meat from cattle, particularly skeletal muscle. Humans have been eating beef since prehistoric times.",
             ExpirationDate = DateTime.Now.AddDays(14),
-            CreatedUserId = eren.Id
+            CreatedUserId = eren.Id,
+            OwnerId = eren.Id
         };
 
         var erensLamb = new MonitoredProduct
@@ -776,7 +808,8 @@ public class EfSeeder : ISeeder
             Description =
                 "Lamb, hogget, and mutton, generically sheep meat, are the meat of domestic sheep, Ovis aries.",
             ExpirationDate = DateTime.Now.AddDays(14),
-            CreatedUserId = eren.Id
+            CreatedUserId = eren.Id,
+            OwnerId = eren.Id
         };
 
         var barissMilk = new MonitoredProduct
@@ -785,7 +818,8 @@ public class EfSeeder : ISeeder
             Description =
                 "Milk is a nutrient-rich, white liquid food produced by the mammary glands of mammals. It is the primary source of nutrition for young mammals, including breastfed human infants before they are able to digest solid food.",
             ExpirationDate = DateTime.Now.AddDays(7),
-            CreatedUserId = baris.Id
+            CreatedUserId = baris.Id,
+            OwnerId = baris.Id
         };
 
         var barissBeer = new MonitoredProduct
@@ -794,7 +828,8 @@ public class EfSeeder : ISeeder
             Description =
                 "Beer is one of the oldest and most widely consumed alcoholic drinks in the world, and the third most popular drink overall after water and tea.",
             ExpirationDate = DateTime.Now.AddDays(14),
-            CreatedUserId = baris.Id
+            CreatedUserId = baris.Id,
+            OwnerId = baris.Id
         };
 
         var barissPork = new MonitoredProduct
@@ -803,7 +838,8 @@ public class EfSeeder : ISeeder
             Description =
                 "Pork is the culinary name for the meat of a domestic pig. It is the most commonly consumed meat worldwide, with evidence of pig husbandry dating back to 5000 BC.",
             ExpirationDate = DateTime.Now.AddDays(21),
-            CreatedUserId = baris.Id
+            CreatedUserId = baris.Id,
+            OwnerId = baris.Id
         };
 
         var barissChicken = new MonitoredProduct
@@ -812,7 +848,8 @@ public class EfSeeder : ISeeder
             Description =
                 "The chicken is a type of domesticated fowl, a subspecies of the red junglefowl. It is one of the most common and widespread domestic animals, with a total population of more than 30 billion as of 2020.",
             ExpirationDate = DateTime.Now.AddDays(28),
-            CreatedUserId = baris.Id
+            CreatedUserId = baris.Id,
+            OwnerId = baris.Id
         };
 
         var barissPie = new MonitoredProduct
@@ -821,7 +858,8 @@ public class EfSeeder : ISeeder
             Description =
                 "A pie is a baked dish that is usually made of a pastry dough casing that covers or completely contains a filling of various sweet or savory ingredients.",
             ExpirationDate = DateTime.Now.AddDays(7),
-            CreatedUserId = baris.Id
+            CreatedUserId = baris.Id,
+            OwnerId = baris.Id
         };
 
         var monitoredProducts = new List<MonitoredProduct>
@@ -831,6 +869,10 @@ public class EfSeeder : ISeeder
             erensTea,
             erensChocolate, erensBeef, erensLamb, barissMilk, barissBeer, barissPork, barissChicken, barissPie
         };
+
+
+        context.Product.AddRange(monitoredProducts);
+        context.SaveChanges();
 
         #endregion Monitored Product
 
@@ -900,6 +942,10 @@ public class EfSeeder : ISeeder
             new() { ProductId = barissPie.Id, CategoryId = dessert.Id }
         };
 
+
+        context.CategoryProduct.AddRange(categoryProducts);
+        context.SaveChanges();
+
         #endregion Store Product Category
 
         # region Report
@@ -951,16 +997,9 @@ public class EfSeeder : ISeeder
             overMilkProductionInBursa, notSoldChickensInEskisehir, bigLossInFishProductionInTunceli
         };
 
-        #endregion Report
-
-        context.User.AddRange(customers);
-        context.User.AddRange(businesses);
-        context.Category.AddRange(categories);
-        context.Product.AddRange(storeProducts);
-        context.Product.AddRange(monitoredProducts);
-        context.CategoryProduct.AddRange(categoryProducts);
         context.Report.AddRange(reports);
-
         context.SaveChanges();
+
+        #endregion Report
     }
 }

@@ -277,6 +277,11 @@ namespace DataAccess.Migrations
                 {
                     b.HasBaseType("Domain.Entities.Marketing.Product");
 
+                    b.Property<Guid>("OwnerId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasIndex("OwnerId");
+
                     b.ToTable("Products", "Marketing");
 
                     b.HasDiscriminator().HasValue("MonitoredProduct");
@@ -397,20 +402,36 @@ namespace DataAccess.Migrations
                     b.Navigation("Product");
                 });
 
+            modelBuilder.Entity("Domain.Entities.Marketing.MonitoredProduct", b =>
+                {
+                    b.HasOne("Domain.Entities.Membership.User", "Owner")
+                        .WithMany("MonitoredProduct")
+                        .HasForeignKey("OwnerId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Owner");
+                });
+
             modelBuilder.Entity("Domain.Entities.Marketing.StoreProduct", b =>
                 {
                     b.HasOne("Domain.Entities.Membership.Business", "Business")
-                        .WithMany("Products")
+                        .WithMany("StoreProducts")
                         .HasForeignKey("BusinessId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Business");
                 });
 
+            modelBuilder.Entity("Domain.Entities.Membership.User", b =>
+                {
+                    b.Navigation("MonitoredProduct");
+                });
+
             modelBuilder.Entity("Domain.Entities.Membership.Business", b =>
                 {
-                    b.Navigation("Products");
+                    b.Navigation("StoreProducts");
                 });
 #pragma warning restore 612, 618
         }

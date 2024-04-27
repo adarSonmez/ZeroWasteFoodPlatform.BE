@@ -26,7 +26,7 @@ public class ReportManager : IReportService
         {
             BusinessRules.Run(("RPRT-508769", BusinessRules.CheckId(id)));
 
-            var report = await _reportDal.GetAsync(b => b.Id.Same(id));
+            var report = await _reportDal.GetAsync(b => b.Id.ToString().Equals(id));
             BusinessRules.Run(("RPRT-386849", BusinessRules.CheckEntityNull(report)));
 
             var reportGetDto = _mapper.Map<ReportGetDto>(report);
@@ -76,7 +76,7 @@ public class ReportManager : IReportService
         {
             BusinessRules.Run(("RPRT-508769", BusinessRules.CheckId(id)));
 
-            var report = await _reportDal.GetAsync(b => b.Id.Same(id));
+            var report = await _reportDal.GetAsync(b => b.Id.ToString().Equals(id));
             BusinessRules.Run(("RPRT-386849", BusinessRules.CheckEntityNull(report)));
 
             await _reportDal.SoftDeleteAsync(report!);

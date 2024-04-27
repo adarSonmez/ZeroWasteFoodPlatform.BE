@@ -26,10 +26,13 @@ public class UserManager : IUserService
 
         try
         {
-            BusinessRules.Run(("USER-650320",
-                userChangePasswordDto.NewPassword.Equals(userChangePasswordDto.ConfirmPassword)
-                    ? null
-                    : UserServiceMessages.PasswordsNotMatch));
+            BusinessRules.Run(
+                ("USER-650320", BusinessRules.CheckDtoNull(userChangePasswordDto)),
+                ("USER-650320", BusinessRules.CheckId(userChangePasswordDto.Id.ToString())),
+                ("USER-650320",
+                    userChangePasswordDto.NewPassword.Equals(userChangePasswordDto.ConfirmPassword)
+                        ? null
+                        : UserServiceMessages.PasswordsNotMatch));
 
             var user = await _businessDal.GetAsync(b => userChangePasswordDto.Id.Equals(b.Id));
             BusinessRules.Run(("USER-387257", BusinessRules.CheckEntityNull(user)));

@@ -33,7 +33,7 @@ builder.Services.AddCors(options =>
                 .AllowAnyMethod()
                 .AllowAnyOrigin();
         });
-});    
+});
 
 builder.Configuration
     .SetBasePath(env.ContentRootPath)

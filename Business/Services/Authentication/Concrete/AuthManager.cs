@@ -39,7 +39,9 @@ public class AuthManager : IAuthService
         try
         {
             if (userLoginDto.Email != null)
-                BusinessRules.Run(("AUTH-589819", BusinessRules.CheckEmail(userLoginDto.Email)));
+                BusinessRules.Run(
+                    ("AUTH-589819", BusinessRules.CheckDtoNull(userLoginDto)),
+                    ("AUTH-589819", BusinessRules.CheckEmail(userLoginDto.Email)));
 
             var user = await _userDal.GetAsync(
                 u => u.Email == userLoginDto.Email || u.Username == userLoginDto.Username);
@@ -112,7 +114,7 @@ public class AuthManager : IAuthService
             if (!isGlobalAdmin)
                 BusinessRules.Run(("AUTH-239831", BusinessRules.CheckIdSameWithCurrentUser(userId)));
 
-            var user = await _userDal.GetAsync(p => p.Id.Same(userId));
+            var user = await _userDal.GetAsync(p => p.Id.ToString().Equals(userId));
             BusinessRules.Run(("AUTH-261163", BusinessRules.CheckEntityNull(user)));
 
             user!.ActiveToken = null;

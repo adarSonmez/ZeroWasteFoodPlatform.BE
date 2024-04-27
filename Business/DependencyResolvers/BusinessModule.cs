@@ -4,6 +4,8 @@ using Business.Services.Authentication.Abstract;
 using Business.Services.Authentication.Concrete;
 using Business.Services.Communication.Abstract;
 using Business.Services.Communication.Concrete;
+using Business.Services.Marketing.Abstract;
+using Business.Services.Marketing.Concrete;
 using Business.Services.Membership.Abstract;
 using Business.Services.Membership.Concrete;
 using Core.Utils.DI.Abstact;
@@ -40,5 +42,11 @@ public class BusinessModule : IDependencyInjectionModule
         services.AddScoped<IAuthService, AuthManager>();
 
         # endregion Authentication
+        
+        # region Marketing
+        
+        services.AddScoped<IMonitoredProductService, MonitoredProductManager>();
+        
+        # endregion Marketing
     }
 }
