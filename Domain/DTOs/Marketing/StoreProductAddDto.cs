@@ -1,6 +1,6 @@
 namespace Domain.DTOs.Marketing;
 
-public class StoreProductAddDto : ProductUpdateDto
+public class StoreProductAddDto : ProductAddDto
 {
     public decimal OriginalPrice { get; set; } = default!;
 

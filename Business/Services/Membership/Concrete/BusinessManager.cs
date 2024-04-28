@@ -135,13 +135,15 @@ public class BusinessManager : IBusinessService
                 ("BSNS-138922", await CheckIfEmailExists(businessUpdateDto.Email, true))
             );
 
-            var businessToUpdate = await _businessDal.GetAsync(b => businessUpdateDto.Id.ToString().Equals(b.Id.ToString()));
+            var businessToUpdate =
+                await _businessDal.GetAsync(b => businessUpdateDto.Id.ToString().Equals(b.Id.ToString()));
             BusinessRules.Run(("BSNS-257397", BusinessRules.CheckEntityNull(businessToUpdate)));
 
             businessToUpdate = _mapper.Map(businessUpdateDto, businessToUpdate)!;
             await _businessDal.UpdateAsync(businessToUpdate);
 
-            var updatedBusiness = await _businessDal.GetAsync(b => businessUpdateDto.Id.ToString().Equals(b.Id.ToString()));
+            var updatedBusiness =
+                await _businessDal.GetAsync(b => businessUpdateDto.Id.ToString().Equals(b.Id.ToString()));
             var businessGetDto = _mapper.Map<BusinessGetDto>(updatedBusiness);
             result.SetData(businessGetDto, BusinessServiceMessages.Updated);
         }

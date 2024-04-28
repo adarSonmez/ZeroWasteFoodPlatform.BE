@@ -157,7 +157,8 @@ public class MonitoredProductManager : IMonitoredProductService
                 ("MNPR-950070", BusinessRules.CheckId(productUpdateDto.Id.ToString()))
             );
 
-            var product = await _monitoredProductDal.GetAsync(b => b.Id.ToString().Equals(productUpdateDto.Id.ToString()));
+            var product =
+                await _monitoredProductDal.GetAsync(b => b.Id.ToString().Equals(productUpdateDto.Id.ToString()));
             BusinessRules.Run(("MNPR-759000", BusinessRules.CheckEntityNull(product)));
 
             _mapper.Map(productUpdateDto, product);

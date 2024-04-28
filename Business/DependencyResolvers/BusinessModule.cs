@@ -42,11 +42,12 @@ public class BusinessModule : IDependencyInjectionModule
         services.AddScoped<IAuthService, AuthManager>();
 
         # endregion Authentication
-        
+
         # region Marketing
-        
+
         services.AddScoped<IMonitoredProductService, MonitoredProductManager>();
-        
+        services.AddScoped<IStoreProductService, StoreProductManager>();
+
         # endregion Marketing
     }
 }

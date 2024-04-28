@@ -7,7 +7,6 @@ using Business.Utils.Validation.FluentValidation.Authentication;
 using Core.Aspects.Validation;
 using Core.Constants;
 using Core.ExceptionHandling;
-using Core.Extensions;
 using Core.Security.SessionManagement;
 using Core.Services.Messages;
 using Core.Services.Payload;

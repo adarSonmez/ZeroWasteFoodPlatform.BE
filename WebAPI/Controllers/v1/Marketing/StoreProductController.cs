@@ -8,15 +8,14 @@ using Microsoft.AspNetCore.Mvc;
 namespace WebAPI.Controllers.v1.Marketing;
 
 [ApiController]
-public class MonitoredProductController : BaseController
+public class StoreProductController : BaseController
 {
-    private readonly IMonitoredProductService _monitoredProductService =
-        ServiceTool.GetService<IMonitoredProductService>()!;
+    private readonly IStoreProductService _storeProductService = ServiceTool.GetService<IStoreProductService>()!;
 
     [HttpGet("{id}")]
     public async Task<IActionResult> GetById(string id)
     {
-        var result = await _monitoredProductService.GetByIdAsync(id);
+        var result = await _storeProductService.GetByIdAsync(id);
 
         return result.HasFailed
             ? BadRequest(result)
@@ -26,7 +25,7 @@ public class MonitoredProductController : BaseController
     [HttpGet("user/{userId}")]
     public async Task<IActionResult> GetByUserId(string userId)
     {
-        var result = await _monitoredProductService.GetByUserIdAsync(userId);
+        var result = await _storeProductService.GetByUserIdAsync(userId);
 
         return result.HasFailed
             ? BadRequest(result)
@@ -34,10 +33,10 @@ public class MonitoredProductController : BaseController
     }
 
     [HttpGet]
-    public async Task<IActionResult> GetList([FromQuery] MonitoredProductFilterModel? filterModel = null, int page = 1,
+    public async Task<IActionResult> GetList([FromQuery] StoreProductFilterModel? filterModel = null, int page = 1,
         int pageSize = 10)
     {
-        var result = await _monitoredProductService.GetListAsync(filterModel, page, pageSize);
+        var result = await _storeProductService.GetListAsync(filterModel, page, pageSize);
 
         return result.HasFailed
             ? BadRequest(result)
@@ -45,9 +44,9 @@ public class MonitoredProductController : BaseController
     }
 
     [HttpPost]
-    public async Task<IActionResult> Add([FromBody] MonitoredProductAddDto monitoredProductAddDto)
+    public async Task<IActionResult> Add([FromBody] StoreProductAddDto storeProductAddDto)
     {
-        var result = await _monitoredProductService.AddAsync(monitoredProductAddDto);
+        var result = await _storeProductService.AddAsync(storeProductAddDto);
 
         return result.HasFailed
             ? BadRequest(result)
@@ -55,9 +54,9 @@ public class MonitoredProductController : BaseController
     }
 
     [HttpPut]
-    public async Task<IActionResult> Update([FromBody] MonitoredProductUpdateDto monitoredProductUpdateDto)
+    public async Task<IActionResult> Update([FromBody] StoreProductUpdateDto storeProductUpdateDto)
     {
-        var result = await _monitoredProductService.UpdateAsync(monitoredProductUpdateDto);
+        var result = await _storeProductService.UpdateAsync(storeProductUpdateDto);
 
         return result.HasFailed
             ? BadRequest(result)
@@ -67,7 +66,7 @@ public class MonitoredProductController : BaseController
     [HttpDelete("{id}")]
     public async Task<IActionResult> Delete(string id)
     {
-        var result = await _monitoredProductService.DeleteByIdAsync(id);
+        var result = await _storeProductService.DeleteByIdAsync(id);
 
         return result.HasFailed
             ? BadRequest(result)
