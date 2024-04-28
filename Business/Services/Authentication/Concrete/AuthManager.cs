@@ -39,21 +39,21 @@ public class AuthManager : IAuthService
         {
             if (userLoginDto.Email != null)
                 BusinessRules.Run(
-                    ("AUTH-589819", BusinessRules.CheckDtoNull(userLoginDto)),
-                    ("AUTH-589819", BusinessRules.CheckEmail(userLoginDto.Email)));
+                    ("AUTH-366764", BusinessRules.CheckDtoNull(userLoginDto)),
+                    ("AUTH-584337", BusinessRules.CheckEmail(userLoginDto.Email)));
 
             var user = await _userDal.GetAsync(
                 u => u.Email == userLoginDto.Email || u.Username == userLoginDto.Username);
 
             if (user == null)
             {
-                result.Fail(new ErrorMessage("AUTH-559600", AuthServiceMessages.NotFound));
+                result.Fail(new ErrorMessage("AUTH-809431", AuthServiceMessages.NotFound));
                 return result;
             }
 
             if (!HashingHelper.VerifyPasswordHash(userLoginDto.Password, user.PasswordHash, user.PasswordSalt))
             {
-                result.Fail(new ErrorMessage("AUTH-374015", AuthServiceMessages.WrongPassword));
+                result.Fail(new ErrorMessage("AUTH-290694", AuthServiceMessages.WrongPassword));
                 return result;
             }
 
@@ -95,7 +95,7 @@ public class AuthManager : IAuthService
         }
         catch (Exception ex)
         {
-            result.Fail(new ErrorMessage("AUTH-425609", ex.Message));
+            result.Fail(new ErrorMessage("AUTH-347466", ex.Message));
         }
 
         return result;
@@ -106,15 +106,15 @@ public class AuthManager : IAuthService
         var result = new ServiceObjectResult<bool>();
         try
         {
-            BusinessRules.Run(("AUTH-249054", BusinessRules.CheckId(userId)));
+            BusinessRules.Run(("AUTH-618318", BusinessRules.CheckId(userId)));
 
             var isGlobalAdmin = AuthHelper.IsLoggedInAsAdmin();
 
             if (!isGlobalAdmin)
-                BusinessRules.Run(("AUTH-239831", BusinessRules.CheckIdSameWithCurrentUser(userId)));
+                BusinessRules.Run(("AUTH-265570", BusinessRules.CheckIdSameWithCurrentUser(userId)));
 
             var user = await _userDal.GetAsync(p => p.Id.ToString().Equals(userId));
-            BusinessRules.Run(("AUTH-261163", BusinessRules.CheckEntityNull(user)));
+            BusinessRules.Run(("AUTH-202349", BusinessRules.CheckEntityNull(user)));
 
             user!.ActiveToken = null;
             await _userDal.UpdateAsync(user);
@@ -127,7 +127,7 @@ public class AuthManager : IAuthService
         }
         catch (Exception ex)
         {
-            result.Fail(new ErrorMessage("AUTH-949599", ex.Message));
+            result.Fail(new ErrorMessage("AUTH-800477", ex.Message));
         }
 
         return result;
@@ -141,10 +141,10 @@ public class AuthManager : IAuthService
         try
         {
             BusinessRules.Run(
-                ("AUTH-155448", BusinessRules.CheckDtoNull(businessRegisterDto)),
-                ("AUTH-807859", BusinessRules.CheckEmail(businessRegisterDto.Email)),
-                ("AUTH-970705", await CheckIfEmailRegisteredBefore(businessRegisterDto.Email)),
-                ("AUTH-487889", await CheckIfUsernameRegisteredBefore(businessRegisterDto.Username))
+                ("AUTH-310832", BusinessRules.CheckDtoNull(businessRegisterDto)),
+                ("AUTH-906899", BusinessRules.CheckEmail(businessRegisterDto.Email)),
+                ("AUTH-712957", await CheckIfEmailRegisteredBefore(businessRegisterDto.Email)),
+                ("AUTH-770711", await CheckIfUsernameRegisteredBefore(businessRegisterDto.Username))
             );
 
             HashingHelper.CreatePasswordHash(businessRegisterDto.Password, out var passwordHash,
@@ -165,7 +165,7 @@ public class AuthManager : IAuthService
         }
         catch (Exception ex)
         {
-            result.Fail(new ErrorMessage("AUTH-474544", ex.Message));
+            result.Fail(new ErrorMessage("AUTH-976141", ex.Message));
         }
 
         return result;
@@ -178,10 +178,10 @@ public class AuthManager : IAuthService
         try
         {
             BusinessRules.Run(
-                ("AUTH-155448", BusinessRules.CheckDtoNull(customerRegisterDto)),
-                ("AUTH-807859", BusinessRules.CheckEmail(customerRegisterDto.Email)),
-                ("AUTH-970705", await CheckIfEmailRegisteredBefore(customerRegisterDto.Email)),
-                ("AUTH-487889", await CheckIfUsernameRegisteredBefore(customerRegisterDto.Username))
+                ("AUTH-681668", BusinessRules.CheckDtoNull(customerRegisterDto)),
+                ("AUTH-758067", BusinessRules.CheckEmail(customerRegisterDto.Email)),
+                ("AUTH-824600", await CheckIfEmailRegisteredBefore(customerRegisterDto.Email)),
+                ("AUTH-603241", await CheckIfUsernameRegisteredBefore(customerRegisterDto.Username))
             );
 
             HashingHelper.CreatePasswordHash(customerRegisterDto.Password, out var passwordHash,
@@ -202,7 +202,7 @@ public class AuthManager : IAuthService
         }
         catch (Exception ex)
         {
-            result.Fail(new ErrorMessage("AUTH-474544", ex.Message));
+            result.Fail(new ErrorMessage("AUTH-855608", ex.Message));
         }
 
         return result;
@@ -218,19 +218,19 @@ public class AuthManager : IAuthService
             var user = await _userDal.GetAsync(p => p.Email == verifyCodeDto.Email);
             if (user == null)
             {
-                result.Fail(new ErrorMessage("AUTH-858063", AuthServiceMessages.NotFound));
+                result.Fail(new ErrorMessage("AUTH-808079", AuthServiceMessages.NotFound));
                 return result;
             }
 
             if (user.LoginVerificationCode != verifyCodeDto.Code)
             {
-                result.Fail(new ErrorMessage("AUTH-107587", AuthServiceMessages.WrongVerificationCode));
+                result.Fail(new ErrorMessage("AUTH-755666", AuthServiceMessages.WrongVerificationCode));
                 return result;
             }
 
             if (user.LoginVerificationCodeExpiration < DateTime.UtcNow)
             {
-                result.Fail(new ErrorMessage("AUTH-639038", AuthServiceMessages.VerificationCodeExpired));
+                result.Fail(new ErrorMessage("AUTH-221332", AuthServiceMessages.VerificationCodeExpired));
                 return result;
             }
 
@@ -249,7 +249,7 @@ public class AuthManager : IAuthService
         }
         catch (Exception ex)
         {
-            result.Fail(new ErrorMessage("AUTH-871272", ex.Message));
+            result.Fail(new ErrorMessage("AUTH-562594", ex.Message));
         }
 
         return result;

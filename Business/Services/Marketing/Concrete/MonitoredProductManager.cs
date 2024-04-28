@@ -27,10 +27,10 @@ public class MonitoredProductManager : IMonitoredProductService
 
         try
         {
-            BusinessRules.Run(("MNPR-950070", BusinessRules.CheckId(id)));
+            BusinessRules.Run(("MNPR-734047", BusinessRules.CheckId(id)));
 
             var monitoredProduct = await _monitoredProductDal.GetAsync(b => b.Id.ToString().Equals(id));
-            BusinessRules.Run(("MNPR-759000", BusinessRules.CheckEntityNull(monitoredProduct)));
+            BusinessRules.Run(("MNPR-987121", BusinessRules.CheckEntityNull(monitoredProduct)));
 
             var monitoredProductGetDto = _mapper.Map<MonitoredProductGetDto>(monitoredProduct);
             result.SetData(monitoredProductGetDto, MonitoredProductServiceMessages.Retrieved);
@@ -41,7 +41,7 @@ public class MonitoredProductManager : IMonitoredProductService
         }
         catch (Exception e)
         {
-            result.Fail(new ErrorMessage("MNPR-203397", e.Message));
+            result.Fail(new ErrorMessage("MNPR-376848", e.Message));
         }
 
         return result;
@@ -65,7 +65,7 @@ public class MonitoredProductManager : IMonitoredProductService
         }
         catch (Exception e)
         {
-            result.Fail(new ErrorMessage("MNPR-304796", e.Message));
+            result.Fail(new ErrorMessage("MNPR-472873", e.Message));
         }
 
         return result;
@@ -77,7 +77,7 @@ public class MonitoredProductManager : IMonitoredProductService
 
         try
         {
-            BusinessRules.Run(("MNPR-950070", BusinessRules.CheckId(userId)));
+            BusinessRules.Run(("MNPR-724642", BusinessRules.CheckId(userId)));
 
             var products = await _monitoredProductDal.GetAllAsync(b => b.OwnerId.ToString().Equals(userId));
             var productGetDtos = _mapper.Map<List<MonitoredProductGetDto>>(products);
@@ -89,7 +89,7 @@ public class MonitoredProductManager : IMonitoredProductService
         }
         catch (Exception e)
         {
-            result.Fail(new ErrorMessage("MNPR-304796", e.Message));
+            result.Fail(new ErrorMessage("MNPR-814907", e.Message));
         }
 
         return result;
@@ -102,7 +102,7 @@ public class MonitoredProductManager : IMonitoredProductService
 
         try
         {
-            BusinessRules.Run(("MNPR-950070", BusinessRules.CheckDtoNull(productAddDto)));
+            BusinessRules.Run(("MNPR-612521", BusinessRules.CheckDtoNull(productAddDto)));
             var product = _mapper.Map<MonitoredProduct>(productAddDto);
             await _monitoredProductDal.AddAsync(product);
             result.SetData(_mapper.Map<MonitoredProductGetDto>(product), MonitoredProductServiceMessages.Added);
@@ -113,7 +113,7 @@ public class MonitoredProductManager : IMonitoredProductService
         }
         catch (Exception e)
         {
-            result.Fail(new ErrorMessage("MNPR-203397", e.Message));
+            result.Fail(new ErrorMessage("MNPR-646039", e.Message));
         }
 
         return result;
@@ -125,9 +125,9 @@ public class MonitoredProductManager : IMonitoredProductService
 
         try
         {
-            BusinessRules.Run(("MNPR-950070", BusinessRules.CheckId(id)));
+            BusinessRules.Run(("MNPR-197002", BusinessRules.CheckId(id)));
             var product = await _monitoredProductDal.GetAsync(b => b.Id.ToString().Equals(id));
-            BusinessRules.Run(("MNPR-759000", BusinessRules.CheckEntityNull(product)));
+            BusinessRules.Run(("MNPR-591741", BusinessRules.CheckEntityNull(product)));
 
             await _monitoredProductDal.SoftDeleteAsync(product!);
             result.SetData(_mapper.Map<MonitoredProductGetDto>(product), MonitoredProductServiceMessages.Deleted);
@@ -138,7 +138,7 @@ public class MonitoredProductManager : IMonitoredProductService
         }
         catch (Exception e)
         {
-            result.Fail(new ErrorMessage("MNPR-661359", e.Message));
+            result.Fail(new ErrorMessage("MNPR-811620", e.Message));
         }
 
         return result;
@@ -153,13 +153,13 @@ public class MonitoredProductManager : IMonitoredProductService
         try
         {
             BusinessRules.Run(
-                ("MNPR-950070", BusinessRules.CheckDtoNull(productUpdateDto)),
-                ("MNPR-950070", BusinessRules.CheckId(productUpdateDto.Id.ToString()))
+                ("MNPR-308013", BusinessRules.CheckDtoNull(productUpdateDto)),
+                ("MNPR-775480", BusinessRules.CheckId(productUpdateDto.Id.ToString()))
             );
 
             var product =
                 await _monitoredProductDal.GetAsync(b => b.Id.ToString().Equals(productUpdateDto.Id.ToString()));
-            BusinessRules.Run(("MNPR-759000", BusinessRules.CheckEntityNull(product)));
+            BusinessRules.Run(("MNPR-927511", BusinessRules.CheckEntityNull(product)));
 
             _mapper.Map(productUpdateDto, product);
             await _monitoredProductDal.UpdateAsync(product!);
@@ -171,7 +171,7 @@ public class MonitoredProductManager : IMonitoredProductService
         }
         catch (Exception e)
         {
-            result.Fail(new ErrorMessage("MNPR-203397", e.Message));
+            result.Fail(new ErrorMessage("MNPR-944544", e.Message));
         }
 
         return result;

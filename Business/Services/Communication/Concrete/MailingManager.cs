@@ -17,10 +17,10 @@ public class MailingManager : IMailingService
         try
         {
             BusinessRules.Run(
-                ("MAIL-721753", BusinessRules.CheckEmail(to)),
-                ("MAIL-948634",
+                ("MAIL-931684", BusinessRules.CheckEmail(to)),
+                ("MAIL-984694",
                     BusinessRules.CheckStringNullOrEmpty(subject, MailingServiceMessages.SubjectCannotBeEmpty)),
-                ("MAIL-701975",
+                ("MAIL-562432",
                     BusinessRules.CheckStringNullOrEmpty(body, MailingServiceMessages.BodyCannotBeEmpty))
             );
 
@@ -41,7 +41,7 @@ public class MailingManager : IMailingService
         }
         catch (Exception ex)
         {
-            result.Fail("MAIL-392388", ex.Message);
+            result.Fail("MAIL-257670", ex.Message);
         }
 
         return result;
