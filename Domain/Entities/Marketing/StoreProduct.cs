@@ -13,6 +13,4 @@ public class StoreProduct : Product
     public Guid BusinessId { get; set; }
 
     public virtual Business Business { get; set; } = null!;
-
-    public virtual ICollection<Category> Categories { get; set; } = new List<Category>();
 }

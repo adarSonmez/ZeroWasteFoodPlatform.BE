@@ -37,5 +37,17 @@ public sealed class EfDbContext : EfDbContextBase
 
         modelBuilder.Entity<CategoryProduct>()
             .HasKey(cp => new { cp.CategoryId, cp.ProductId });
+
+        modelBuilder.Entity<MonitoredProduct>()
+            .HasOne(mp => mp.Owner)
+            .WithMany(u => u.MonitoredProduct)
+            .HasForeignKey(mp => mp.OwnerId)
+            .OnDelete(DeleteBehavior.Restrict);
+
+        modelBuilder.Entity<StoreProduct>()
+            .HasOne(sp => sp.Business)
+            .WithMany(b => b.StoreProducts)
+            .HasForeignKey(sp => sp.BusinessId)
+            .OnDelete(DeleteBehavior.Restrict);
     }
 }

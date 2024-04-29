@@ -35,7 +35,21 @@ builder.Services.AddDependencyResolvers(
         new DataAccessModule()
     });
 
+<<<<<<< HEAD
 
+=======
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(corsPolicyName,
+        corsPolicyBuilder =>
+        {
+            corsPolicyBuilder
+                .AllowAnyHeader()
+                .AllowAnyMethod()
+                .AllowAnyOrigin();
+        });
+});
+>>>>>>> 14167465d7572e6139ab4762421ae83e71b629e6
 
 builder.Configuration
     .SetBasePath(env.ContentRootPath)
@@ -58,7 +72,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseCors(corsPolicyName);
 
-app.UseHttpsRedirection();
+// app.UseHttpsRedirection();
 
 app.UseAuthorization();
 

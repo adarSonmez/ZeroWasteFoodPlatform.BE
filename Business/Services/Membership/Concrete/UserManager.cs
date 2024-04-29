@@ -26,19 +26,22 @@ public class UserManager : IUserService
 
         try
         {
-            BusinessRules.Run(("USER-650320",
-                userChangePasswordDto.NewPassword.Equals(userChangePasswordDto.ConfirmPassword)
-                    ? null
-                    : UserServiceMessages.PasswordsNotMatch));
+            BusinessRules.Run(
+                ("USER-342385", BusinessRules.CheckDtoNull(userChangePasswordDto)),
+                ("USER-324854", BusinessRules.CheckId(userChangePasswordDto.Id.ToString())),
+                ("USER-128747",
+                    userChangePasswordDto.NewPassword.Equals(userChangePasswordDto.ConfirmPassword)
+                        ? null
+                        : UserServiceMessages.PasswordsNotMatch));
 
             var user = await _businessDal.GetAsync(b => userChangePasswordDto.Id.Equals(b.Id));
-            BusinessRules.Run(("USER-387257", BusinessRules.CheckEntityNull(user)));
+            BusinessRules.Run(("USER-500620", BusinessRules.CheckEntityNull(user)));
 
             var passwordCheck = HashingHelper.VerifyPasswordHash(userChangePasswordDto.CurrentPassword,
                 user!.PasswordHash,
                 user.PasswordSalt);
 
-            BusinessRules.Run(("USER-650320", passwordCheck ? null : UserServiceMessages.IncorrectPassword));
+            BusinessRules.Run(("USER-569667", passwordCheck ? null : UserServiceMessages.IncorrectPassword));
 
             HashingHelper.CreatePasswordHash(userChangePasswordDto.NewPassword, out var passwordHash,
                 out var passwordSalt);
@@ -55,7 +58,7 @@ public class UserManager : IUserService
         }
         catch (Exception e)
         {
-            result.Fail(new ErrorMessage("USER-650320", e.Message));
+            result.Fail(new ErrorMessage("USER-841618", e.Message));
         }
 
         return result;

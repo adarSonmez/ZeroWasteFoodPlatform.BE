@@ -24,10 +24,10 @@ public class ReportManager : IReportService
 
         try
         {
-            BusinessRules.Run(("RPRT-508769", BusinessRules.CheckId(id)));
+            BusinessRules.Run(("RPRT-325966", BusinessRules.CheckId(id)));
 
-            var report = await _reportDal.GetAsync(b => b.Id.Same(id));
-            BusinessRules.Run(("RPRT-386849", BusinessRules.CheckEntityNull(report)));
+            var report = await _reportDal.GetAsync(b => b.Id.ToString().Equals(id));
+            BusinessRules.Run(("RPRT-786267", BusinessRules.CheckEntityNull(report)));
 
             var reportGetDto = _mapper.Map<ReportGetDto>(report);
             result.SetData(reportGetDto, ReportServiceMessages.Retrieved);
@@ -38,7 +38,7 @@ public class ReportManager : IReportService
         }
         catch (Exception e)
         {
-            result.Fail(new ErrorMessage("RPRT-723931", e.Message));
+            result.Fail(new ErrorMessage("RPRT-183243", e.Message));
         }
 
         return result;
@@ -62,7 +62,7 @@ public class ReportManager : IReportService
         }
         catch (Exception e)
         {
-            result.Fail(new ErrorMessage("RPRT-723931", e.Message));
+            result.Fail(new ErrorMessage("RPRT-123147", e.Message));
         }
 
         return result;
@@ -74,10 +74,10 @@ public class ReportManager : IReportService
 
         try
         {
-            BusinessRules.Run(("RPRT-508769", BusinessRules.CheckId(id)));
+            BusinessRules.Run(("RPRT-500681", BusinessRules.CheckId(id)));
 
-            var report = await _reportDal.GetAsync(b => b.Id.Same(id));
-            BusinessRules.Run(("RPRT-386849", BusinessRules.CheckEntityNull(report)));
+            var report = await _reportDal.GetAsync(b => b.Id.ToString().Equals(id));
+            BusinessRules.Run(("RPRT-516247", BusinessRules.CheckEntityNull(report)));
 
             await _reportDal.SoftDeleteAsync(report!);
             result.SetData(_mapper.Map<ReportGetDto>(report), ReportServiceMessages.Deleted);
@@ -88,7 +88,7 @@ public class ReportManager : IReportService
         }
         catch (Exception e)
         {
-            result.Fail(new ErrorMessage("RPRT-723931", e.Message));
+            result.Fail(new ErrorMessage("RPRT-595739", e.Message));
         }
 
         return result;

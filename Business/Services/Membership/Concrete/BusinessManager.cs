@@ -28,7 +28,7 @@ public class BusinessManager : IBusinessService
         {
             BusinessRules.Run(("BSNS-508769", BusinessRules.CheckId(id)));
 
-            var business = await _businessDal.GetAsync(b => id.Equals(b.Id));
+            var business = await _businessDal.GetAsync(b => id.Equals(b.Id.ToString()));
             BusinessRules.Run(("BSNS-386849", BusinessRules.CheckEntityNull(business)));
 
             var businessGetDto = _mapper.Map<BusinessGetDto>(business);
@@ -130,17 +130,20 @@ public class BusinessManager : IBusinessService
         try
         {
             BusinessRules.Run(
+                ("BSNS-257397", BusinessRules.CheckDtoNull(businessUpdateDto)),
                 ("BSNS-445608", await CheckIfUsernameExists(businessUpdateDto.Username, true)),
                 ("BSNS-138922", await CheckIfEmailExists(businessUpdateDto.Email, true))
             );
 
-            var businessToUpdate = await _businessDal.GetAsync(b => businessUpdateDto.Id.Equals(b.Id));
+            var businessToUpdate =
+                await _businessDal.GetAsync(b => businessUpdateDto.Id.ToString().Equals(b.Id.ToString()));
             BusinessRules.Run(("BSNS-257397", BusinessRules.CheckEntityNull(businessToUpdate)));
 
             businessToUpdate = _mapper.Map(businessUpdateDto, businessToUpdate)!;
             await _businessDal.UpdateAsync(businessToUpdate);
 
-            var updatedBusiness = await _businessDal.GetAsync(b => businessUpdateDto.Id.Equals(b.Id));
+            var updatedBusiness =
+                await _businessDal.GetAsync(b => businessUpdateDto.Id.ToString().Equals(b.Id.ToString()));
             var businessGetDto = _mapper.Map<BusinessGetDto>(updatedBusiness);
             result.SetData(businessGetDto, BusinessServiceMessages.Updated);
         }
@@ -164,7 +167,7 @@ public class BusinessManager : IBusinessService
         {
             BusinessRules.Run(("BSNS-160835", BusinessRules.CheckId(id)));
 
-            var business = await _businessDal.GetAsync(b => id.Equals(b.Id));
+            var business = await _businessDal.GetAsync(b => id.Equals(b.Id.ToString()));
             BusinessRules.Run(("BSNS-188217", BusinessRules.CheckEntityNull(business)));
 
             await _businessDal.SoftDeleteAsync(business!);
