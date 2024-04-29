@@ -9,6 +9,18 @@ var builder = WebApplication.CreateBuilder(args);
 var env = builder.Environment;
 const string corsPolicyName = "AllowOrigin";
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(corsPolicyName,
+        corsPolicyBuilder =>
+        {
+            corsPolicyBuilder
+                .AllowAnyHeader()
+                .AllowAnyMethod()
+                .AllowAnyOrigin();
+        });
+});
+
 // Add services to the container.
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
@@ -22,6 +34,8 @@ builder.Services.AddDependencyResolvers(
         new BusinessModule(),
         new DataAccessModule()
     });
+
+
 
 builder.Configuration
     .SetBasePath(env.ContentRootPath)
