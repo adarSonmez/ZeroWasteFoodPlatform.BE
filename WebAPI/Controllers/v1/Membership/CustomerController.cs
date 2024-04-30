@@ -48,11 +48,20 @@ public class CustomerController : BaseController
     }
 
     [HttpGet]
-    [Authorize(Roles = UserRoles.Admin)]
     public async Task<IActionResult> GetList([FromQuery] CustomerFilterModel? filterModel, int page = 1,
         int pageSize = 10)
     {
         var result = await _customerService.GetListAsync(filterModel, page, pageSize);
+
+        return result.HasFailed
+            ? BadRequest(result)
+            : Ok(result);
+    }
+
+    [HttpGet("shopping-list/{userId}")]
+    public async Task<IActionResult> GetShoppingList(string userId)
+    {
+        var result = await _customerService.GetShoppingListAsync(userId);
 
         return result.HasFailed
             ? BadRequest(result)

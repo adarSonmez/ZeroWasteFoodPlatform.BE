@@ -197,6 +197,33 @@ namespace DataAccess.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "CustomerStoreProduct",
+                schema: "Association",
+                columns: table => new
+                {
+                    CustomerId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ProductId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CustomerStoreProduct", x => new { x.CustomerId, x.ProductId });
+                    table.ForeignKey(
+                        name: "FK_CustomerStoreProduct_Products_ProductId",
+                        column: x => x.ProductId,
+                        principalSchema: "Marketing",
+                        principalTable: "Products",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_CustomerStoreProduct_Users_CustomerId",
+                        column: x => x.CustomerId,
+                        principalSchema: "Membership",
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_CategoryProduct_ProductsId",
                 schema: "Marketing",
@@ -207,6 +234,12 @@ namespace DataAccess.Migrations
                 name: "IX_CategoryProducts_ProductId",
                 schema: "Association",
                 table: "CategoryProducts",
+                column: "ProductId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_CustomerStoreProduct_ProductId",
+                schema: "Association",
+                table: "CustomerStoreProduct",
                 column: "ProductId");
 
             migrationBuilder.CreateIndex(
@@ -231,6 +264,10 @@ namespace DataAccess.Migrations
 
             migrationBuilder.DropTable(
                 name: "CategoryProducts",
+                schema: "Association");
+
+            migrationBuilder.DropTable(
+                name: "CustomerStoreProduct",
                 schema: "Association");
 
             migrationBuilder.DropTable(

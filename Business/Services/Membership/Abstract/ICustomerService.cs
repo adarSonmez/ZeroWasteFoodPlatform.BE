@@ -1,5 +1,6 @@
 using Core.Services;
 using Core.Services.Result;
+using Domain.DTOs.Marketing;
 using Domain.DTOs.Membership;
 using Domain.FilterModels.Membership;
 
@@ -12,6 +13,8 @@ public interface ICustomerService : IService
     Task<ServiceObjectResult<CustomerGetDto?>> GetByUsernameAsync(string username);
 
     Task<ServiceObjectResult<CustomerGetDto?>> GetByEmailAsync(string email);
+
+    Task<ServiceCollectionResult<StoreProductGetDto>> GetShoppingListAsync(string userId);
 
     Task<ServiceCollectionResult<CustomerGetDto>>
         GetListAsync(CustomerFilterModel? filterModel, int page, int pageSize);

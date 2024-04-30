@@ -7,7 +7,10 @@ using Core.Services.Messages;
 using Core.Services.Result;
 using Core.Utils.IoC;
 using Core.Utils.Rules;
+using DataAccess.Repositories.Abstract.Association;
+using DataAccess.Repositories.Abstract.Marketing;
 using DataAccess.Repositories.Abstract.Membership;
+using Domain.DTOs.Marketing;
 using Domain.DTOs.Membership;
 using Domain.FilterModels.Membership;
 
@@ -16,7 +19,12 @@ namespace Business.Services.Membership.Concrete;
 public class CustomerManager : ICustomerService
 {
     private readonly ICustomerDal _customerDal = ServiceTool.GetService<ICustomerDal>()!;
+
+    private readonly ICustomerStoreProductDal _customerStoreProductDal =
+        ServiceTool.GetService<ICustomerStoreProductDal>()!;
+
     private readonly IMapper _mapper = ServiceTool.GetService<IMapper>()!;
+    private readonly IStoreProductDal _storeProductDal = ServiceTool.GetService<IStoreProductDal>()!;
 
     public async Task<ServiceObjectResult<CustomerGetDto?>> GetByIdAsync(string id)
     {
@@ -176,6 +184,34 @@ public class CustomerManager : ICustomerService
         catch (Exception e)
         {
             result.Fail(new ErrorMessage("CSTM-304796", e.Message));
+        }
+
+        return result;
+    }
+
+    public async Task<ServiceCollectionResult<StoreProductGetDto>> GetShoppingListAsync(string userId)
+    {
+        var result = new ServiceCollectionResult<StoreProductGetDto>();
+
+        try
+        {
+            BusinessRules.Run(("CSTM-950070", BusinessRules.CheckId(userId)));
+
+            var customerStoreProducts = await _customerStoreProductDal
+                .GetAllAsync(b => b.CustomerId.ToString().Equals(userId));
+
+            var storeProductsIds = customerStoreProducts.Select(b => b.ProductId.ToString()).ToList();
+            var products = await _storeProductDal.GetAllAsync(b => storeProductsIds.Contains(b.Id.ToString()));
+            var productGetDtos = _mapper.Map<List<StoreProductGetDto>>(products);
+            result.SetData(productGetDtos, successMessage: CustomerServiceMessages.ShoppingListRetrieved);
+        }
+        catch (ValidationException e)
+        {
+            result.Fail(e);
+        }
+        catch (Exception e)
+        {
+            result.Fail(new ErrorMessage("CSTM-203397", e.Message));
         }
 
         return result;

@@ -8,7 +8,9 @@ using Core.Services.Result;
 using Core.Utils.IoC;
 using Core.Utils.Rules;
 using DataAccess.Repositories.Abstract.Marketing;
+using DataAccess.Repositories.Abstract.Membership;
 using Domain.DTOs.Marketing;
+using Domain.Entities.Association;
 using Domain.Entities.Marketing;
 using Domain.FilterModels.Marketing;
 
@@ -16,6 +18,7 @@ namespace Business.Services.Marketing.Concrete;
 
 public class StoreProductManager : IStoreProductService
 {
+    private readonly ICustomerDal _customerDal = ServiceTool.GetService<ICustomerDal>()!;
     private readonly IMapper _mapper = ServiceTool.GetService<IMapper>()!;
     private readonly IStoreProductDal _storeProductDal = ServiceTool.GetService<IStoreProductDal>()!;
 
@@ -136,6 +139,84 @@ public class StoreProductManager : IStoreProductService
         catch (Exception e)
         {
             result.Fail(new ErrorMessage("STPR-274294", e.Message));
+        }
+
+        return result;
+    }
+
+    public async Task<ServiceObjectResult<StoreProductGetDto?>> AddToShoppingListAsync(
+        StoreProductManipulateShoppingListDto productManipulateShoppingListDto)
+    {
+        var result = new ServiceObjectResult<StoreProductGetDto?>();
+
+        try
+        {
+            BusinessRules.Run(("STPR-646480", BusinessRules.CheckDtoNull(productManipulateShoppingListDto)));
+
+            var product = await _storeProductDal.GetAsync(b =>
+                b.Id.ToString().Equals(productManipulateShoppingListDto.ProductId.ToString()));
+            BusinessRules.Run(("STPR-591299", BusinessRules.CheckEntityNull(product)));
+
+            var customer = await _customerDal.GetAsync(b =>
+                b.Id.ToString().Equals(productManipulateShoppingListDto.CustomerId.ToString()));
+            BusinessRules.Run(("STPR-709635", BusinessRules.CheckEntityNull(customer)));
+
+            customer!.ShoppingList.Add(new CustomerStoreProduct
+            {
+                CustomerId = customer.Id,
+                ProductId = product!.Id
+            });
+
+            await _customerDal.UpdateAsync(customer!);
+            result.SetData(_mapper.Map<StoreProductGetDto>(product), StoreProductServiceMessages.AddedToShoppingList);
+        }
+        catch (ValidationException e)
+        {
+            result.Fail(e);
+        }
+        catch (Exception e)
+        {
+            result.Fail(new ErrorMessage("STPR-136340", e.Message));
+        }
+
+        return result;
+    }
+
+    public async Task<ServiceObjectResult<StoreProductGetDto?>> RemoveFromShoppingListAsync(
+        StoreProductManipulateShoppingListDto productManipulateShoppingListDto)
+    {
+        var result = new ServiceObjectResult<StoreProductGetDto?>();
+
+        try
+        {
+            BusinessRules.Run(("STPR-612880", BusinessRules.CheckDtoNull(productManipulateShoppingListDto)));
+
+            var product = await _storeProductDal.GetAsync(b =>
+                b.Id.ToString().Equals(productManipulateShoppingListDto.ProductId.ToString()));
+            BusinessRules.Run(("STPR-794153", BusinessRules.CheckEntityNull(product)));
+
+            var customer = await _customerDal.GetAsync(b =>
+                b.Id.ToString().Equals(productManipulateShoppingListDto.CustomerId.ToString()));
+
+            BusinessRules.Run(("STPR-461088", BusinessRules.CheckEntityNull(customer)));
+
+            var customerStoreProduct = customer!.ShoppingList.FirstOrDefault(csp =>
+                csp.ProductId.ToString().Equals(product!.Id.ToString()));
+
+            BusinessRules.Run(("STPR-234627", BusinessRules.CheckEntityNull(customerStoreProduct)));
+
+            customer!.ShoppingList.Remove(customerStoreProduct!);
+            await _customerDal.UpdateAsync(customer!);
+            result.SetData(_mapper.Map<StoreProductGetDto>(product),
+                StoreProductServiceMessages.RemovedFromShoppingList);
+        }
+        catch (ValidationException e)
+        {
+            result.Fail(e);
+        }
+        catch (Exception e)
+        {
+            result.Fail(new ErrorMessage("STPR-884821", e.Message));
         }
 
         return result;
