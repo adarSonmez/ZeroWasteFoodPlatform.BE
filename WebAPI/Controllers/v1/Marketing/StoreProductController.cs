@@ -1,8 +1,10 @@
 using Business.Services.Marketing.Abstract;
 using Core.Api.Abstract;
+using Core.Constants;
 using Core.Utils.IoC;
 using Domain.DTOs.Marketing;
 using Domain.FilterModels.Marketing;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebAPI.Controllers.v1.Marketing;
@@ -44,6 +46,7 @@ public class StoreProductController : BaseController
     }
 
     [HttpPost]
+    [Authorize(Policy = AuthPolicies.AdminOrBusiness)]
     public async Task<IActionResult> Add([FromBody] StoreProductAddDto storeProductAddDto)
     {
         if (!ModelState.IsValid)
@@ -57,6 +60,7 @@ public class StoreProductController : BaseController
     }
 
     [HttpPut]
+    [Authorize(Policy = AuthPolicies.AdminOrBusiness)]
     public async Task<IActionResult> Update([FromBody] StoreProductUpdateDto storeProductUpdateDto)
     {
         if (!ModelState.IsValid)
@@ -70,6 +74,7 @@ public class StoreProductController : BaseController
     }
 
     [HttpDelete("{id}")]
+    [Authorize(Policy = AuthPolicies.AdminOrBusiness)]
     public async Task<IActionResult> Delete(string id)
     {
         var result = await _storeProductService.DeleteByIdAsync(id);

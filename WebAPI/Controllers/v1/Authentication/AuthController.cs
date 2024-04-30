@@ -2,16 +2,19 @@ using Business.Services.Authentication.Abstract;
 using Core.Api.Abstract;
 using Core.Utils.IoC;
 using Domain.DTOs.Authentication;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebAPI.Controllers.v1.Authentication;
 
 [ApiController]
+[Authorize]
 public class AuthController : BaseController
 {
     private readonly IAuthService _authService = ServiceTool.GetService<IAuthService>()!;
 
     [HttpPost("login")]
+    [AllowAnonymous]
     public async Task<IActionResult> Login([FromBody] UserLoginDto userLoginDto)
     {
         if (!ModelState.IsValid)
@@ -42,6 +45,7 @@ public class AuthController : BaseController
     }
 
     [HttpPost("verify-code")]
+    [AllowAnonymous]
     public async Task<IActionResult> VerifyCode(VerifyEmailCodeDto verifyCodeDto)
     {
         if (!ModelState.IsValid)

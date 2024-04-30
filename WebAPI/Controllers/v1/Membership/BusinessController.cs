@@ -1,8 +1,10 @@
 using Business.Services.Membership.Abstract;
 using Core.Api.Abstract;
+using Core.Constants;
 using Core.Utils.IoC;
 using Domain.DTOs.Membership;
 using Domain.FilterModels.Membership;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebAPI.Controllers.v1.Membership;
@@ -54,6 +56,7 @@ public class BusinessController : BaseController
     }
 
     [HttpPut]
+    [Authorize(Policy = AuthPolicies.AdminOrBusiness)]
     public async Task<IActionResult> Update([FromBody] BusinessUpdateDto businessUpdateDto)
     {
         if (!ModelState.IsValid)
@@ -67,6 +70,7 @@ public class BusinessController : BaseController
     }
 
     [HttpDelete("{id}")]
+    [Authorize(Policy = AuthPolicies.AdminOrBusiness)]
     public async Task<IActionResult> DeleteById(string id)
     {
         var result = await _businessService.DeleteByIdAsync(id);

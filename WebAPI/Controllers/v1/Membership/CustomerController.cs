@@ -1,8 +1,10 @@
 using Business.Services.Membership.Abstract;
 using Core.Api.Abstract;
+using Core.Constants;
 using Core.Utils.IoC;
 using Domain.DTOs.Membership;
 using Domain.FilterModels.Membership;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebAPI.Controllers.v1.Membership;
@@ -13,6 +15,7 @@ public class CustomerController : BaseController
     private readonly ICustomerService _customerService = ServiceTool.GetService<ICustomerService>()!;
 
     [HttpGet("{id}")]
+    [Authorize(Policy = AuthPolicies.AdminOrCustomer)]
     public async Task<IActionResult> GetById(string id)
     {
         var result = await _customerService.GetByIdAsync(id);
@@ -23,6 +26,7 @@ public class CustomerController : BaseController
     }
 
     [HttpGet("username/{username}")]
+    [Authorize(Policy = AuthPolicies.AdminOrCustomer)]
     public async Task<IActionResult> GetByUsername(string username)
     {
         var result = await _customerService.GetByUsernameAsync(username);
@@ -33,6 +37,7 @@ public class CustomerController : BaseController
     }
 
     [HttpGet("email/{email}")]
+    [Authorize(Policy = AuthPolicies.AdminOrCustomer)]
     public async Task<IActionResult> GetByEmail(string email)
     {
         var result = await _customerService.GetByEmailAsync(email);
@@ -43,6 +48,7 @@ public class CustomerController : BaseController
     }
 
     [HttpGet]
+    [Authorize(Roles = UserRoles.Admin)]
     public async Task<IActionResult> GetList([FromQuery] CustomerFilterModel? filterModel, int page = 1,
         int pageSize = 10)
     {
@@ -54,6 +60,7 @@ public class CustomerController : BaseController
     }
 
     [HttpPut]
+    [Authorize(Policy = AuthPolicies.AdminOrCustomer)]
     public async Task<IActionResult> Update([FromBody] CustomerUpdateDto customerUpdateDto)
     {
         if (!ModelState.IsValid)
@@ -67,6 +74,7 @@ public class CustomerController : BaseController
     }
 
     [HttpDelete("{id}")]
+    [Authorize(Policy = AuthPolicies.AdminOrCustomer)]
     public async Task<IActionResult> DeleteById(string id)
     {
         var result = await _customerService.DeleteByIdAsync(id);
