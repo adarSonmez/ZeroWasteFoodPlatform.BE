@@ -3,8 +3,6 @@ using AutoMapper;
 using Business.Constants.Messages.Services.Authentication;
 using Business.Services.Authentication.Abstract;
 using Business.Services.Communication.Abstract;
-using Business.Utils.Validation.FluentValidation.Authentication;
-using Core.Aspects.Validation;
 using Core.Constants;
 using Core.ExceptionHandling;
 using Core.Security.SessionManagement;
@@ -30,7 +28,6 @@ public class AuthManager : IAuthService
     private readonly ITokenHandler _tokenHandler = ServiceTool.GetService<ITokenHandler>()!;
     private readonly IUserDal _userDal = ServiceTool.GetService<IUserDal>()!;
 
-    [ValidationAspect(typeof(UserLoginValidator))]
     public async Task<ServiceObjectResult<Token?>> LoginUser(UserLoginDto userLoginDto)
     {
         var result = new ServiceObjectResult<Token?>();
@@ -133,7 +130,6 @@ public class AuthManager : IAuthService
         return result;
     }
 
-    [ValidationAspect(typeof(BusinessRegisterValidator))]
     public async Task<ServiceObjectResult<bool>> RegisterBusiness(BusinessRegisterDto businessRegisterDto)
     {
         var result = new ServiceObjectResult<bool>();
@@ -208,8 +204,6 @@ public class AuthManager : IAuthService
         return result;
     }
 
-
-    [ValidationAspect(typeof(VerifyEmailCodeValidator))]
     public async Task<ServiceObjectResult<Token?>> VerifyEmailCode(VerifyEmailCodeDto verifyCodeDto)
     {
         var result = new ServiceObjectResult<Token?>();

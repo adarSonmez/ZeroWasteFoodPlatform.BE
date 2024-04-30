@@ -46,6 +46,9 @@ public class StoreProductController : BaseController
     [HttpPost]
     public async Task<IActionResult> Add([FromBody] StoreProductAddDto storeProductAddDto)
     {
+        if (!ModelState.IsValid)
+            return BadRequest(ModelState);
+
         var result = await _storeProductService.AddAsync(storeProductAddDto);
 
         return result.HasFailed
@@ -56,6 +59,9 @@ public class StoreProductController : BaseController
     [HttpPut]
     public async Task<IActionResult> Update([FromBody] StoreProductUpdateDto storeProductUpdateDto)
     {
+        if (!ModelState.IsValid)
+            return BadRequest(ModelState);
+
         var result = await _storeProductService.UpdateAsync(storeProductUpdateDto);
 
         return result.HasFailed

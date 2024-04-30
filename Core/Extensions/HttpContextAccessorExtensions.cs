@@ -35,4 +35,9 @@ public static class HttpContextAccessorExtensions
     {
         return httpContext.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Name)?.Value;
     }
+
+    public static string? GetRole(this HttpContext httpContext)
+    {
+        return httpContext.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role)?.Value;
+    }
 }

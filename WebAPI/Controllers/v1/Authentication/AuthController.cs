@@ -14,6 +14,9 @@ public class AuthController : BaseController
     [HttpPost("login")]
     public async Task<IActionResult> Login([FromBody] UserLoginDto userLoginDto)
     {
+        if (!ModelState.IsValid)
+            return BadRequest(ModelState);
+
         var result = await _authService.LoginUser(userLoginDto);
 
         if (result.HasFailed)
@@ -41,6 +44,9 @@ public class AuthController : BaseController
     [HttpPost("verify-code")]
     public async Task<IActionResult> VerifyCode(VerifyEmailCodeDto verifyCodeDto)
     {
+        if (!ModelState.IsValid)
+            return BadRequest(ModelState);
+
         var result = await _authService.VerifyEmailCode(verifyCodeDto);
 
         if (result.HasFailed)
@@ -52,6 +58,9 @@ public class AuthController : BaseController
     [HttpPost("register-business")]
     public async Task<IActionResult> RegisterBusiness([FromBody] BusinessRegisterDto businessRegisterDto)
     {
+        if (!ModelState.IsValid)
+            return BadRequest(ModelState);
+
         var result = await _authService.RegisterBusiness(businessRegisterDto);
 
         if (result.HasFailed)
@@ -63,6 +72,9 @@ public class AuthController : BaseController
     [HttpPost("register-customer")]
     public async Task<IActionResult> RegisterCustomer([FromBody] CustomerRegisterDto customerRegisterDto)
     {
+        if (!ModelState.IsValid)
+            return BadRequest(ModelState);
+
         var result = await _authService.RegisterCustomer(customerRegisterDto);
 
         if (result.HasFailed)

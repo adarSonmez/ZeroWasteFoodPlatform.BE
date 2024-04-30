@@ -56,6 +56,9 @@ public class BusinessController : BaseController
     [HttpPut]
     public async Task<IActionResult> Update([FromBody] BusinessUpdateDto businessUpdateDto)
     {
+        if (!ModelState.IsValid)
+            return BadRequest(ModelState);
+
         var result = await _businessService.UpdateAsync(businessUpdateDto);
 
         return result.HasFailed

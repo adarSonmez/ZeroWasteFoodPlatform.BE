@@ -56,6 +56,9 @@ public class CustomerController : BaseController
     [HttpPut]
     public async Task<IActionResult> Update([FromBody] CustomerUpdateDto customerUpdateDto)
     {
+        if (!ModelState.IsValid)
+            return BadRequest(ModelState);
+
         var result = await _customerService.UpdateAsync(customerUpdateDto);
 
         return result.HasFailed

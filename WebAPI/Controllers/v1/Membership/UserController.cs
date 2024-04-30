@@ -14,6 +14,9 @@ public class UserController : BaseController
     [HttpPost("change-password")]
     public async Task<IActionResult> ChangePasswordAsync([FromBody] UserChangePasswordDto userChangePasswordDto)
     {
+        if (!ModelState.IsValid)
+            return BadRequest(ModelState);
+
         var result = await _userService.ChangePasswordAsync(userChangePasswordDto);
 
         return result.HasFailed

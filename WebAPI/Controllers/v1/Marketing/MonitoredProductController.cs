@@ -47,6 +47,9 @@ public class MonitoredProductController : BaseController
     [HttpPost]
     public async Task<IActionResult> Add([FromBody] MonitoredProductAddDto monitoredProductAddDto)
     {
+        if (!ModelState.IsValid)
+            return BadRequest(ModelState);
+
         var result = await _monitoredProductService.AddAsync(monitoredProductAddDto);
 
         return result.HasFailed
@@ -57,6 +60,9 @@ public class MonitoredProductController : BaseController
     [HttpPut]
     public async Task<IActionResult> Update([FromBody] MonitoredProductUpdateDto monitoredProductUpdateDto)
     {
+        if (!ModelState.IsValid)
+            return BadRequest(ModelState);
+
         var result = await _monitoredProductService.UpdateAsync(monitoredProductUpdateDto);
 
         return result.HasFailed

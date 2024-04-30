@@ -1,8 +1,6 @@
 using AutoMapper;
 using Business.Constants.Messages.Services.Membership;
 using Business.Services.Membership.Abstract;
-using Business.Utils.Validation.FluentValidation.Membership;
-using Core.Aspects.Validation;
 using Core.ExceptionHandling;
 using Core.Extensions;
 using Core.Services.Messages;
@@ -98,7 +96,6 @@ public class CustomerManager : ICustomerService
         return result;
     }
 
-    [ValidationAspect(typeof(CustomerUpdateValidator))]
     public async Task<ServiceObjectResult<CustomerGetDto?>> UpdateAsync(CustomerUpdateDto customerUpdateDto)
     {
         var result = new ServiceObjectResult<CustomerGetDto?>();

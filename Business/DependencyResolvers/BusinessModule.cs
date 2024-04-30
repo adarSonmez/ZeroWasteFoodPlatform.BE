@@ -9,17 +9,19 @@ using Business.Services.Marketing.Concrete;
 using Business.Services.Membership.Abstract;
 using Business.Services.Membership.Concrete;
 using Core.Utils.DI.Abstact;
+using FluentValidation;
+using FluentValidation.AspNetCore;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Business.DependencyResolvers;
 
 public class BusinessModule : IDependencyInjectionModule
-
 {
     public void Load(IServiceCollection services)
     {
         # region Membership
 
+        services.AddScoped<IUserService, UserManager>();
         services.AddScoped<IBusinessService, BusinessManager>();
         services.AddScoped<ICustomerService, CustomerManager>();
 
@@ -49,5 +51,13 @@ public class BusinessModule : IDependencyInjectionModule
         services.AddScoped<IStoreProductService, StoreProductManager>();
 
         # endregion Marketing
+
+        # region FluentValidation
+
+        services.AddFluentValidationAutoValidation();
+        services.AddFluentValidationClientsideAdapters();
+        services.AddValidatorsFromAssemblyContaining<BusinessModule>();
+
+        # endregion FluentValidation
     }
 }
