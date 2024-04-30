@@ -1,8 +1,6 @@
 using AutoMapper;
 using Business.Constants.Messages.Services.Membership;
 using Business.Services.Membership.Abstract;
-using Business.Utils.Validation.FluentValidation.Membership;
-using Core.Aspects.Validation;
 using Core.ExceptionHandling;
 using Core.Services.Messages;
 using Core.Services.Result;
@@ -16,10 +14,9 @@ namespace Business.Services.Membership.Concrete;
 
 public class UserManager : IUserService
 {
-    private readonly IBusinessDal _businessDal = ServiceTool.GetService<IBusinessDal>()!;
     private readonly IMapper _mapper = ServiceTool.GetService<IMapper>()!;
+    private readonly IUserDal _userDal = ServiceTool.GetService<IUserDal>()!;
 
-    [ValidationAspect(typeof(UserChangePasswordValidator))]
     public async Task<ServiceObjectResult<UserGetDto?>> ChangePasswordAsync(UserChangePasswordDto userChangePasswordDto)
     {
         var result = new ServiceObjectResult<UserGetDto?>();
@@ -34,7 +31,7 @@ public class UserManager : IUserService
                         ? null
                         : UserServiceMessages.PasswordsNotMatch));
 
-            var user = await _businessDal.GetAsync(b => userChangePasswordDto.Id.Equals(b.Id));
+            var user = await _userDal.GetAsync(b => userChangePasswordDto.Id.Equals(b.Id));
             BusinessRules.Run(("USER-500620", BusinessRules.CheckEntityNull(user)));
 
             var passwordCheck = HashingHelper.VerifyPasswordHash(userChangePasswordDto.CurrentPassword,

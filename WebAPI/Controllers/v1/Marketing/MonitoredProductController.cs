@@ -3,11 +3,13 @@ using Core.Api.Abstract;
 using Core.Utils.IoC;
 using Domain.DTOs.Marketing;
 using Domain.FilterModels.Marketing;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebAPI.Controllers.v1.Marketing;
 
 [ApiController]
+[Authorize]
 public class MonitoredProductController : BaseController
 {
     private readonly IMonitoredProductService _monitoredProductService =
@@ -47,6 +49,9 @@ public class MonitoredProductController : BaseController
     [HttpPost]
     public async Task<IActionResult> Add([FromBody] MonitoredProductAddDto monitoredProductAddDto)
     {
+        if (!ModelState.IsValid)
+            return BadRequest(ModelState);
+
         var result = await _monitoredProductService.AddAsync(monitoredProductAddDto);
 
         return result.HasFailed
@@ -57,6 +62,9 @@ public class MonitoredProductController : BaseController
     [HttpPut]
     public async Task<IActionResult> Update([FromBody] MonitoredProductUpdateDto monitoredProductUpdateDto)
     {
+        if (!ModelState.IsValid)
+            return BadRequest(ModelState);
+
         var result = await _monitoredProductService.UpdateAsync(monitoredProductUpdateDto);
 
         return result.HasFailed

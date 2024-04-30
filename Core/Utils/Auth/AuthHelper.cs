@@ -37,4 +37,9 @@ public static class AuthHelper
     {
         return HttpContextAccessor.HttpContext!.IsBusiness();
     }
+
+    public static string? GetRole()
+    {
+        return HttpContextAccessor.HttpContext!.GetRole();
+    }
 }

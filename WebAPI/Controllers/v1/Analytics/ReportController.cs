@@ -1,12 +1,15 @@
 using Business.Services.Analytics.Abstract;
 using Core.Api.Abstract;
+using Core.Constants;
 using Core.Utils.IoC;
 using Domain.FilterModels.Analytics;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebAPI.Controllers.v1.Analytics;
 
 [ApiController]
+[Authorize(Policy = AuthPolicies.AdminOnly)]
 public class ReportController : BaseController
 {
     private readonly IReportService _reportService = ServiceTool.GetService<IReportService>()!;

@@ -1,8 +1,6 @@
 using AutoMapper;
 using Business.Constants.Messages.Services.Marketing;
 using Business.Services.Marketing.Abstract;
-using Business.Utils.Validation.FluentValidation.Marketing;
-using Core.Aspects.Validation;
 using Core.ExceptionHandling;
 using Core.Extensions;
 using Core.Services.Messages;
@@ -120,7 +118,6 @@ public class StoreProductManager : IStoreProductService
         return result;
     }
 
-    [ValidationAspect(typeof(StoreProductAddValidator))]
     public async Task<ServiceObjectResult<StoreProductGetDto?>> AddAsync(StoreProductAddDto productAddDto)
     {
         var result = new ServiceObjectResult<StoreProductGetDto?>();
@@ -144,7 +141,6 @@ public class StoreProductManager : IStoreProductService
         return result;
     }
 
-    [ValidationAspect(typeof(StoreProductUpdateValidator))]
     public async Task<ServiceObjectResult<StoreProductGetDto?>> UpdateAsync(
         StoreProductUpdateDto productUpdateDto)
     {

@@ -1,8 +1,6 @@
 using AutoMapper;
 using Business.Constants.Messages.Services.Membership;
 using Business.Services.Membership.Abstract;
-using Business.Utils.Validation.FluentValidation.Membership;
-using Core.Aspects.Validation;
 using Core.ExceptionHandling;
 using Core.Extensions;
 using Core.Services.Messages;
@@ -122,7 +120,6 @@ public class BusinessManager : IBusinessService
         return result;
     }
 
-    [ValidationAspect(typeof(BusinessUpdateValidator))]
     public async Task<ServiceObjectResult<BusinessGetDto?>> UpdateAsync(BusinessUpdateDto businessUpdateDto)
     {
         var result = new ServiceObjectResult<BusinessGetDto?>();
