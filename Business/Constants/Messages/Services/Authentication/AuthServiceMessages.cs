@@ -15,4 +15,5 @@ internal static class AuthServiceMessages
     internal const string WrongVerificationCode = "Invalid verification code.";
     internal const string VerificationCodeExpired = "Invalid verification code.";
     internal const string MfaRequired = "Multi-factor authentication required.";
+    internal const string VerificationSuccessful = "Successfully verified.";
 }

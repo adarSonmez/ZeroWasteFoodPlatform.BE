@@ -1,4 +1,3 @@
-using Core.Security.SessionManagement;
 using Core.Services;
 using Core.Services.Result;
 using Domain.DTOs.Authentication;
@@ -7,7 +6,7 @@ namespace Business.Services.Authentication.Abstract;
 
 public interface IAuthService : IService
 {
-    Task<ServiceObjectResult<Token?>> LoginUser(UserLoginDto userLoginDto);
+    Task<ServiceObjectResult<LoginResponseDto?>> LoginUser(UserLoginDto userLoginDto);
 
     Task<ServiceObjectResult<bool>> LogoutUser(string userId);
 
@@ -15,5 +14,5 @@ public interface IAuthService : IService
 
     Task<ServiceObjectResult<bool>> RegisterCustomer(CustomerRegisterDto customerRegisterDto);
 
-    Task<ServiceObjectResult<Token?>> VerifyEmailCode(VerifyEmailCodeDto verifyCodeDto);
+    Task<ServiceObjectResult<LoginResponseDto?>> VerifyEmailCode(VerifyEmailCodeDto verifyCodeDto);
 }
