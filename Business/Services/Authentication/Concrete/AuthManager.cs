@@ -83,7 +83,11 @@ public class AuthManager : IAuthService
             var serializedToken = JsonSerializer.Serialize(token);
             user.ActiveToken = serializedToken;
             await _userDal.UpdateAsync(user);
+            var dict = new Dictionary<String, Object>
+            {
+                "token": token
 
+            }
             result.SetData(token, AuthServiceMessages.LoginSuccessful);
         }
         catch (ValidationException ex)
@@ -99,171 +103,171 @@ public class AuthManager : IAuthService
     }
 
     public async Task<ServiceObjectResult<bool>> LogoutUser(string userId)
+{
+    var result = new ServiceObjectResult<bool>();
+    try
     {
-        var result = new ServiceObjectResult<bool>();
-        try
-        {
-            BusinessRules.Run(("AUTH-618318", BusinessRules.CheckId(userId)));
+        BusinessRules.Run(("AUTH-618318", BusinessRules.CheckId(userId)));
 
-            var isGlobalAdmin = AuthHelper.IsLoggedInAsAdmin();
+        var isGlobalAdmin = AuthHelper.IsLoggedInAsAdmin();
 
-            if (!isGlobalAdmin)
-                BusinessRules.Run(("AUTH-265570", BusinessRules.CheckIdSameWithCurrentUser(userId)));
+        if (!isGlobalAdmin)
+            BusinessRules.Run(("AUTH-265570", BusinessRules.CheckIdSameWithCurrentUser(userId)));
 
-            var user = await _userDal.GetAsync(p => p.Id.ToString().Equals(userId));
-            BusinessRules.Run(("AUTH-202349", BusinessRules.CheckEntityNull(user)));
+        var user = await _userDal.GetAsync(p => p.Id.ToString().Equals(userId));
+        BusinessRules.Run(("AUTH-202349", BusinessRules.CheckEntityNull(user)));
 
-            user!.ActiveToken = null;
-            await _userDal.UpdateAsync(user);
+        user!.ActiveToken = null;
+        await _userDal.UpdateAsync(user);
 
-            result.SetData(true, AuthServiceMessages.LogoutSuccessful);
-        }
-        catch (ValidationException ex)
-        {
-            result.Fail(new ErrorMessage(ex.ExceptionCode, ex.Message));
-        }
-        catch (Exception ex)
-        {
-            result.Fail(new ErrorMessage("AUTH-800477", ex.Message));
-        }
-
-        return result;
+        result.SetData(true, AuthServiceMessages.LogoutSuccessful);
+    }
+    catch (ValidationException ex)
+    {
+        result.Fail(new ErrorMessage(ex.ExceptionCode, ex.Message));
+    }
+    catch (Exception ex)
+    {
+        result.Fail(new ErrorMessage("AUTH-800477", ex.Message));
     }
 
-    public async Task<ServiceObjectResult<bool>> RegisterBusiness(BusinessRegisterDto businessRegisterDto)
+    return result;
+}
+
+public async Task<ServiceObjectResult<bool>> RegisterBusiness(BusinessRegisterDto businessRegisterDto)
+{
+    var result = new ServiceObjectResult<bool>();
+
+    try
     {
-        var result = new ServiceObjectResult<bool>();
+        BusinessRules.Run(
+            ("AUTH-310832", BusinessRules.CheckDtoNull(businessRegisterDto)),
+            ("AUTH-906899", BusinessRules.CheckEmail(businessRegisterDto.Email)),
+            ("AUTH-712957", await CheckIfEmailRegisteredBefore(businessRegisterDto.Email)),
+            ("AUTH-770711", await CheckIfUsernameRegisteredBefore(businessRegisterDto.Username))
+        );
 
-        try
-        {
-            BusinessRules.Run(
-                ("AUTH-310832", BusinessRules.CheckDtoNull(businessRegisterDto)),
-                ("AUTH-906899", BusinessRules.CheckEmail(businessRegisterDto.Email)),
-                ("AUTH-712957", await CheckIfEmailRegisteredBefore(businessRegisterDto.Email)),
-                ("AUTH-770711", await CheckIfUsernameRegisteredBefore(businessRegisterDto.Username))
-            );
+        HashingHelper.CreatePasswordHash(businessRegisterDto.Password, out var passwordHash,
+            out var passwordSalt);
 
-            HashingHelper.CreatePasswordHash(businessRegisterDto.Password, out var passwordHash,
-                out var passwordSalt);
+        var user = _mapper.Map<Domain.Entities.Membership.Business>(businessRegisterDto);
 
-            var user = _mapper.Map<Domain.Entities.Membership.Business>(businessRegisterDto);
+        user.PasswordHash = passwordHash;
+        user.PasswordSalt = passwordSalt;
+        user.Role = UserRoles.Business;
 
-            user.PasswordHash = passwordHash;
-            user.PasswordSalt = passwordSalt;
-            user.Role = UserRoles.Business;
-
-            await _businessDal.AddAsync(user);
-            result.SetData(true, AuthServiceMessages.RegisterSuccessful);
-        }
-        catch (ValidationException ex)
-        {
-            result.Fail(new ErrorMessage(ex.ExceptionCode, ex.Message));
-        }
-        catch (Exception ex)
-        {
-            result.Fail(new ErrorMessage("AUTH-976141", ex.Message));
-        }
-
-        return result;
+        await _businessDal.AddAsync(user);
+        result.SetData(true, AuthServiceMessages.RegisterSuccessful);
+    }
+    catch (ValidationException ex)
+    {
+        result.Fail(new ErrorMessage(ex.ExceptionCode, ex.Message));
+    }
+    catch (Exception ex)
+    {
+        result.Fail(new ErrorMessage("AUTH-976141", ex.Message));
     }
 
-    public async Task<ServiceObjectResult<bool>> RegisterCustomer(CustomerRegisterDto customerRegisterDto)
+    return result;
+}
+
+public async Task<ServiceObjectResult<bool>> RegisterCustomer(CustomerRegisterDto customerRegisterDto)
+{
+    var result = new ServiceObjectResult<bool>();
+
+    try
     {
-        var result = new ServiceObjectResult<bool>();
+        BusinessRules.Run(
+            ("AUTH-681668", BusinessRules.CheckDtoNull(customerRegisterDto)),
+            ("AUTH-758067", BusinessRules.CheckEmail(customerRegisterDto.Email)),
+            ("AUTH-824600", await CheckIfEmailRegisteredBefore(customerRegisterDto.Email)),
+            ("AUTH-603241", await CheckIfUsernameRegisteredBefore(customerRegisterDto.Username))
+        );
 
-        try
-        {
-            BusinessRules.Run(
-                ("AUTH-681668", BusinessRules.CheckDtoNull(customerRegisterDto)),
-                ("AUTH-758067", BusinessRules.CheckEmail(customerRegisterDto.Email)),
-                ("AUTH-824600", await CheckIfEmailRegisteredBefore(customerRegisterDto.Email)),
-                ("AUTH-603241", await CheckIfUsernameRegisteredBefore(customerRegisterDto.Username))
-            );
+        HashingHelper.CreatePasswordHash(customerRegisterDto.Password, out var passwordHash,
+            out var passwordSalt);
 
-            HashingHelper.CreatePasswordHash(customerRegisterDto.Password, out var passwordHash,
-                out var passwordSalt);
+        var user = _mapper.Map<Customer>(customerRegisterDto);
 
-            var user = _mapper.Map<Customer>(customerRegisterDto);
+        user.PasswordHash = passwordHash;
+        user.PasswordSalt = passwordSalt;
+        user.Role = UserRoles.Customer;
 
-            user.PasswordHash = passwordHash;
-            user.PasswordSalt = passwordSalt;
-            user.Role = UserRoles.Customer;
-
-            await _customerDal.AddAsync(user);
-            result.SetData(true, AuthServiceMessages.RegisterSuccessful);
-        }
-        catch (ValidationException ex)
-        {
-            result.Fail(new ErrorMessage(ex.ExceptionCode, ex.Message));
-        }
-        catch (Exception ex)
-        {
-            result.Fail(new ErrorMessage("AUTH-855608", ex.Message));
-        }
-
-        return result;
+        await _customerDal.AddAsync(user);
+        result.SetData(true, AuthServiceMessages.RegisterSuccessful);
+    }
+    catch (ValidationException ex)
+    {
+        result.Fail(new ErrorMessage(ex.ExceptionCode, ex.Message));
+    }
+    catch (Exception ex)
+    {
+        result.Fail(new ErrorMessage("AUTH-855608", ex.Message));
     }
 
-    public async Task<ServiceObjectResult<Token?>> VerifyEmailCode(VerifyEmailCodeDto verifyCodeDto)
+    return result;
+}
+
+public async Task<ServiceObjectResult<Token?>> VerifyEmailCode(VerifyEmailCodeDto verifyCodeDto)
+{
+    var result = new ServiceObjectResult<Token?>();
+    try
     {
-        var result = new ServiceObjectResult<Token?>();
-        try
+        var user = await _userDal.GetAsync(p => p.Email == verifyCodeDto.Email);
+        if (user == null)
         {
-            var user = await _userDal.GetAsync(p => p.Email == verifyCodeDto.Email);
-            if (user == null)
-            {
-                result.Fail(new ErrorMessage("AUTH-808079", AuthServiceMessages.NotFound));
-                return result;
-            }
-
-            if (user.LoginVerificationCode != verifyCodeDto.Code)
-            {
-                result.Fail(new ErrorMessage("AUTH-755666", AuthServiceMessages.WrongVerificationCode));
-                return result;
-            }
-
-            if (user.LoginVerificationCodeExpiration < DateTime.UtcNow)
-            {
-                result.Fail(new ErrorMessage("AUTH-221332", AuthServiceMessages.VerificationCodeExpired));
-                return result;
-            }
-
-            user.LoginVerificationCode = null;
-            user.LoginVerificationCodeExpiration = null;
-
-            await _userDal.UpdateAsync(user);
-
-            var token = _tokenHandler.GenerateToken(user.Id.ToString(), user.Username, user.Email, user.Role, false);
-
-            result.SetData(token, AuthServiceMessages.LoginSuccessful);
-        }
-        catch (ValidationException ex)
-        {
-            result.Fail(new ErrorMessage(ex.ExceptionCode, ex.Message));
-        }
-        catch (Exception ex)
-        {
-            result.Fail(new ErrorMessage("AUTH-562594", ex.Message));
+            result.Fail(new ErrorMessage("AUTH-808079", AuthServiceMessages.NotFound));
+            return result;
         }
 
-        return result;
+        if (user.LoginVerificationCode != verifyCodeDto.Code)
+        {
+            result.Fail(new ErrorMessage("AUTH-755666", AuthServiceMessages.WrongVerificationCode));
+            return result;
+        }
+
+        if (user.LoginVerificationCodeExpiration < DateTime.UtcNow)
+        {
+            result.Fail(new ErrorMessage("AUTH-221332", AuthServiceMessages.VerificationCodeExpired));
+            return result;
+        }
+
+        user.LoginVerificationCode = null;
+        user.LoginVerificationCodeExpiration = null;
+
+        await _userDal.UpdateAsync(user);
+
+        var token = _tokenHandler.GenerateToken(user.Id.ToString(), user.Username, user.Email, user.Role, false);
+
+        result.SetData(token, AuthServiceMessages.LoginSuccessful);
+    }
+    catch (ValidationException ex)
+    {
+        result.Fail(new ErrorMessage(ex.ExceptionCode, ex.Message));
+    }
+    catch (Exception ex)
+    {
+        result.Fail(new ErrorMessage("AUTH-562594", ex.Message));
     }
 
-    private static string GenerateMfaCode()
-    {
-        var code = new Random().Next(100000, 999999).ToString();
-        return code;
-    }
+    return result;
+}
 
-    private async Task<string?> CheckIfUsernameRegisteredBefore(string username)
-    {
-        var user = await _userDal.GetAsync(p => p.Username == username);
-        return user != null ? AuthServiceMessages.UsernameAlreadyRegistered : null;
-    }
+private static string GenerateMfaCode()
+{
+    var code = new Random().Next(100000, 999999).ToString();
+    return code;
+}
 
-    private async Task<string?> CheckIfEmailRegisteredBefore(string email)
-    {
-        var user = await _userDal.GetAsync(p => p.Email == email);
-        return user != null ? AuthServiceMessages.EmailAlreadyRegistered : null;
-    }
+private async Task<string?> CheckIfUsernameRegisteredBefore(string username)
+{
+    var user = await _userDal.GetAsync(p => p.Username == username);
+    return user != null ? AuthServiceMessages.UsernameAlreadyRegistered : null;
+}
+
+private async Task<string?> CheckIfEmailRegisteredBefore(string email)
+{
+    var user = await _userDal.GetAsync(p => p.Email == email);
+    return user != null ? AuthServiceMessages.EmailAlreadyRegistered : null;
+}
 }

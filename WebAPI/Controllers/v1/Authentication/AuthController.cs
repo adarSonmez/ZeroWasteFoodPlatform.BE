@@ -60,6 +60,7 @@ public class AuthController : BaseController
     }
 
     [HttpPost("register-business")]
+    [AllowAnonymous]
     public async Task<IActionResult> RegisterBusiness([FromBody] BusinessRegisterDto businessRegisterDto)
     {
         if (!ModelState.IsValid)
@@ -74,6 +75,7 @@ public class AuthController : BaseController
     }
 
     [HttpPost("register-customer")]
+    [AllowAnonymous]
     public async Task<IActionResult> RegisterCustomer([FromBody] CustomerRegisterDto customerRegisterDto)
     {
         if (!ModelState.IsValid)
