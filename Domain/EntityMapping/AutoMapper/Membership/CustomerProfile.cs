@@ -15,5 +15,7 @@ public class CustomerProfile : Profile
             .ForAllMembers(opts => opts.Condition((src, dest, srcMember) => srcMember != null));
 
         CreateMap<CustomerRegisterDto, Customer>();
+        
+        CreateMap<Customer, UserGetDto>();
     }
 }

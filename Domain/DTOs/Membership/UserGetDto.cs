@@ -14,8 +14,6 @@ public class UserGetDto : IDto
 
     public string UseMultiFactorAuthentication { get; set; } = null!;
     
-    public string Role { get; set; } = null!;
-
     public string EmailVerified { get; set; } = null!;
 
     public string PhoneNumberVerified { get; set; } = null!;
