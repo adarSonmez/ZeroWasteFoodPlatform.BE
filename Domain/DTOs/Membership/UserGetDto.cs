@@ -13,6 +13,8 @@ public class UserGetDto : IDto
     public string PhoneNumber { get; set; } = null!;
 
     public string UseMultiFactorAuthentication { get; set; } = null!;
+    
+    public string Role { get; set; } = null!;
 
     public string EmailVerified { get; set; } = null!;
 
