@@ -35,6 +35,7 @@ public class DataAccessModule : IDependencyInjectionModule
         services.AddScoped(typeof(IUserDal), typeof(EfUserDal));
         services.AddScoped(typeof(IBusinessDal), typeof(EfBusinessDal));
         services.AddScoped(typeof(ICustomerDal), typeof(EfCustomerDal));
+        services.AddScoped(typeof(ICustomerStoreProductDal), typeof(EfCustomerStoreProductDal));
 
         #endregion Repositories
 

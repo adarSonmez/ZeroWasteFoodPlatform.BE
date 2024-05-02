@@ -99,6 +99,21 @@ namespace DataAccess.Migrations
                     b.ToTable("CategoryProducts", "Association");
                 });
 
+            modelBuilder.Entity("Domain.Entities.Association.CustomerStoreProduct", b =>
+                {
+                    b.Property<Guid>("CustomerId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("ProductId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("CustomerId", "ProductId");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("CustomerStoreProduct", "Association");
+                });
+
             modelBuilder.Entity("Domain.Entities.Marketing.Category", b =>
                 {
                     b.Property<Guid>("Id")
@@ -402,6 +417,25 @@ namespace DataAccess.Migrations
                     b.Navigation("Product");
                 });
 
+            modelBuilder.Entity("Domain.Entities.Association.CustomerStoreProduct", b =>
+                {
+                    b.HasOne("Domain.Entities.Membership.Customer", "Customer")
+                        .WithMany("ShoppingList")
+                        .HasForeignKey("CustomerId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Entities.Marketing.StoreProduct", "Product")
+                        .WithMany("InterestedCustomers")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Customer");
+
+                    b.Navigation("Product");
+                });
+
             modelBuilder.Entity("Domain.Entities.Marketing.MonitoredProduct", b =>
                 {
                     b.HasOne("Domain.Entities.Membership.User", "Owner")
@@ -429,9 +463,19 @@ namespace DataAccess.Migrations
                     b.Navigation("MonitoredProduct");
                 });
 
+            modelBuilder.Entity("Domain.Entities.Marketing.StoreProduct", b =>
+                {
+                    b.Navigation("InterestedCustomers");
+                });
+
             modelBuilder.Entity("Domain.Entities.Membership.Business", b =>
                 {
                     b.Navigation("StoreProducts");
+                });
+
+            modelBuilder.Entity("Domain.Entities.Membership.Customer", b =>
+                {
+                    b.Navigation("ShoppingList");
                 });
 #pragma warning restore 612, 618
         }

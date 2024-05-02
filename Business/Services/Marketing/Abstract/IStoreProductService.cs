@@ -16,6 +16,12 @@ public interface IStoreProductService : IService
 
     Task<ServiceObjectResult<StoreProductGetDto?>> AddAsync(StoreProductAddDto productAddDto);
 
+    Task<ServiceObjectResult<StoreProductGetDto?>> AddToShoppingListAsync(
+        StoreProductManipulateShoppingListDto productManipulateShoppingListDto);
+
+    Task<ServiceObjectResult<StoreProductGetDto?>> RemoveFromShoppingListAsync(
+        StoreProductManipulateShoppingListDto productManipulateShoppingListDto);
+
     Task<ServiceObjectResult<StoreProductGetDto?>> UpdateAsync(StoreProductUpdateDto productUpdateDto);
 
     Task<ServiceObjectResult<StoreProductGetDto?>> DeleteByIdAsync(string id);

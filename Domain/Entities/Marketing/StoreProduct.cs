@@ -1,3 +1,4 @@
+using Domain.Entities.Association;
 using Domain.Entities.Membership;
 using Microsoft.EntityFrameworkCore;
 
@@ -13,4 +14,7 @@ public class StoreProduct : Product
     public Guid BusinessId { get; set; }
 
     public virtual Business Business { get; set; } = null!;
+
+    public virtual ICollection<CustomerStoreProduct> InterestedCustomers { get; set; } =
+        new List<CustomerStoreProduct>();
 }

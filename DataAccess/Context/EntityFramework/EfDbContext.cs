@@ -17,12 +17,16 @@ public sealed class EfDbContext : EfDbContextBase
     public DbSet<Category> Category { get; set; } = null!;
     public DbSet<Product> Product { get; set; } = null!;
     public DbSet<CategoryProduct> CategoryProduct { get; set; } = null!;
+
+    public DbSet<CustomerStoreProduct> CustomerStoreProduct { get; set; } = null!;
     public DbSet<User> User { get; set; } = null!;
     public DbSet<Report> Report { get; set; } = null!;
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
+
+        # region Derived Entities
 
         modelBuilder.Entity<User>()
             .ToTable("Users", "Membership")
@@ -35,8 +39,31 @@ public sealed class EfDbContext : EfDbContextBase
             .HasValue<MonitoredProduct>("MonitoredProduct")
             .HasValue<StoreProduct>("StoreProduct");
 
+        # endregion Derived Entities
+
+        # region Association Entities
+
         modelBuilder.Entity<CategoryProduct>()
             .HasKey(cp => new { cp.CategoryId, cp.ProductId });
+
+        modelBuilder.Entity<CustomerStoreProduct>()
+            .HasKey(csp => new { csp.CustomerId, csp.ProductId });
+
+        modelBuilder.Entity<CustomerStoreProduct>()
+            .HasOne(csp => csp.Customer)
+            .WithMany(c => c.ShoppingList)
+            .HasForeignKey(csp => csp.CustomerId)
+            .OnDelete(DeleteBehavior.Restrict);
+
+        modelBuilder.Entity<CustomerStoreProduct>()
+            .HasOne(csp => csp.Product)
+            .WithMany(p => p.InterestedCustomers)
+            .HasForeignKey(csp => csp.ProductId)
+            .OnDelete(DeleteBehavior.Restrict);
+
+        # endregion Association Entities
+
+        # region Restricting Relationships
 
         modelBuilder.Entity<MonitoredProduct>()
             .HasOne(mp => mp.Owner)
@@ -49,5 +76,7 @@ public sealed class EfDbContext : EfDbContextBase
             .WithMany(b => b.StoreProducts)
             .HasForeignKey(sp => sp.BusinessId)
             .OnDelete(DeleteBehavior.Restrict);
+
+        # endregion Restricting Relationships
     }
 }

@@ -948,6 +948,48 @@ public class EfSeeder : ISeeder
 
         #endregion Store Product Category
 
+        # region Shopping List
+
+        var shoppingListItems = new List<CustomerStoreProduct>
+        {
+            new() { ProductId = bimMilk.Id, CustomerId = adar.Id },
+            new() { ProductId = bimCheese.Id, CustomerId = baris.Id },
+            new() { ProductId = bimButter.Id, CustomerId = eren.Id },
+            new() { ProductId = bimGarlic.Id, CustomerId = adar.Id },
+            new() { ProductId = bimCarrot.Id, CustomerId = baris.Id },
+            new() { ProductId = bimYogurt.Id, CustomerId = baris.Id },
+            new() { ProductId = bimCoffee.Id, CustomerId = adar.Id },
+            new() { ProductId = bimOil.Id, CustomerId = baris.Id },
+            new() { ProductId = bimPasta.Id, CustomerId = eren.Id },
+            new() { ProductId = bimOnion.Id, CustomerId = adar.Id },
+            new() { ProductId = bimApple.Id, CustomerId = baris.Id },
+            new() { ProductId = bimBanana.Id, CustomerId = eren.Id },
+            new() { ProductId = migrosMilk.Id, CustomerId = adar.Id },
+            new() { ProductId = migrosCheese.Id, CustomerId = baris.Id },
+            new() { ProductId = migrosPork.Id, CustomerId = eren.Id },
+            new() { ProductId = migrosChicken.Id, CustomerId = adar.Id },
+            new() { ProductId = migrosApple.Id, CustomerId = baris.Id },
+            new() { ProductId = migrosKetchup.Id, CustomerId = eren.Id },
+            new() { ProductId = migrosRice.Id, CustomerId = adar.Id },
+            new() { ProductId = migrosPasta.Id, CustomerId = baris.Id },
+            new() { ProductId = carrefourMilk.Id, CustomerId = eren.Id },
+            new() { ProductId = carrefourChocolate.Id, CustomerId = adar.Id },
+            new() { ProductId = carrefourPasta.Id, CustomerId = baris.Id },
+            new() { ProductId = carrefourFish.Id, CustomerId = eren.Id },
+            new() { ProductId = carrefourRice.Id, CustomerId = adar.Id },
+            new() { ProductId = carrefourEgg.Id, CustomerId = baris.Id },
+            new() { ProductId = carrefourPalmoil.Id, CustomerId = eren.Id },
+            new() { ProductId = carrefourTomato.Id, CustomerId = adar.Id },
+            new() { ProductId = carrefourOrange.Id, CustomerId = baris.Id },
+            new() { ProductId = carrefourBanana.Id, CustomerId = eren.Id },
+            new() { ProductId = carrefourNoodle.Id, CustomerId = eren.Id }
+        };
+
+        context.CustomerStoreProduct.AddRange(shoppingListItems);
+        context.SaveChanges();
+
+        # endregion Shopping List
+
         # region Report
 
         var overMilkProductionInBursa = new Report

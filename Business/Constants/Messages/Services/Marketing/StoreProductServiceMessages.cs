@@ -2,9 +2,11 @@ namespace Business.Constants.Messages.Services.Marketing;
 
 internal static class StoreProductServiceMessages
 {
-    internal const string Retrieved = "MonitoredProduct retrieved successfully!";
-    internal const string ListRetrieved = "MonitoredProduct list retrieved successfully!";
-    internal const string Deleted = "MonitoredProduct deleted successfully!";
-    internal const string Updated = "MonitoredProduct updated successfully!";
-    internal const string Added = "MonitoredProduct added successfully!";
+    internal const string Retrieved = "Product retrieved successfully!";
+    internal const string ListRetrieved = "Product list retrieved successfully!";
+    internal const string Deleted = "Product deleted successfully!";
+    internal const string Updated = "Product updated successfully!";
+    internal const string Added = "Product added successfully!";
+    internal const string AddedToShoppingList = "Product added to shopping list successfully!";
+    internal const string RemovedFromShoppingList = "Product removed from shopping list successfully!";
 }

@@ -59,6 +59,36 @@ public class StoreProductController : BaseController
             : Ok(result);
     }
 
+    [HttpPost("add-to-shopping-list")]
+    [Authorize(Roles = UserRoles.Customer)]
+    public async Task<IActionResult> AddToShoppingList(
+        [FromBody] StoreProductManipulateShoppingListDto storeProductManipulateShoppingListDto)
+    {
+        if (!ModelState.IsValid)
+            return BadRequest(ModelState);
+
+        var result = await _storeProductService.AddToShoppingListAsync(storeProductManipulateShoppingListDto);
+
+        return result.HasFailed
+            ? BadRequest(result)
+            : Ok(result);
+    }
+
+    [HttpPost("remove-from-shopping-list")]
+    [Authorize(Roles = UserRoles.Customer)]
+    public async Task<IActionResult> RemoveFromShoppingList(
+        [FromBody] StoreProductManipulateShoppingListDto storeProductManipulateShoppingListDto)
+    {
+        if (!ModelState.IsValid)
+            return BadRequest(ModelState);
+
+        var result = await _storeProductService.RemoveFromShoppingListAsync(storeProductManipulateShoppingListDto);
+
+        return result.HasFailed
+            ? BadRequest(result)
+            : Ok(result);
+    }
+
     [HttpPut]
     [Authorize(Policy = AuthPolicies.AdminOrBusiness)]
     public async Task<IActionResult> Update([FromBody] StoreProductUpdateDto storeProductUpdateDto)
