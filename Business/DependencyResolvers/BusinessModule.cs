@@ -8,13 +8,7 @@ using Business.Services.Marketing.Abstract;
 using Business.Services.Marketing.Concrete;
 using Business.Services.Membership.Abstract;
 using Business.Services.Membership.Concrete;
-using Business.Utils.Validation.FluentValidation.Authentication;
-using Business.Utils.Validation.FluentValidation.Marketing;
-using Business.Utils.Validation.FluentValidation.Membership;
 using Core.Utils.DI.Abstact;
-using Domain.DTOs.Authentication;
-using Domain.DTOs.Marketing;
-using Domain.DTOs.Membership;
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -59,7 +53,7 @@ public class BusinessModule : IDependencyInjectionModule
         # endregion Marketing
 
         # region FluentValidation
-        
+
         services.AddFluentValidationAutoValidation();
         services.AddFluentValidationClientsideAdapters();
         services.AddValidatorsFromAssembly(typeof(BusinessModule).Assembly);
