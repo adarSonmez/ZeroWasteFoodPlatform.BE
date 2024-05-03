@@ -3,9 +3,9 @@ using FluentValidation;
 
 namespace Business.Utils.Validation.FluentValidation.Marketing;
 
-internal class MonitoredProductUpdateValidator : AbstractValidator<MonitoredProductUpdateDto>
+public class MonitoredProductUpdateValidator : AbstractValidator<MonitoredProductUpdateDto>
 {
-    internal MonitoredProductUpdateValidator()
+    public MonitoredProductUpdateValidator()
     {
         # region Required
 
@@ -21,7 +21,7 @@ internal class MonitoredProductUpdateValidator : AbstractValidator<MonitoredProd
             .WithMessage("Product description cannot be longer than 1023 characters");
         RuleFor(x => x.Photo).MaximumLength(2047).When(x => x.Photo != null)
             .WithMessage("Photo cannot be longer than 2047 characters");
-        RuleFor(x => x.CategoryIds).Must(x => x.Count > 0).When(x => x.CategoryIds != null)
+        RuleFor(x => x.CategoryIds).Must(x => x?.Count > 0).When(x => x.CategoryIds != null)
             .WithMessage("Product must have at least one category");
 
         #endregion Optional

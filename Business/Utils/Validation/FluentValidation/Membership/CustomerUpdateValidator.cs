@@ -3,9 +3,9 @@ using FluentValidation;
 
 namespace Business.Utils.Validation.FluentValidation.Membership;
 
-internal class CustomerUpdateValidator : AbstractValidator<CustomerUpdateDto>
+public class CustomerUpdateValidator : AbstractValidator<CustomerUpdateDto>
 {
-    internal CustomerUpdateValidator()
+    public CustomerUpdateValidator()
     {
         # region Required
 

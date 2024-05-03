@@ -3,9 +3,9 @@ using FluentValidation;
 
 namespace Business.Utils.Validation.FluentValidation.Membership;
 
-internal class UserChangePasswordValidator : AbstractValidator<UserChangePasswordDto>
+public class UserChangePasswordValidator : AbstractValidator<UserChangePasswordDto>
 {
-    internal UserChangePasswordValidator()
+    public UserChangePasswordValidator()
     {
         RuleFor(x => x.Id).NotEmpty().WithMessage("User Id is required");
         RuleFor(x => x.CurrentPassword).NotEmpty().WithMessage("Current password is required");

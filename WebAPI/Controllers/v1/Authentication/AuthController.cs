@@ -8,13 +8,11 @@ using Microsoft.AspNetCore.Mvc;
 namespace WebAPI.Controllers.v1.Authentication;
 
 [ApiController]
-[Authorize]
 public class AuthController : BaseController
 {
     private readonly IAuthService _authService = ServiceTool.GetService<IAuthService>()!;
 
     [HttpPost("login")]
-    [AllowAnonymous]
     public async Task<IActionResult> Login([FromBody] UserLoginDto userLoginDto)
     {
         if (!ModelState.IsValid)
@@ -34,6 +32,7 @@ public class AuthController : BaseController
     }
 
     [HttpPost("logout-user/{userId}")]
+    [Authorize]
     public async Task<IActionResult> LogoutUser(string userId)
     {
         var result = await _authService.LogoutUser(userId);
@@ -45,7 +44,6 @@ public class AuthController : BaseController
     }
 
     [HttpPost("verify-code")]
-    [AllowAnonymous]
     public async Task<IActionResult> VerifyCode(VerifyEmailCodeDto verifyCodeDto)
     {
         if (!ModelState.IsValid)
@@ -60,7 +58,6 @@ public class AuthController : BaseController
     }
 
     [HttpPost("register-business")]
-    [AllowAnonymous]
     public async Task<IActionResult> RegisterBusiness([FromBody] BusinessRegisterDto businessRegisterDto)
     {
         if (!ModelState.IsValid)
@@ -75,7 +72,6 @@ public class AuthController : BaseController
     }
 
     [HttpPost("register-customer")]
-    [AllowAnonymous]
     public async Task<IActionResult> RegisterCustomer([FromBody] CustomerRegisterDto customerRegisterDto)
     {
         if (!ModelState.IsValid)

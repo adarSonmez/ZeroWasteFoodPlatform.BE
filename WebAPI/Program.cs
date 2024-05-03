@@ -6,6 +6,8 @@ using Core.Extensions;
 using Core.Utils.DI.Abstact;
 using DataAccess.DependencyResolvers;
 using Domain.DependencyResolvers;
+using FluentValidation;
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 

@@ -3,9 +3,9 @@ using FluentValidation;
 
 namespace Business.Utils.Validation.FluentValidation.Authentication;
 
-internal class VerifyEmailCodeValidator : AbstractValidator<VerifyEmailCodeDto>
+public class VerifyEmailCodeValidator : AbstractValidator<VerifyEmailCodeDto>
 {
-    internal VerifyEmailCodeValidator()
+    public VerifyEmailCodeValidator()
     {
         RuleFor(x => x.Email).NotEmpty().WithMessage("Email is required");
         RuleFor(x => x.Email).EmailAddress().WithMessage("Email is not valid");

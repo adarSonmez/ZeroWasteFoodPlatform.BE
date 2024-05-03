@@ -3,9 +3,9 @@ using FluentValidation;
 
 namespace Business.Utils.Validation.FluentValidation.Marketing;
 
-internal class StoreProductAddValidator : AbstractValidator<StoreProductAddDto>
+public class StoreProductAddValidator : AbstractValidator<StoreProductAddDto>
 {
-    internal StoreProductAddValidator()
+    public StoreProductAddValidator()
     {
         RuleFor(x => x.Name).NotEmpty().WithMessage("Name is required");
         RuleFor(x => x.Name).MinimumLength(2).MaximumLength(127)
