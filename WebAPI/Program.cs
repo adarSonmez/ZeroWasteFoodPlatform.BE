@@ -74,7 +74,7 @@ builder.Services.AddAuthorizationBuilder()
         context.User.IsInRole(UserRoles.Admin) || context.User.IsInRole(UserRoles.Business)))
     .AddPolicy(AuthPolicies.AdminOrCustomer, policy => policy.RequireAssertion(context =>
         context.User.IsInRole(UserRoles.Admin) || context.User.IsInRole(UserRoles.Customer)))
-    .AddPolicy(AuthPolicies.AllowAll, policy => policy.RequireAssertion(context => true));
+    .AddPolicy(AuthPolicies.AllowAll, policy => policy.RequireAssertion(_ => true));
 
 builder.Configuration
     .SetBasePath(env.ContentRootPath)

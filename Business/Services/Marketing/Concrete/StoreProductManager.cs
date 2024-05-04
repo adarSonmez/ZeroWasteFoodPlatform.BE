@@ -5,6 +5,7 @@ using Core.ExceptionHandling;
 using Core.Extensions;
 using Core.Services.Messages;
 using Core.Services.Result;
+using Core.Utils.Auth;
 using Core.Utils.IoC;
 using Core.Utils.Rules;
 using DataAccess.Repositories.Abstract.Marketing;
@@ -129,6 +130,10 @@ public class StoreProductManager : IStoreProductService
         {
             BusinessRules.Run(("STPR-412438", BusinessRules.CheckDtoNull(productAddDto)));
             var product = _mapper.Map<StoreProduct>(productAddDto);
+            var currentUserId = Guid.Parse(AuthHelper.GetUserId()!);
+            product.BusinessId = currentUserId;
+            product.CreatedUserId = currentUserId;
+
             await _storeProductDal.AddAsync(product);
             result.SetData(_mapper.Map<StoreProductGetDto>(product), StoreProductServiceMessages.Added);
         }
@@ -157,9 +162,9 @@ public class StoreProductManager : IStoreProductService
                 b.Id.ToString().Equals(productManipulateShoppingListDto.ProductId.ToString()));
             BusinessRules.Run(("STPR-591299", BusinessRules.CheckEntityNull(product)));
 
-            var customer = await _customerDal.GetAsync(b =>
-                b.Id.ToString().Equals(productManipulateShoppingListDto.CustomerId.ToString()));
-            BusinessRules.Run(("STPR-709635", BusinessRules.CheckEntityNull(customer)));
+            var currentUserId = Guid.Parse(AuthHelper.GetUserId()!);
+            var customer = await _customerDal.GetAsync(b => b.Id.ToString().Equals(currentUserId.ToString()));
+            BusinessRules.Run(("STPR-234627", BusinessRules.CheckEntityNull(customer)));
 
             customer!.ShoppingList.Add(new CustomerStoreProduct
             {
@@ -195,8 +200,8 @@ public class StoreProductManager : IStoreProductService
                 b.Id.ToString().Equals(productManipulateShoppingListDto.ProductId.ToString()));
             BusinessRules.Run(("STPR-794153", BusinessRules.CheckEntityNull(product)));
 
-            var customer = await _customerDal.GetAsync(b =>
-                b.Id.ToString().Equals(productManipulateShoppingListDto.CustomerId.ToString()));
+            var currentUserId = Guid.Parse(AuthHelper.GetUserId()!);
+            var customer = await _customerDal.GetAsync(b => b.Id.ToString().Equals(currentUserId.ToString()));
 
             BusinessRules.Run(("STPR-461088", BusinessRules.CheckEntityNull(customer)));
 

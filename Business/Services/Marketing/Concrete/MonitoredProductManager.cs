@@ -5,6 +5,7 @@ using Core.ExceptionHandling;
 using Core.Extensions;
 using Core.Services.Messages;
 using Core.Services.Result;
+using Core.Utils.Auth;
 using Core.Utils.IoC;
 using Core.Utils.Rules;
 using DataAccess.Repositories.Abstract.Marketing;
@@ -101,6 +102,10 @@ public class MonitoredProductManager : IMonitoredProductService
         {
             BusinessRules.Run(("MNPR-612521", BusinessRules.CheckDtoNull(productAddDto)));
             var product = _mapper.Map<MonitoredProduct>(productAddDto);
+            var currentUserId = Guid.Parse(AuthHelper.GetUserId()!);
+            product.OwnerId = currentUserId;
+            product.CreatedUserId = currentUserId;
+
             await _monitoredProductDal.AddAsync(product);
             result.SetData(_mapper.Map<MonitoredProductGetDto>(product), MonitoredProductServiceMessages.Added);
         }
