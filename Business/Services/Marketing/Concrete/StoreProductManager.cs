@@ -8,6 +8,7 @@ using Core.Services.Result;
 using Core.Utils.Auth;
 using Core.Utils.IoC;
 using Core.Utils.Rules;
+using DataAccess.Repositories.Abstract.Association;
 using DataAccess.Repositories.Abstract.Marketing;
 using DataAccess.Repositories.Abstract.Membership;
 using Domain.DTOs.Marketing;
@@ -20,6 +21,10 @@ namespace Business.Services.Marketing.Concrete;
 public class StoreProductManager : IStoreProductService
 {
     private readonly ICustomerDal _customerDal = ServiceTool.GetService<ICustomerDal>()!;
+
+    private readonly ICustomerStoreProductDal _customerStoreProductDal =
+        ServiceTool.GetService<ICustomerStoreProductDal>()!;
+
     private readonly IMapper _mapper = ServiceTool.GetService<IMapper>()!;
     private readonly IStoreProductDal _storeProductDal = ServiceTool.GetService<IStoreProductDal>()!;
 
@@ -163,16 +168,14 @@ public class StoreProductManager : IStoreProductService
             BusinessRules.Run(("STPR-591299", BusinessRules.CheckEntityNull(product)));
 
             var currentUserId = Guid.Parse(AuthHelper.GetUserId()!);
-            var customer = await _customerDal.GetAsync(b => b.Id.ToString().Equals(currentUserId.ToString()));
-            BusinessRules.Run(("STPR-234627", BusinessRules.CheckEntityNull(customer)));
-
-            customer!.ShoppingList.Add(new CustomerStoreProduct
+            var customerStoreProduct = new CustomerStoreProduct
             {
-                CustomerId = customer.Id,
+                CustomerId = currentUserId,
                 ProductId = product!.Id
-            });
+            };
 
-            await _customerDal.UpdateAsync(customer!);
+            await _customerStoreProductDal.AddAsync(customerStoreProduct);
+
             result.SetData(_mapper.Map<StoreProductGetDto>(product), StoreProductServiceMessages.AddedToShoppingList);
         }
         catch (ValidationException e)
@@ -201,17 +204,14 @@ public class StoreProductManager : IStoreProductService
             BusinessRules.Run(("STPR-794153", BusinessRules.CheckEntityNull(product)));
 
             var currentUserId = Guid.Parse(AuthHelper.GetUserId()!);
-            var customer = await _customerDal.GetAsync(b => b.Id.ToString().Equals(currentUserId.ToString()));
+            var customerStoreProduct = await _customerStoreProductDal.GetAsync(b =>
+                b.CustomerId.ToString().Equals(currentUserId.ToString()) &&
+                b.ProductId.ToString().Equals(product!.Id.ToString()));
 
-            BusinessRules.Run(("STPR-461088", BusinessRules.CheckEntityNull(customer)));
+            BusinessRules.Run(("STPR-612880", BusinessRules.CheckEntityNull(customerStoreProduct)));
 
-            var customerStoreProduct = customer!.ShoppingList.FirstOrDefault(csp =>
-                csp.ProductId.ToString().Equals(product!.Id.ToString()));
+            await _customerStoreProductDal.SoftDeleteAsync(customerStoreProduct!);
 
-            BusinessRules.Run(("STPR-234627", BusinessRules.CheckEntityNull(customerStoreProduct)));
-
-            customer!.ShoppingList.Remove(customerStoreProduct!);
-            await _customerDal.UpdateAsync(customer!);
             result.SetData(_mapper.Map<StoreProductGetDto>(product),
                 StoreProductServiceMessages.RemovedFromShoppingList);
         }
