@@ -10,7 +10,6 @@ using Core.Utils.IoC;
 using Core.Utils.Rules;
 using DataAccess.Repositories.Abstract.Association;
 using DataAccess.Repositories.Abstract.Marketing;
-using DataAccess.Repositories.Abstract.Membership;
 using Domain.DTOs.Marketing;
 using Domain.Entities.Association;
 using Domain.Entities.Marketing;
@@ -20,8 +19,6 @@ namespace Business.Services.Marketing.Concrete;
 
 public class StoreProductManager : IStoreProductService
 {
-    private readonly ICustomerDal _customerDal = ServiceTool.GetService<ICustomerDal>()!;
-
     private readonly ICustomerStoreProductDal _customerStoreProductDal =
         ServiceTool.GetService<ICustomerStoreProductDal>()!;
 
