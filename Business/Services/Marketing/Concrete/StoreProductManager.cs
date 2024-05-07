@@ -24,6 +24,8 @@ public class StoreProductManager : IStoreProductService
 
     private readonly IMapper _mapper = ServiceTool.GetService<IMapper>()!;
     private readonly IStoreProductDal _storeProductDal = ServiceTool.GetService<IStoreProductDal>()!;
+    private readonly ICategoryProductDal _categoryProductDal = ServiceTool.GetService<ICategoryProductDal>()!;
+    private readonly ICategoryDal _categoryDal = ServiceTool.GetService<ICategoryDal>()!;
 
     public async Task<ServiceObjectResult<StoreProductGetDto?>> GetByIdAsync(string id)
     {
@@ -35,6 +37,12 @@ public class StoreProductManager : IStoreProductService
 
             var storeProduct = await _storeProductDal.GetAsync(b => b.Id.ToString().Equals(id));
             BusinessRules.Run(("STPR-194703", BusinessRules.CheckEntityNull(storeProduct)));
+            
+            // Add category product to store product
+            var categoryProducts = await _categoryProductDal.GetAllAsync(b => b.ProductId.ToString() == storeProduct!.Id.ToString());
+            var categories = await _categoryDal.GetAllAsync(b => categoryProducts.Select(c => c.CategoryId).Contains(b.Id));
+            
+            storeProduct!.Categories = categories;
 
             var storeProductGetDto = _mapper.Map<StoreProductGetDto>(storeProduct);
             result.SetData(storeProductGetDto, StoreProductServiceMessages.Retrieved);
@@ -60,6 +68,15 @@ public class StoreProductManager : IStoreProductService
             BusinessRules.Run(("STPR-171373", BusinessRules.CheckId(userId)));
 
             var products = await _storeProductDal.GetAllAsync(b => b.BusinessId.ToString().Equals(userId));
+            
+            foreach (var product in products)
+            {
+                var categoryProducts = await _categoryProductDal.GetAllAsync(b => b.ProductId.ToString() == product.Id.ToString());
+                var categories = await _categoryDal.GetAllAsync(b => categoryProducts.Select(c => c.CategoryId).Contains(b.Id));
+                
+                product.Categories = categories;
+            }
+            
             var productGetDtos = _mapper.Map<List<StoreProductGetDto>>(products);
             result.SetData(productGetDtos, successMessage: StoreProductServiceMessages.ListRetrieved);
         }
@@ -109,6 +126,15 @@ public class StoreProductManager : IStoreProductService
         {
             var filters = filterModel?.ToExpression();
             var products = await _storeProductDal.GetAllAsync(filters);
+            
+            foreach (var product in products)
+            {
+                var categoryProducts = await _categoryProductDal.GetAllAsync(b => b.ProductId.ToString() == product.Id.ToString());
+                var categories = await _categoryDal.GetAllAsync(b => categoryProducts.Select(c => c.CategoryId).Contains(b.Id));
+                
+                product.Categories = categories;
+            }
+            
             var productGetDtos = _mapper.Map<List<StoreProductGetDto>>(products);
             result.SetData(productGetDtos, page, pageSize, StoreProductServiceMessages.ListRetrieved);
         }
