@@ -4,7 +4,7 @@ using Domain.Entities.Marketing;
 
 namespace Domain.EntityMapping.AutoMapper.Marketing;
 
-public class CategoryProfile: Profile
+public class CategoryProfile : Profile
 {
     public CategoryProfile()
     {

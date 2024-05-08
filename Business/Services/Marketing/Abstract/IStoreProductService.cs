@@ -22,6 +22,8 @@ public interface IStoreProductService : IService
     Task<ServiceObjectResult<StoreProductGetDto?>> RemoveFromShoppingListAsync(
         StoreProductManipulateShoppingListDto productManipulateShoppingListDto);
 
+    Task<ServiceCollectionResult<IList<string>>> GetAllShoppingListsAnonymously();
+
     Task<ServiceObjectResult<StoreProductGetDto?>> UpdateAsync(StoreProductUpdateDto productUpdateDto);
 
     Task<ServiceObjectResult<StoreProductGetDto?>> DeleteByIdAsync(string id);

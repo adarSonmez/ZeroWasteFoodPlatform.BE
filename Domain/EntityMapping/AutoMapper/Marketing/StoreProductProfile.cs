@@ -13,7 +13,7 @@ public class StoreProductProfile : Profile
 
         CreateMap<StoreProductUpdateDto, StoreProduct>()
             .ForAllMembers(opts => opts.Condition((src, dest, srcMember) => srcMember != null));
-        
+
         CreateMap<StoreProduct, ProductGetDto>();
     }
 }

@@ -18,10 +18,10 @@ namespace Business.Services.Marketing.Concrete;
 
 public class MonitoredProductManager : IMonitoredProductService
 {
+    private readonly ICategoryDal _categoryDal = ServiceTool.GetService<ICategoryDal>()!;
+    private readonly ICategoryProductDal _categoryProductDal = ServiceTool.GetService<ICategoryProductDal>()!;
     private readonly IMapper _mapper = ServiceTool.GetService<IMapper>()!;
     private readonly IMonitoredProductDal _monitoredProductDal = ServiceTool.GetService<IMonitoredProductDal>()!;
-    private readonly ICategoryProductDal _categoryProductDal = ServiceTool.GetService<ICategoryProductDal>()!;
-    private readonly ICategoryDal _categoryDal = ServiceTool.GetService<ICategoryDal>()!;
 
     public async Task<ServiceObjectResult<MonitoredProductGetDto?>> GetByIdAsync(string id)
     {
@@ -33,10 +33,12 @@ public class MonitoredProductManager : IMonitoredProductService
 
             var monitoredProduct = await _monitoredProductDal.GetAsync(b => b.Id.ToString().Equals(id));
             BusinessRules.Run(("MNPR-987121", BusinessRules.CheckEntityNull(monitoredProduct)));
-            
-            var categoryProducts = await _categoryProductDal.GetAllAsync(b => b.ProductId.ToString() == monitoredProduct!.Id.ToString());
-            var categories = await _categoryDal.GetAllAsync(b => categoryProducts.Select(c => c.CategoryId).Contains(b.Id));
-            
+
+            var categoryProducts =
+                await _categoryProductDal.GetAllAsync(b => b.ProductId.ToString() == monitoredProduct!.Id.ToString());
+            var categories =
+                await _categoryDal.GetAllAsync(b => categoryProducts.Select(c => c.CategoryId).Contains(b.Id));
+
             monitoredProduct!.Categories = categories;
 
             var monitoredProductGetDto = _mapper.Map<MonitoredProductGetDto>(monitoredProduct);
@@ -63,15 +65,17 @@ public class MonitoredProductManager : IMonitoredProductService
         {
             var filters = filterModel?.ToExpression();
             var products = await _monitoredProductDal.GetAllAsync(filters);
-            
+
             foreach (var product in products)
             {
-                var categoryProducts = await _categoryProductDal.GetAllAsync(b => b.ProductId.ToString() == product.Id.ToString());
-                var categories = await _categoryDal.GetAllAsync(b => categoryProducts.Select(c => c.CategoryId).Contains(b.Id));
-                
+                var categoryProducts =
+                    await _categoryProductDal.GetAllAsync(b => b.ProductId.ToString() == product.Id.ToString());
+                var categories =
+                    await _categoryDal.GetAllAsync(b => categoryProducts.Select(c => c.CategoryId).Contains(b.Id));
+
                 product.Categories = categories;
             }
-            
+
             var productGetDtos = _mapper.Map<List<MonitoredProductGetDto>>(products);
             result.SetData(productGetDtos, page, pageSize, MonitoredProductServiceMessages.ListRetrieved);
         }
@@ -96,15 +100,17 @@ public class MonitoredProductManager : IMonitoredProductService
             BusinessRules.Run(("MNPR-724642", BusinessRules.CheckId(userId)));
 
             var products = await _monitoredProductDal.GetAllAsync(b => b.OwnerId.ToString().Equals(userId));
-            
+
             foreach (var product in products)
             {
-                var categoryProducts = await _categoryProductDal.GetAllAsync(b => b.ProductId.ToString() == product.Id.ToString());
-                var categories = await _categoryDal.GetAllAsync(b => categoryProducts.Select(c => c.CategoryId).Contains(b.Id));
-                
+                var categoryProducts =
+                    await _categoryProductDal.GetAllAsync(b => b.ProductId.ToString() == product.Id.ToString());
+                var categories =
+                    await _categoryDal.GetAllAsync(b => categoryProducts.Select(c => c.CategoryId).Contains(b.Id));
+
                 product.Categories = categories;
             }
-            
+
             var productGetDtos = _mapper.Map<List<MonitoredProductGetDto>>(products);
             result.SetData(productGetDtos, successMessage: MonitoredProductServiceMessages.ListRetrieved);
         }

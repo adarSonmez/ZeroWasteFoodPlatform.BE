@@ -13,7 +13,7 @@ public class MonitoredProductProfile : Profile
 
         CreateMap<MonitoredProductUpdateDto, MonitoredProduct>()
             .ForAllMembers(opts => opts.Condition((src, dest, srcMember) => srcMember != null));
-        
+
         CreateMap<MonitoredProduct, ProductGetDto>();
     }
 }

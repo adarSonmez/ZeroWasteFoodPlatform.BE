@@ -1,3 +1,5 @@
+using Business.Services.AI.Abstract;
+using Business.Services.AI.Concrete;
 using Business.Services.Analytics.Abstract;
 using Business.Services.Analytics.Concrete;
 using Business.Services.Authentication.Abstract;
@@ -51,6 +53,12 @@ public class BusinessModule : IDependencyInjectionModule
         services.AddScoped<IStoreProductService, StoreProductManager>();
 
         # endregion Marketing
+
+        # region AI
+
+        services.AddScoped<IProductRecommendationService, ProductRecommendationManager>();
+
+        # endregion AI
 
         # region FluentValidation
 
