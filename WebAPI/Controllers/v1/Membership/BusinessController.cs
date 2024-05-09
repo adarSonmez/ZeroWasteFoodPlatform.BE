@@ -25,6 +25,7 @@ public class BusinessController : BaseController
     }
 
     [HttpGet("username/{username}")]
+    [Authorize]
     public async Task<IActionResult> GetByUsername(string username)
     {
         var result = await _businessService.GetByUsernameAsync(username);
@@ -35,6 +36,7 @@ public class BusinessController : BaseController
     }
 
     [HttpGet("email/{email}")]
+    [Authorize]
     public async Task<IActionResult> GetByEmail(string email)
     {
         var result = await _businessService.GetByEmailAsync(email);
@@ -45,6 +47,7 @@ public class BusinessController : BaseController
     }
 
     [HttpGet]
+    [Authorize]
     public async Task<IActionResult> GetList([FromQuery] BusinessFilterModel? filterModel, int page = 1,
         int pageSize = 10)
     {

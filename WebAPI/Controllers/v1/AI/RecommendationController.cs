@@ -13,7 +13,7 @@ public class RecommendationController : BaseController
     private readonly IProductRecommendationService _productRecommendationService =
         ServiceTool.GetService<IProductRecommendationService>()!;
 
-    [HttpGet]
+    [HttpGet("store-products")]
     [Authorize(Roles = UserRoles.Customer)]
     public async Task<IActionResult> GetRecommendedProductsAsync()
     {

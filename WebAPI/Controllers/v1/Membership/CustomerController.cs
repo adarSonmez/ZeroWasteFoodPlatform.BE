@@ -48,6 +48,7 @@ public class CustomerController : BaseController
     }
 
     [HttpGet]
+    [Authorize(Roles = UserRoles.Admin)]
     public async Task<IActionResult> GetList([FromQuery] CustomerFilterModel? filterModel, int page = 1,
         int pageSize = 10)
     {
@@ -59,6 +60,7 @@ public class CustomerController : BaseController
     }
 
     [HttpGet("shopping-list/{userId}")]
+    [Authorize(Policy = AuthPolicies.AdminOrCustomer)]
     public async Task<IActionResult> GetShoppingList(string userId)
     {
         var result = await _customerService.GetShoppingListAsync(userId);
