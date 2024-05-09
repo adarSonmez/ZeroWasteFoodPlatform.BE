@@ -216,7 +216,7 @@ public class CustomerManager : ICustomerService
                 product.Categories = categories;
 
                 var business = await _businessDal.GetAsync(b => b.Id.ToString().Equals(product.BusinessId.ToString()));
-                BusinessRules.Run(("STPR-515321", BusinessRules.CheckEntityNull(business)));
+                BusinessRules.Run(("CSTM-515321", BusinessRules.CheckEntityNull(business)));
 
                 product.Business = business!;
             }            
