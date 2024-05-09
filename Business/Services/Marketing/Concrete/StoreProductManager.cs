@@ -10,6 +10,7 @@ using Core.Utils.IoC;
 using Core.Utils.Rules;
 using DataAccess.Repositories.Abstract.Association;
 using DataAccess.Repositories.Abstract.Marketing;
+using DataAccess.Repositories.Abstract.Membership;
 using Domain.DTOs.Marketing;
 using Domain.Entities.Association;
 using Domain.Entities.Marketing;
@@ -19,6 +20,7 @@ namespace Business.Services.Marketing.Concrete;
 
 public class StoreProductManager : IStoreProductService
 {
+    private readonly IBusinessDal _businessDal = ServiceTool.GetService<IBusinessDal>()!;
     private readonly ICategoryDal _categoryDal = ServiceTool.GetService<ICategoryDal>()!;
     private readonly ICategoryProductDal _categoryProductDal = ServiceTool.GetService<ICategoryProductDal>()!;
 
@@ -46,6 +48,11 @@ public class StoreProductManager : IStoreProductService
                 await _categoryDal.GetAllAsync(b => categoryProducts.Select(c => c.CategoryId).Contains(b.Id));
 
             storeProduct!.Categories = categories;
+
+            var business = await _businessDal.GetAsync(b => b.Id.ToString().Equals(storeProduct.BusinessId.ToString()));
+            BusinessRules.Run(("STPR-194703", BusinessRules.CheckEntityNull(business)));
+
+            storeProduct.Business = business!;
 
             var storeProductGetDto = _mapper.Map<StoreProductGetDto>(storeProduct);
             result.SetData(storeProductGetDto, StoreProductServiceMessages.Retrieved);
@@ -80,6 +87,11 @@ public class StoreProductManager : IStoreProductService
                     await _categoryDal.GetAllAsync(b => categoryProducts.Select(c => c.CategoryId).Contains(b.Id));
 
                 product.Categories = categories;
+
+                var business = await _businessDal.GetAsync(b => b.Id.ToString().Equals(product.BusinessId.ToString()));
+                BusinessRules.Run(("STPR-125496", BusinessRules.CheckEntityNull(business)));
+
+                product.Business = business!;
             }
 
             var productGetDtos = _mapper.Map<List<StoreProductGetDto>>(products);
@@ -140,6 +152,11 @@ public class StoreProductManager : IStoreProductService
                     await _categoryDal.GetAllAsync(b => categoryProducts.Select(c => c.CategoryId).Contains(b.Id));
 
                 product.Categories = categories;
+
+                var business = await _businessDal.GetAsync(b => b.Id.ToString().Equals(product.BusinessId.ToString()));
+                BusinessRules.Run(("STPR-515321", BusinessRules.CheckEntityNull(business)));
+
+                product.Business = business!;
             }
 
             var productGetDtos = _mapper.Map<List<StoreProductGetDto>>(products);
