@@ -4,7 +4,7 @@ namespace Domain.DTOs.Marketing;
 
 public class ProductGetDto : IDto
 {
-    public Guid Id { get; set; } = default!;
+    public Guid Id { get; set; }
 
     public string Name { get; set; } = null!;
 
@@ -12,7 +12,7 @@ public class ProductGetDto : IDto
 
     public string Photo { get; set; } = null!;
 
-    public DateTime? ExpirationDate { get; set; } = default!;
+    public DateTime? ExpirationDate { get; set; }
 
     public virtual ICollection<CategoryGetDto> Categories { get; set; } = default!;
 }

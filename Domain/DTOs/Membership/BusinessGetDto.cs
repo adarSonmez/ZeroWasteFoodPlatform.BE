@@ -6,11 +6,11 @@ public class BusinessGetDto : UserGetDto
 
     public string Name { get; set; } = null!;
 
-    public string Website { get; set; } = null!;
+    public string? Website { get; set; }
 
-    public string Description { get; set; } = null!;
+    public string? Description { get; set; }
 
     public string Logo { get; set; } = null!;
 
-    public string CoverPhoto { get; set; } = null!;
+    public string? CoverPhoto { get; set; }
 }

@@ -25,6 +25,9 @@ public class CustomerManager : ICustomerService
 
     private readonly IMapper _mapper = ServiceTool.GetService<IMapper>()!;
     private readonly IStoreProductDal _storeProductDal = ServiceTool.GetService<IStoreProductDal>()!;
+    private readonly ICategoryProductDal _categoryProductDal = ServiceTool.GetService<ICategoryProductDal>()!;
+    private readonly ICategoryDal _categoryDal = ServiceTool.GetService<ICategoryDal>()!;
+    private readonly IBusinessDal _businessDal = ServiceTool.GetService<IBusinessDal>()!;
 
     public async Task<ServiceObjectResult<CustomerGetDto?>> GetByIdAsync(string id)
     {
@@ -202,6 +205,22 @@ public class CustomerManager : ICustomerService
 
             var storeProductsIds = customerStoreProducts.Select(b => b.ProductId.ToString()).ToList();
             var products = await _storeProductDal.GetAllAsync(b => storeProductsIds.Contains(b.Id.ToString()));
+            
+            foreach (var product in products)
+            {
+                var categoryProducts =
+                    await _categoryProductDal.GetAllAsync(b => b.ProductId.ToString() == product.Id.ToString());
+                var categories =
+                    await _categoryDal.GetAllAsync(b => categoryProducts.Select(c => c.CategoryId).Contains(b.Id));
+
+                product.Categories = categories;
+
+                var business = await _businessDal.GetAsync(b => b.Id.ToString().Equals(product.BusinessId.ToString()));
+                BusinessRules.Run(("STPR-515321", BusinessRules.CheckEntityNull(business)));
+
+                product.Business = business!;
+            }            
+            
             var productGetDtos = _mapper.Map<List<StoreProductGetDto>>(products);
             result.SetData(productGetDtos, successMessage: CustomerServiceMessages.ShoppingListRetrieved);
         }
