@@ -4,7 +4,7 @@ namespace Domain.DTOs.Marketing;
 
 public class ProductUpdateDto : IDto
 {
-    public Guid Id { get; set; } = default!;
+    public Guid Id { get; set; }
 
     public string? Name { get; set; }
 

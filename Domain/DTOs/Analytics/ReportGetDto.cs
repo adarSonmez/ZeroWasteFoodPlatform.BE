@@ -4,7 +4,7 @@ namespace Domain.DTOs.Analytics;
 
 public class ReportGetDto : IDto
 {
-    public Guid Id { get; set; } = default!;
+    public Guid Id { get; set; }
 
     public string ReportName { get; set; } = null!;
 
@@ -16,11 +16,11 @@ public class ReportGetDto : IDto
 
     public string Location { get; set; } = null!;
 
-    public DateTime StartDate { get; set; } = default!;
+    public DateTime StartDate { get; set; }
 
-    public DateTime EndDate { get; set; } = default!;
+    public DateTime EndDate { get; set; }
 
-    public int SuppliedAmount { get; set; } = default!;
+    public int SuppliedAmount { get; set; }
 
-    public int SoldAmount { get; set; } = default!;
+    public int SoldAmount { get; set; }
 }

@@ -14,5 +14,5 @@ public class ProductGetDto : IDto
 
     public DateTime? ExpirationDate { get; set; }
 
-    public virtual ICollection<CategoryGetDto> Categories { get; set; } = default!;
+    public virtual ICollection<CategoryGetDto> Categories { get; set; }
 }

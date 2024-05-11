@@ -12,5 +12,5 @@ public class ProductAddDto : IDto
 
     public DateTime ExpirationDate { get; set; }
 
-    public ICollection<string> CategoriesIds { get; set; } = default!;
+    public ICollection<string> CategoriesIds { get; set; }
 }

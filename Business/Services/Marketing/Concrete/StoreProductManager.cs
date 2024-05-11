@@ -213,17 +213,17 @@ public class StoreProductManager : IStoreProductService
             var product = await _storeProductDal.GetAsync(b =>
                 b.Id.ToString().Equals(productManipulateShoppingListDto.ProductId.ToString()));
             BusinessRules.Run(("STPR-591299", BusinessRules.CheckEntityNull(product)));
-            
+
             var categoryProducts =
                 await _categoryProductDal.GetAllAsync(b => b.ProductId.ToString() == product!.Id.ToString());
             var categories =
                 await _categoryDal.GetAllAsync(b => categoryProducts.Select(c => c.CategoryId).Contains(b.Id));
-            
+
             product!.Categories = categories;
-            
+
             var business = await _businessDal.GetAsync(b => b.Id.ToString().Equals(product.BusinessId.ToString()));
             BusinessRules.Run(("STPR-194703", BusinessRules.CheckEntityNull(business)));
-            
+
             product.Business = business!;
 
             var currentUserId = Guid.Parse(AuthHelper.GetUserId()!);
@@ -232,7 +232,7 @@ public class StoreProductManager : IStoreProductService
                 CustomerId = currentUserId,
                 ProductId = product!.Id
             };
-            
+
             await _customerStoreProductDal.AddAsync(customerStoreProduct);
 
             result.SetData(_mapper.Map<StoreProductGetDto>(product), StoreProductServiceMessages.AddedToShoppingList);

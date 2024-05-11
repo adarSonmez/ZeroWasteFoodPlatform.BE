@@ -18,6 +18,9 @@ namespace Business.Services.Membership.Concrete;
 
 public class CustomerManager : ICustomerService
 {
+    private readonly IBusinessDal _businessDal = ServiceTool.GetService<IBusinessDal>()!;
+    private readonly ICategoryDal _categoryDal = ServiceTool.GetService<ICategoryDal>()!;
+    private readonly ICategoryProductDal _categoryProductDal = ServiceTool.GetService<ICategoryProductDal>()!;
     private readonly ICustomerDal _customerDal = ServiceTool.GetService<ICustomerDal>()!;
 
     private readonly ICustomerStoreProductDal _customerStoreProductDal =
@@ -25,9 +28,6 @@ public class CustomerManager : ICustomerService
 
     private readonly IMapper _mapper = ServiceTool.GetService<IMapper>()!;
     private readonly IStoreProductDal _storeProductDal = ServiceTool.GetService<IStoreProductDal>()!;
-    private readonly ICategoryProductDal _categoryProductDal = ServiceTool.GetService<ICategoryProductDal>()!;
-    private readonly ICategoryDal _categoryDal = ServiceTool.GetService<ICategoryDal>()!;
-    private readonly IBusinessDal _businessDal = ServiceTool.GetService<IBusinessDal>()!;
 
     public async Task<ServiceObjectResult<CustomerGetDto?>> GetByIdAsync(string id)
     {
@@ -205,7 +205,7 @@ public class CustomerManager : ICustomerService
 
             var storeProductsIds = customerStoreProducts.Select(b => b.ProductId.ToString()).ToList();
             var products = await _storeProductDal.GetAllAsync(b => storeProductsIds.Contains(b.Id.ToString()));
-            
+
             foreach (var product in products)
             {
                 var categoryProducts =
@@ -219,8 +219,8 @@ public class CustomerManager : ICustomerService
                 BusinessRules.Run(("CSTM-515321", BusinessRules.CheckEntityNull(business)));
 
                 product.Business = business!;
-            }            
-            
+            }
+
             var productGetDtos = _mapper.Map<List<StoreProductGetDto>>(products);
             result.SetData(productGetDtos, successMessage: CustomerServiceMessages.ShoppingListRetrieved);
         }
