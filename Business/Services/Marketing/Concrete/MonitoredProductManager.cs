@@ -163,7 +163,7 @@ public class MonitoredProductManager : IMonitoredProductService
             var product = await _monitoredProductDal.GetAsync(b => b.Id.ToString().Equals(id));
             BusinessRules.Run(("MNPR-591741", BusinessRules.CheckEntityNull(product)));
 
-            await _monitoredProductDal.SoftDeleteAsync(product!);
+            await _monitoredProductDal.HardDeleteAsync(product!);
             result.SetData(_mapper.Map<MonitoredProductGetDto>(product), MonitoredProductServiceMessages.Deleted);
         }
         catch (ValidationException e)

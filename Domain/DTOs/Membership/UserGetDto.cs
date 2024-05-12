@@ -16,9 +16,9 @@ public class UserGetDto : IDto
 
     public string Role { get; set; } = null!;
 
-    public string EmailVerified { get; set; } = null!;
+    public bool EmailVerified { get; set; }
 
-    public string PhoneNumberVerified { get; set; } = null!;
+    public bool PhoneNumberVerified { get; set; }
 
     public string LastLoginTime { get; set; } = null!;
 }

@@ -25,9 +25,11 @@ public class StoreProductController : BaseController
     }
 
     [HttpGet("user/{userId}")]
-    public async Task<IActionResult> GetByUserId(string userId)
+    public async Task<IActionResult> GetByUserId(string userId, [FromQuery] StoreProductFilterModel? filterModel = null,
+        int page = 1,
+        int pageSize = 10)
     {
-        var result = await _storeProductService.GetByUserIdAsync(userId);
+        var result = await _storeProductService.GetByUserIdAsync(userId, filterModel, page, pageSize);
 
         return result.HasFailed
             ? BadRequest(result)

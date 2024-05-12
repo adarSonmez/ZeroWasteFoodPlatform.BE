@@ -94,7 +94,9 @@ public class EfSeeder : ISeeder
             Email = "migros@gmail.com",
             PhoneNumber = "+908504550444",
             UseMultiFactorAuthentication = false,
-            Role = UserRoles.Business
+            Role = UserRoles.Business,
+            PhoneNumberVerified = true,
+            EmailVerified = false
         };
 
         HashingHelper.CreatePasswordHash("Carrefour123456789.", out passwordHash, out passwordSalt);
@@ -112,7 +114,9 @@ public class EfSeeder : ISeeder
             Email = "carrefour@gmail.com",
             PhoneNumber = "+905452977501",
             UseMultiFactorAuthentication = true,
-            Role = UserRoles.Business
+            Role = UserRoles.Business,
+            EmailVerified = true,
+            PhoneNumberVerified = true
         };
 
         HashingHelper.CreatePasswordHash("BIM123456789.", out passwordHash, out passwordSalt);
@@ -130,7 +134,9 @@ public class EfSeeder : ISeeder
             Email = "bim@gmail.com",
             PhoneNumber = "+908504550444",
             UseMultiFactorAuthentication = false,
-            Role = UserRoles.Business
+            Role = UserRoles.Business,
+            PhoneNumberVerified = false,
+            EmailVerified = true
         };
 
         var businesses = new List<Business> { migros, carrefour, bim };

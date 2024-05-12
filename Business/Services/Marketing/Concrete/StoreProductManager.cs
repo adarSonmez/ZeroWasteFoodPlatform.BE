@@ -69,15 +69,20 @@ public class StoreProductManager : IStoreProductService
         return result;
     }
 
-    public async Task<ServiceCollectionResult<StoreProductGetDto>> GetByUserIdAsync(string userId)
+    public async Task<ServiceCollectionResult<StoreProductGetDto>> GetByUserIdAsync(string userId,
+        StoreProductFilterModel? filterModel,
+        int page, int pageSize)
     {
         var result = new ServiceCollectionResult<StoreProductGetDto>();
 
         try
         {
             BusinessRules.Run(("STPR-171373", BusinessRules.CheckId(userId)));
+            var filters = filterModel?.ToExpression();
 
-            var products = await _storeProductDal.GetAllAsync(b => b.BusinessId.ToString().Equals(userId));
+
+            var products = await _storeProductDal.GetAllAsync(filters);
+            products = products.Where(p => p.BusinessId.ToString().Equals(userId)).ToList();
 
             foreach (var product in products)
             {
@@ -95,7 +100,7 @@ public class StoreProductManager : IStoreProductService
             }
 
             var productGetDtos = _mapper.Map<List<StoreProductGetDto>>(products);
-            result.SetData(productGetDtos, successMessage: StoreProductServiceMessages.ListRetrieved);
+            result.SetData(productGetDtos, page, pageSize, StoreProductServiceMessages.ListRetrieved);
         }
         catch (ValidationException e)
         {
@@ -262,14 +267,14 @@ public class StoreProductManager : IStoreProductService
                 b.Id.ToString().Equals(productManipulateShoppingListDto.ProductId.ToString()));
             BusinessRules.Run(("STPR-794153", BusinessRules.CheckEntityNull(product)));
 
-            var currentUserId = Guid.Parse(AuthHelper.GetUserId()!);
+            var currentUserId = AuthHelper.GetUserId()!;
             var customerStoreProduct = await _customerStoreProductDal.GetAsync(b =>
-                b.CustomerId.ToString().Equals(currentUserId.ToString()) &&
+                b.CustomerId.ToString().Equals(currentUserId) &&
                 b.ProductId.ToString().Equals(product!.Id.ToString()));
 
             BusinessRules.Run(("STPR-612880", BusinessRules.CheckEntityNull(customerStoreProduct)));
 
-            await _customerStoreProductDal.SoftDeleteAsync(customerStoreProduct!);
+            await _customerStoreProductDal.HardDeleteAsync(customerStoreProduct!);
 
             result.SetData(_mapper.Map<StoreProductGetDto>(product),
                 StoreProductServiceMessages.RemovedFromShoppingList);

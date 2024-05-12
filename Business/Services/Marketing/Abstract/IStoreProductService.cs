@@ -12,7 +12,9 @@ public interface IStoreProductService : IService
     Task<ServiceCollectionResult<StoreProductGetDto>> GetListAsync(StoreProductFilterModel? filterModel, int page,
         int pageSize);
 
-    Task<ServiceCollectionResult<StoreProductGetDto>> GetByUserIdAsync(string userId);
+    Task<ServiceCollectionResult<StoreProductGetDto>> GetByUserIdAsync(string userId,
+        StoreProductFilterModel? filterModel,
+        int page, int pageSize);
 
     Task<ServiceObjectResult<StoreProductGetDto?>> AddAsync(StoreProductAddDto productAddDto);
 
