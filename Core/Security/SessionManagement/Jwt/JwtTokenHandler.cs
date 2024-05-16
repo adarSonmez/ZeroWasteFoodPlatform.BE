@@ -16,7 +16,7 @@ public class JwtTokenHandler : ITokenHandler
         _configuration = configuration;
     }
 
-    public Token? GenerateToken(string userId, string username, string email, string role,
+    public Token? GenerateToken(Guid userId, string username, string email, string role,
         bool? infiniteExpiration = false)
     {
         Token? token = new();
@@ -30,7 +30,7 @@ public class JwtTokenHandler : ITokenHandler
             expires: infiniteExpiration == true ? DateTime.MaxValue : token.ExpirationTime,
             notBefore: DateTime.Now,
             signingCredentials: signingCredentials,
-            claims: SetClaims(userId, username, email, role)
+            claims: SetClaims(userId.ToString(), username, email, role)
         );
 
         var jwtSecurityTokenHandler = new JwtSecurityTokenHandler();

@@ -6,7 +6,7 @@ using Core.Utils.Auth;
 
 namespace Core.Utils.Rules;
 
-public class BusinessRules
+public static class BusinessRules
 {
     public static void Run(params (string errCode, string? msg)[] checkResults)
     {
@@ -15,7 +15,7 @@ public class BusinessRules
                 throw new ValidationException(errCode, msg);
     }
 
-    public static string? CheckEntityNull<TEntity>(TEntity? obj, string customError)
+    private static string? CheckEntityNull<TEntity>(TEntity? obj, string customError)
         where TEntity : IEntity
     {
         if (obj is not null) return null;
@@ -42,25 +42,7 @@ public class BusinessRules
 
         return customError;
     }
-
-    public static string? CheckId<TEntity>(TEntity obj)
-        where TEntity : IEntity
-    {
-        if (obj is EntityBase entity)
-            return CheckId(entity.Id.ToString());
-
-        return null;
-    }
-
-    public static string? CheckId(string? id, bool allowNull = false)
-    {
-        if (allowNull) return null;
-
-        if (string.IsNullOrEmpty(id)) return BusinessRulesMessages.EntityIdCannotBeBlank;
-
-        return id.IsValidGuid() ? null : BusinessRulesMessages.IdFormatIsNotValid;
-    }
-
+    
     public static string? CheckEmail(string email)
     {
         return !email.IsValidEmail() ? BusinessRulesMessages.EmailFormatIsNotValid : null;
@@ -88,10 +70,10 @@ public class BusinessRules
         return currentUserUsername != username ? ServiceResultConstants.UsernameIsNotSameWithCurrentUser : null;
     }
 
-    public static string? CheckIdSameWithCurrentUser(string id)
+    public static string? CheckIdSameWithCurrentUser(Guid id)
     {
         var currentUserId = AuthHelper.GetUserId();
-
+        
         return currentUserId != id ? ServiceResultConstants.IdIsNotSameWithCurrentUser : null;
     }
 }

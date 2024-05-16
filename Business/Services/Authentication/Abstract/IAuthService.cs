@@ -8,7 +8,7 @@ public interface IAuthService : IService
 {
     Task<ServiceObjectResult<LoginResponseDto?>> LoginUser(UserLoginDto userLoginDto);
 
-    Task<ServiceObjectResult<bool>> LogoutUser(string userId);
+    Task<ServiceObjectResult<bool>> LogoutUser(Guid userId);
 
     Task<ServiceObjectResult<bool>> RegisterBusiness(BusinessRegisterDto businessRegisterDto);
 

@@ -18,15 +18,13 @@ public class ReportManager : IReportService
     private readonly IMapper _mapper = ServiceTool.GetService<IMapper>()!;
     private readonly IReportDal _reportDal = ServiceTool.GetService<IReportDal>()!;
 
-    public async Task<ServiceObjectResult<ReportGetDto?>> GetByIdAsync(string id)
+    public async Task<ServiceObjectResult<ReportGetDto?>> GetByIdAsync(Guid id)
     {
         var result = new ServiceObjectResult<ReportGetDto?>();
 
         try
         {
-            BusinessRules.Run(("RPRT-325966", BusinessRules.CheckId(id)));
-
-            var report = await _reportDal.GetAsync(b => b.Id.ToString().Equals(id));
+            var report = await _reportDal.GetAsync(b => b.Id.Equals(id));
             BusinessRules.Run(("RPRT-786267", BusinessRules.CheckEntityNull(report)));
 
             var reportGetDto = _mapper.Map<ReportGetDto>(report);
@@ -68,15 +66,13 @@ public class ReportManager : IReportService
         return result;
     }
 
-    public async Task<ServiceObjectResult<ReportGetDto?>> DeleteByIdAsync(string id)
+    public async Task<ServiceObjectResult<ReportGetDto?>> DeleteByIdAsync(Guid id)
     {
         var result = new ServiceObjectResult<ReportGetDto?>();
 
         try
         {
-            BusinessRules.Run(("RPRT-500681", BusinessRules.CheckId(id)));
-
-            var report = await _reportDal.GetAsync(b => b.Id.ToString().Equals(id));
+            var report = await _reportDal.GetAsync(b => b.Id.Equals(id));
             BusinessRules.Run(("RPRT-516247", BusinessRules.CheckEntityNull(report)));
 
             await _reportDal.SoftDeleteAsync(report!);

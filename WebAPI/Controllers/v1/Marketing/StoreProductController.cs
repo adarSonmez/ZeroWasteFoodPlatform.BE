@@ -14,8 +14,8 @@ public class StoreProductController : BaseController
 {
     private readonly IStoreProductService _storeProductService = ServiceTool.GetService<IStoreProductService>()!;
 
-    [HttpGet("{id}")]
-    public async Task<IActionResult> GetById(string id)
+    [HttpGet("{id:guid}")]
+    public async Task<IActionResult> GetById(Guid id)
     {
         var result = await _storeProductService.GetByIdAsync(id);
 
@@ -24,8 +24,8 @@ public class StoreProductController : BaseController
             : Ok(result);
     }
 
-    [HttpGet("user/{userId}")]
-    public async Task<IActionResult> GetByUserId(string userId, [FromQuery] StoreProductFilterModel? filterModel = null,
+    [HttpGet("user/{userId:guid}")]
+    public async Task<IActionResult> GetByUserId(Guid userId, [FromQuery] StoreProductFilterModel? filterModel = null,
         int page = 1,
         int pageSize = 10)
     {
@@ -105,9 +105,9 @@ public class StoreProductController : BaseController
             : Ok(result);
     }
 
-    [HttpDelete("{id}")]
+    [HttpDelete("{id:guid}")]
     [Authorize(Policy = AuthPolicies.AdminOrBusiness)]
-    public async Task<IActionResult> Delete(string id)
+    public async Task<IActionResult> Delete(Guid id)
     {
         var result = await _storeProductService.DeleteByIdAsync(id);
 

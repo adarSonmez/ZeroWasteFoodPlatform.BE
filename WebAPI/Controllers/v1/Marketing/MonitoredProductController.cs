@@ -15,8 +15,8 @@ public class MonitoredProductController : BaseController
     private readonly IMonitoredProductService _monitoredProductService =
         ServiceTool.GetService<IMonitoredProductService>()!;
 
-    [HttpGet("{id}")]
-    public async Task<IActionResult> GetById(string id)
+    [HttpGet("{id:guid}")]
+    public async Task<IActionResult> GetById(Guid id)
     {
         var result = await _monitoredProductService.GetByIdAsync(id);
 
@@ -25,8 +25,8 @@ public class MonitoredProductController : BaseController
             : Ok(result);
     }
 
-    [HttpGet("user/{userId}")]
-    public async Task<IActionResult> GetByUserId(string userId)
+    [HttpGet("user/{userId:guid}")]
+    public async Task<IActionResult> GetByUserId(Guid userId)
     {
         var result = await _monitoredProductService.GetByUserIdAsync(userId);
 
@@ -72,8 +72,8 @@ public class MonitoredProductController : BaseController
             : Ok(result);
     }
 
-    [HttpDelete("{id}")]
-    public async Task<IActionResult> Delete(string id)
+    [HttpDelete("{id:guid}")]
+    public async Task<IActionResult> Delete(Guid id)
     {
         var result = await _monitoredProductService.DeleteByIdAsync(id);
 

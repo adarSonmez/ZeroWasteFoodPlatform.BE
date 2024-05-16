@@ -24,10 +24,12 @@ public class ProductRecommendationManager : IProductRecommendationService
 
         try
         {
-            var userId = AuthHelper.GetUserId()!;
+            var userId = AuthHelper.GetUserId() ?? 
+                         throw new ValidationException("PRCD-154686", ProductRecommendationServiceMessages.UserNotFound);
+
             var currentShoppingListDto = await _customerService.GetShoppingListAsync(userId);
             var currentShoppingList = currentShoppingListDto.Data;
-            var currentProductIds = currentShoppingList?.Select(p => p.Id.ToString()).ToList();
+            var currentProductIds = currentShoppingList?.Select(p => p.Id).ToList();
 
             if (currentProductIds == null || currentProductIds.Count == 0)
             {
@@ -56,7 +58,7 @@ public class ProductRecommendationManager : IProductRecommendationService
                 .Aggregate((a, b) => a.Zip(b, (x, y) => x + y).ToArray());
 
             // Recommend products
-            var currentShoppingSet = new HashSet<string>(currentProductIds);
+            var currentShoppingSet = new HashSet<Guid>(currentProductIds);
             var sortedSums = allProducts
                 .Zip(weightedSums, (product, weight) => new { Product = product, Weight = weight })
                 .OrderByDescending(x => x.Weight).ToList();

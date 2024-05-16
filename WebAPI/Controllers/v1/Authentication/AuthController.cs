@@ -31,9 +31,9 @@ public class AuthController : BaseController
             : Ok(result);
     }
 
-    [HttpPost("logout-user/{userId}")]
+    [HttpPost("logout-user/{userId:guid}")]
     [Authorize]
-    public async Task<IActionResult> LogoutUser(string userId)
+    public async Task<IActionResult> LogoutUser(Guid userId)
     {
         var result = await _authService.LogoutUser(userId);
 

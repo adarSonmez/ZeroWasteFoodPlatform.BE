@@ -25,7 +25,6 @@ public class UserManager : IUserService
         {
             BusinessRules.Run(
                 ("USER-342385", BusinessRules.CheckDtoNull(userChangePasswordDto)),
-                ("USER-324854", BusinessRules.CheckId(userChangePasswordDto.Id.ToString())),
                 ("USER-128747",
                     userChangePasswordDto.NewPassword.Equals(userChangePasswordDto.ConfirmPassword)
                         ? null

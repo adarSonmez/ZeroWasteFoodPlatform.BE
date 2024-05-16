@@ -29,14 +29,12 @@ public class CustomerManager : ICustomerService
     private readonly IMapper _mapper = ServiceTool.GetService<IMapper>()!;
     private readonly IStoreProductDal _storeProductDal = ServiceTool.GetService<IStoreProductDal>()!;
 
-    public async Task<ServiceObjectResult<CustomerGetDto?>> GetByIdAsync(string id)
+    public async Task<ServiceObjectResult<CustomerGetDto?>> GetByIdAsync(Guid id)
     {
         var result = new ServiceObjectResult<CustomerGetDto?>();
 
         try
         {
-            BusinessRules.Run(("CSTM-950070", BusinessRules.CheckId(id)));
-
             var customer = await _customerDal.GetAsync(b => id.Equals(b.Id));
             BusinessRules.Run(("CSTM-759000", BusinessRules.CheckEntityNull(customer)));
 
@@ -115,7 +113,6 @@ public class CustomerManager : ICustomerService
         {
             BusinessRules.Run(
                 ("CSTM-950070", BusinessRules.CheckDtoNull(customerUpdateDto)),
-                ("CSTM-950070", BusinessRules.CheckId(customerUpdateDto.Id.ToString())),
                 ("CSTM-377965", await CheckIfUsernameExists(customerUpdateDto.Username, true)),
                 ("CSTM-842305", await CheckIfEmailExists(customerUpdateDto.Email, true))
             );
@@ -142,14 +139,12 @@ public class CustomerManager : ICustomerService
         return result;
     }
 
-    public async Task<ServiceObjectResult<CustomerGetDto?>> DeleteByIdAsync(string id)
+    public async Task<ServiceObjectResult<CustomerGetDto?>> DeleteByIdAsync(Guid id)
     {
         var result = new ServiceObjectResult<CustomerGetDto?>();
 
         try
         {
-            BusinessRules.Run(("CSTM-196947", BusinessRules.CheckId(id)));
-
             var customer = await _customerDal.GetAsync(b => id.Equals(b.Id));
             BusinessRules.Run(("CSTM-440740", BusinessRules.CheckEntityNull(customer)));
 
@@ -192,30 +187,28 @@ public class CustomerManager : ICustomerService
         return result;
     }
 
-    public async Task<ServiceCollectionResult<StoreProductGetDto>> GetShoppingListAsync(string userId)
+    public async Task<ServiceCollectionResult<StoreProductGetDto>> GetShoppingListAsync(Guid userId)
     {
         var result = new ServiceCollectionResult<StoreProductGetDto>();
 
         try
         {
-            BusinessRules.Run(("CSTM-950070", BusinessRules.CheckId(userId)));
-
             var customerStoreProducts = await _customerStoreProductDal
-                .GetAllAsync(b => b.CustomerId.ToString().Equals(userId));
+                .GetAllAsync(b => b.CustomerId.Equals(userId));
 
-            var storeProductsIds = customerStoreProducts.Select(b => b.ProductId.ToString()).ToList();
-            var products = await _storeProductDal.GetAllAsync(b => storeProductsIds.Contains(b.Id.ToString()));
+            var storeProductsIds = customerStoreProducts.Select(b => b.ProductId).ToList();
+            var products = await _storeProductDal.GetAllAsync(b => storeProductsIds.Contains(b.Id));
 
             foreach (var product in products)
             {
                 var categoryProducts =
-                    await _categoryProductDal.GetAllAsync(b => b.ProductId.ToString() == product.Id.ToString());
+                    await _categoryProductDal.GetAllAsync(b => b.ProductId == product.Id);
                 var categories =
                     await _categoryDal.GetAllAsync(b => categoryProducts.Select(c => c.CategoryId).Contains(b.Id));
 
                 product.Categories = categories;
 
-                var business = await _businessDal.GetAsync(b => b.Id.ToString().Equals(product.BusinessId.ToString()));
+                var business = await _businessDal.GetAsync(b => b.Id.Equals(product.BusinessId));
                 BusinessRules.Run(("CSTM-515321", BusinessRules.CheckEntityNull(business)));
 
                 product.Business = business!;

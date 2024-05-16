@@ -7,4 +7,5 @@ internal static class MonitoredProductServiceMessages
     internal const string Deleted = "Product deleted successfully!";
     internal const string Updated = "Product updated successfully!";
     internal const string Added = "Product added successfully!";
+    internal const string UserNotFound = "User not found!";
 }

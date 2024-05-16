@@ -14,8 +14,8 @@ public class ReportController : BaseController
 {
     private readonly IReportService _reportService = ServiceTool.GetService<IReportService>()!;
 
-    [HttpGet("{id}")]
-    public async Task<IActionResult> GetByIdAsync(string id)
+    [HttpGet("{id:guid}")]
+    public async Task<IActionResult> GetByIdAsync(Guid id)
     {
         var result = await _reportService.GetByIdAsync(id);
 
@@ -35,8 +35,8 @@ public class ReportController : BaseController
             : Ok(result);
     }
 
-    [HttpDelete("{id}")]
-    public async Task<IActionResult> DeleteAsync(string id)
+    [HttpDelete("{id:guid}")]
+    public async Task<IActionResult> DeleteAsync(Guid id)
     {
         var result = await _reportService.DeleteByIdAsync(id);
 

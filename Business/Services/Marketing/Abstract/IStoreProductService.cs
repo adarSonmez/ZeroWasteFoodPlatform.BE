@@ -7,12 +7,12 @@ namespace Business.Services.Marketing.Abstract;
 
 public interface IStoreProductService : IService
 {
-    Task<ServiceObjectResult<StoreProductGetDto?>> GetByIdAsync(string id);
+    Task<ServiceObjectResult<StoreProductGetDto?>> GetByIdAsync(Guid id);
 
     Task<ServiceCollectionResult<StoreProductGetDto>> GetListAsync(StoreProductFilterModel? filterModel, int page,
         int pageSize);
 
-    Task<ServiceCollectionResult<StoreProductGetDto>> GetByUserIdAsync(string userId,
+    Task<ServiceCollectionResult<StoreProductGetDto>> GetByUserIdAsync(Guid userId,
         StoreProductFilterModel? filterModel,
         int page, int pageSize);
 
@@ -24,9 +24,9 @@ public interface IStoreProductService : IService
     Task<ServiceObjectResult<StoreProductGetDto?>> RemoveFromShoppingListAsync(
         StoreProductManipulateShoppingListDto productManipulateShoppingListDto);
 
-    Task<ServiceCollectionResult<IList<string>>> GetAllShoppingListsAnonymously();
+    Task<ServiceCollectionResult<IList<Guid>>> GetAllShoppingListsAnonymously();
 
     Task<ServiceObjectResult<StoreProductGetDto?>> UpdateAsync(StoreProductUpdateDto productUpdateDto);
 
-    Task<ServiceObjectResult<StoreProductGetDto?>> DeleteByIdAsync(string id);
+    Task<ServiceObjectResult<StoreProductGetDto?>> DeleteByIdAsync(Guid id);
 }

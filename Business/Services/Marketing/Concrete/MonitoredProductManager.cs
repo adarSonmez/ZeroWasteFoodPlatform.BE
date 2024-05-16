@@ -23,19 +23,17 @@ public class MonitoredProductManager : IMonitoredProductService
     private readonly IMapper _mapper = ServiceTool.GetService<IMapper>()!;
     private readonly IMonitoredProductDal _monitoredProductDal = ServiceTool.GetService<IMonitoredProductDal>()!;
 
-    public async Task<ServiceObjectResult<MonitoredProductGetDto?>> GetByIdAsync(string id)
+    public async Task<ServiceObjectResult<MonitoredProductGetDto?>> GetByIdAsync(Guid id)
     {
         var result = new ServiceObjectResult<MonitoredProductGetDto?>();
 
         try
         {
-            BusinessRules.Run(("MNPR-734047", BusinessRules.CheckId(id)));
-
-            var monitoredProduct = await _monitoredProductDal.GetAsync(b => b.Id.ToString().Equals(id));
+            var monitoredProduct = await _monitoredProductDal.GetAsync(b => b.Id.Equals(id));
             BusinessRules.Run(("MNPR-987121", BusinessRules.CheckEntityNull(monitoredProduct)));
 
             var categoryProducts =
-                await _categoryProductDal.GetAllAsync(b => b.ProductId.ToString() == monitoredProduct!.Id.ToString());
+                await _categoryProductDal.GetAllAsync(b => b.ProductId.Equals(monitoredProduct!.Id));
             var categories =
                 await _categoryDal.GetAllAsync(b => categoryProducts.Select(c => c.CategoryId).Contains(b.Id));
 
@@ -69,7 +67,7 @@ public class MonitoredProductManager : IMonitoredProductService
             foreach (var product in products)
             {
                 var categoryProducts =
-                    await _categoryProductDal.GetAllAsync(b => b.ProductId.ToString() == product.Id.ToString());
+                    await _categoryProductDal.GetAllAsync(b => b.ProductId.Equals(product.Id));
                 var categories =
                     await _categoryDal.GetAllAsync(b => categoryProducts.Select(c => c.CategoryId).Contains(b.Id));
 
@@ -91,20 +89,18 @@ public class MonitoredProductManager : IMonitoredProductService
         return result;
     }
 
-    public async Task<ServiceCollectionResult<MonitoredProductGetDto>> GetByUserIdAsync(string userId)
+    public async Task<ServiceCollectionResult<MonitoredProductGetDto>> GetByUserIdAsync(Guid userId)
     {
         var result = new ServiceCollectionResult<MonitoredProductGetDto>();
 
         try
         {
-            BusinessRules.Run(("MNPR-724642", BusinessRules.CheckId(userId)));
-
-            var products = await _monitoredProductDal.GetAllAsync(b => b.OwnerId.ToString().Equals(userId));
+            var products = await _monitoredProductDal.GetAllAsync(b => b.OwnerId.Equals(userId));
 
             foreach (var product in products)
             {
                 var categoryProducts =
-                    await _categoryProductDal.GetAllAsync(b => b.ProductId.ToString() == product.Id.ToString());
+                    await _categoryProductDal.GetAllAsync(b => b.ProductId.Equals(product.Id));
                 var categories =
                     await _categoryDal.GetAllAsync(b => categoryProducts.Select(c => c.CategoryId).Contains(b.Id));
 
@@ -134,7 +130,10 @@ public class MonitoredProductManager : IMonitoredProductService
         {
             BusinessRules.Run(("MNPR-612521", BusinessRules.CheckDtoNull(productAddDto)));
             var product = _mapper.Map<MonitoredProduct>(productAddDto);
-            var currentUserId = Guid.Parse(AuthHelper.GetUserId()!);
+            
+            var currentUserId = AuthHelper.GetUserId() ??
+                                throw new ValidationException("MNPR-445883", MonitoredProductServiceMessages.UserNotFound);
+            
             product.OwnerId = currentUserId;
             product.CreatedUserId = currentUserId;
 
@@ -153,14 +152,13 @@ public class MonitoredProductManager : IMonitoredProductService
         return result;
     }
 
-    public async Task<ServiceObjectResult<MonitoredProductGetDto?>> DeleteByIdAsync(string id)
+    public async Task<ServiceObjectResult<MonitoredProductGetDto?>> DeleteByIdAsync(Guid id)
     {
         var result = new ServiceObjectResult<MonitoredProductGetDto?>();
 
         try
-        {
-            BusinessRules.Run(("MNPR-197002", BusinessRules.CheckId(id)));
-            var product = await _monitoredProductDal.GetAsync(b => b.Id.ToString().Equals(id));
+        { 
+            var product = await _monitoredProductDal.GetAsync(b => b.Id.Equals(id));
             BusinessRules.Run(("MNPR-591741", BusinessRules.CheckEntityNull(product)));
 
             await _monitoredProductDal.HardDeleteAsync(product!);
@@ -185,13 +183,10 @@ public class MonitoredProductManager : IMonitoredProductService
 
         try
         {
-            BusinessRules.Run(
-                ("MNPR-308013", BusinessRules.CheckDtoNull(productUpdateDto)),
-                ("MNPR-775480", BusinessRules.CheckId(productUpdateDto.Id.ToString()))
-            );
+            BusinessRules.Run(("MNPR-308013", BusinessRules.CheckDtoNull(productUpdateDto)));
 
             var product =
-                await _monitoredProductDal.GetAsync(b => b.Id.ToString().Equals(productUpdateDto.Id.ToString()));
+                await _monitoredProductDal.GetAsync(b => b.Id.Equals(productUpdateDto.Id));
             BusinessRules.Run(("MNPR-927511", BusinessRules.CheckEntityNull(product)));
 
             _mapper.Map(productUpdateDto, product);

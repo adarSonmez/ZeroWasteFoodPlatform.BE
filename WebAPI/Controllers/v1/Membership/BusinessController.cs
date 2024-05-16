@@ -14,8 +14,8 @@ public class BusinessController : BaseController
 {
     private readonly IBusinessService _businessService = ServiceTool.GetService<IBusinessService>()!;
 
-    [HttpGet("{id}")]
-    public async Task<IActionResult> GetById(string id)
+    [HttpGet("{id:guid}")]
+    public async Task<IActionResult> GetById(Guid id)
     {
         var result = await _businessService.GetByIdAsync(id);
 
@@ -72,9 +72,9 @@ public class BusinessController : BaseController
             : Ok(result);
     }
 
-    [HttpDelete("{id}")]
+    [HttpDelete("{id:guid}")]
     [Authorize(Policy = AuthPolicies.AdminOrBusiness)]
-    public async Task<IActionResult> DeleteById(string id)
+    public async Task<IActionResult> DeleteById(Guid id)
     {
         var result = await _businessService.DeleteByIdAsync(id);
 

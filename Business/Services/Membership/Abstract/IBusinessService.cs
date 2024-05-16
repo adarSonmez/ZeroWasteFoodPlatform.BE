@@ -7,7 +7,7 @@ namespace Business.Services.Membership.Abstract;
 
 public interface IBusinessService : IService
 {
-    Task<ServiceObjectResult<BusinessGetDto?>> GetByIdAsync(string id);
+    Task<ServiceObjectResult<BusinessGetDto?>> GetByIdAsync(Guid id);
 
     Task<ServiceObjectResult<BusinessGetDto?>> GetByUsernameAsync(string username);
 
@@ -18,5 +18,5 @@ public interface IBusinessService : IService
 
     Task<ServiceObjectResult<BusinessGetDto?>> UpdateAsync(BusinessUpdateDto businessUpdateDto);
 
-    Task<ServiceObjectResult<BusinessGetDto?>> DeleteByIdAsync(string id);
+    Task<ServiceObjectResult<BusinessGetDto?>> DeleteByIdAsync(Guid id);
 }

@@ -10,4 +10,5 @@ internal static class StoreProductServiceMessages
     internal const string AddedToShoppingList = "Product added to shopping list successfully!";
     internal const string RemovedFromShoppingList = "Product removed from shopping list successfully!";
     internal const string ShoppingListsRetrieved = "Shopping list retrieved successfully!";
+    internal const string UserNotFound = "User not found!";
 }

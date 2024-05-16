@@ -79,7 +79,7 @@ public class AuthManager : IAuthService
                 return result;
             }
 
-            var token = _tokenHandler.GenerateToken(user.Id.ToString(), user.Username, user.Email, user.Role, false);
+            var token = _tokenHandler.GenerateToken(user.Id, user.Username, user.Email, user.Role, false);
 
             var serializedToken = JsonSerializer.Serialize(token);
             user.ActiveToken = serializedToken;
@@ -101,19 +101,17 @@ public class AuthManager : IAuthService
         return result;
     }
 
-    public async Task<ServiceObjectResult<bool>> LogoutUser(string userId)
+    public async Task<ServiceObjectResult<bool>> LogoutUser(Guid userId)
     {
         var result = new ServiceObjectResult<bool>();
         try
         {
-            BusinessRules.Run(("AUTH-618318", BusinessRules.CheckId(userId)));
-
             var isGlobalAdmin = AuthHelper.IsLoggedInAsAdmin();
 
             if (!isGlobalAdmin)
                 BusinessRules.Run(("AUTH-265570", BusinessRules.CheckIdSameWithCurrentUser(userId)));
 
-            var user = await _userDal.GetAsync(p => p.Id.ToString().Equals(userId));
+            var user = await _userDal.GetAsync(p => p.Id.Equals(userId));
             BusinessRules.Run(("AUTH-202349", BusinessRules.CheckEntityNull(user)));
 
             user!.ActiveToken = null;
@@ -236,7 +234,7 @@ public class AuthManager : IAuthService
 
             await _userDal.UpdateAsync(user);
 
-            var token = _tokenHandler.GenerateToken(user.Id.ToString(), user.Username, user.Email, user.Role, false);
+            var token = _tokenHandler.GenerateToken(user.Id, user.Username, user.Email, user.Role, false);
 
             var userGetDto = _mapper.Map<UserGetDto>(user);
             result.SetData(new LoginResponseDto { Token = token!, User = userGetDto },

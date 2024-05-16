@@ -14,9 +14,9 @@ public class CustomerController : BaseController
 {
     private readonly ICustomerService _customerService = ServiceTool.GetService<ICustomerService>()!;
 
-    [HttpGet("{id}")]
+    [HttpGet("{id:guid}")]
     [Authorize(Policy = AuthPolicies.AdminOrCustomer)]
-    public async Task<IActionResult> GetById(string id)
+    public async Task<IActionResult> GetById(Guid id)
     {
         var result = await _customerService.GetByIdAsync(id);
 
@@ -59,9 +59,9 @@ public class CustomerController : BaseController
             : Ok(result);
     }
 
-    [HttpGet("shopping-list/{userId}")]
+    [HttpGet("shopping-list/{userId:guid}")]
     [Authorize(Policy = AuthPolicies.AdminOrCustomer)]
-    public async Task<IActionResult> GetShoppingList(string userId)
+    public async Task<IActionResult> GetShoppingList(Guid userId)
     {
         var result = await _customerService.GetShoppingListAsync(userId);
 
@@ -84,9 +84,9 @@ public class CustomerController : BaseController
             : Ok(result);
     }
 
-    [HttpDelete("{id}")]
+    [HttpDelete("{id:guid}")]
     [Authorize(Policy = AuthPolicies.AdminOrCustomer)]
-    public async Task<IActionResult> DeleteById(string id)
+    public async Task<IActionResult> DeleteById(Guid id)
     {
         var result = await _customerService.DeleteByIdAsync(id);
 

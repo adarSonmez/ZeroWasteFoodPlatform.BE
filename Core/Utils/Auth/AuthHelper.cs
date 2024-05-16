@@ -8,7 +8,7 @@ public static class AuthHelper
 {
     private static readonly IHttpContextAccessor HttpContextAccessor = ServiceTool.GetService<IHttpContextAccessor>()!;
 
-    public static string? GetUserId()
+    public static Guid? GetUserId()
     {
         return HttpContextAccessor.HttpContext!.GetUserId();
     }

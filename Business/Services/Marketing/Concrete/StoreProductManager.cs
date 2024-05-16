@@ -30,26 +30,24 @@ public class StoreProductManager : IStoreProductService
     private readonly IMapper _mapper = ServiceTool.GetService<IMapper>()!;
     private readonly IStoreProductDal _storeProductDal = ServiceTool.GetService<IStoreProductDal>()!;
 
-    public async Task<ServiceObjectResult<StoreProductGetDto?>> GetByIdAsync(string id)
+    public async Task<ServiceObjectResult<StoreProductGetDto?>> GetByIdAsync(Guid id)
     {
         var result = new ServiceObjectResult<StoreProductGetDto?>();
 
         try
         {
-            BusinessRules.Run(("STPR-218236", BusinessRules.CheckId(id)));
-
-            var storeProduct = await _storeProductDal.GetAsync(b => b.Id.ToString().Equals(id));
+            var storeProduct = await _storeProductDal.GetAsync(b => b.Id.Equals(id));
             BusinessRules.Run(("STPR-194703", BusinessRules.CheckEntityNull(storeProduct)));
 
             // Add category product to store product
             var categoryProducts =
-                await _categoryProductDal.GetAllAsync(b => b.ProductId.ToString() == storeProduct!.Id.ToString());
+                await _categoryProductDal.GetAllAsync(b => b.ProductId.Equals(storeProduct!.Id));
             var categories =
                 await _categoryDal.GetAllAsync(b => categoryProducts.Select(c => c.CategoryId).Contains(b.Id));
 
             storeProduct!.Categories = categories;
 
-            var business = await _businessDal.GetAsync(b => b.Id.ToString().Equals(storeProduct.BusinessId.ToString()));
+            var business = await _businessDal.GetAsync(b => b.Id.Equals(storeProduct.BusinessId));
             BusinessRules.Run(("STPR-194703", BusinessRules.CheckEntityNull(business)));
 
             storeProduct.Business = business!;
@@ -69,7 +67,7 @@ public class StoreProductManager : IStoreProductService
         return result;
     }
 
-    public async Task<ServiceCollectionResult<StoreProductGetDto>> GetByUserIdAsync(string userId,
+    public async Task<ServiceCollectionResult<StoreProductGetDto>> GetByUserIdAsync(Guid userId,
         StoreProductFilterModel? filterModel,
         int page, int pageSize)
     {
@@ -77,23 +75,21 @@ public class StoreProductManager : IStoreProductService
 
         try
         {
-            BusinessRules.Run(("STPR-171373", BusinessRules.CheckId(userId)));
             var filters = filterModel?.ToExpression();
 
-
             var products = await _storeProductDal.GetAllAsync(filters);
-            products = products.Where(p => p.BusinessId.ToString().Equals(userId)).ToList();
+            products = products.Where(p => p.BusinessId.Equals(userId)).ToList();
 
             foreach (var product in products)
             {
                 var categoryProducts =
-                    await _categoryProductDal.GetAllAsync(b => b.ProductId.ToString() == product.Id.ToString());
+                    await _categoryProductDal.GetAllAsync(b => b.ProductId.Equals(product.Id));
                 var categories =
                     await _categoryDal.GetAllAsync(b => categoryProducts.Select(c => c.CategoryId).Contains(b.Id));
 
                 product.Categories = categories;
 
-                var business = await _businessDal.GetAsync(b => b.Id.ToString().Equals(product.BusinessId.ToString()));
+                var business = await _businessDal.GetAsync(b => b.Id.Equals(product.BusinessId));
                 BusinessRules.Run(("STPR-125496", BusinessRules.CheckEntityNull(business)));
 
                 product.Business = business!;
@@ -114,14 +110,13 @@ public class StoreProductManager : IStoreProductService
         return result;
     }
 
-    public async Task<ServiceObjectResult<StoreProductGetDto?>> DeleteByIdAsync(string id)
+    public async Task<ServiceObjectResult<StoreProductGetDto?>> DeleteByIdAsync(Guid id)
     {
         var result = new ServiceObjectResult<StoreProductGetDto?>();
 
         try
         {
-            BusinessRules.Run(("STPR-748260", BusinessRules.CheckId(id)));
-            var product = await _storeProductDal.GetAsync(b => b.Id.ToString().Equals(id));
+            var product = await _storeProductDal.GetAsync(b => b.Id.Equals(id));
             BusinessRules.Run(("STPR-735131", BusinessRules.CheckEntityNull(product)));
 
             await _storeProductDal.SoftDeleteAsync(product!);
@@ -152,13 +147,13 @@ public class StoreProductManager : IStoreProductService
             foreach (var product in products)
             {
                 var categoryProducts =
-                    await _categoryProductDal.GetAllAsync(b => b.ProductId.ToString() == product.Id.ToString());
+                    await _categoryProductDal.GetAllAsync(b => b.ProductId.Equals(product.Id));
                 var categories =
                     await _categoryDal.GetAllAsync(b => categoryProducts.Select(c => c.CategoryId).Contains(b.Id));
 
                 product.Categories = categories;
 
-                var business = await _businessDal.GetAsync(b => b.Id.ToString().Equals(product.BusinessId.ToString()));
+                var business = await _businessDal.GetAsync(b => b.Id.Equals(product.BusinessId));
                 BusinessRules.Run(("STPR-515321", BusinessRules.CheckEntityNull(business)));
 
                 product.Business = business!;
@@ -187,7 +182,10 @@ public class StoreProductManager : IStoreProductService
         {
             BusinessRules.Run(("STPR-412438", BusinessRules.CheckDtoNull(productAddDto)));
             var product = _mapper.Map<StoreProduct>(productAddDto);
-            var currentUserId = Guid.Parse(AuthHelper.GetUserId()!);
+            
+            var currentUserId = AuthHelper.GetUserId() ?? throw new ValidationException("STPR-145689",
+                StoreProductServiceMessages.UserNotFound);
+            
             product.BusinessId = currentUserId;
             product.CreatedUserId = currentUserId;
 
@@ -216,22 +214,24 @@ public class StoreProductManager : IStoreProductService
             BusinessRules.Run(("STPR-646480", BusinessRules.CheckDtoNull(productManipulateShoppingListDto)));
 
             var product = await _storeProductDal.GetAsync(b =>
-                b.Id.ToString().Equals(productManipulateShoppingListDto.ProductId.ToString()));
+                b.Id.Equals(productManipulateShoppingListDto.ProductId));
             BusinessRules.Run(("STPR-591299", BusinessRules.CheckEntityNull(product)));
 
             var categoryProducts =
-                await _categoryProductDal.GetAllAsync(b => b.ProductId.ToString() == product!.Id.ToString());
+                await _categoryProductDal.GetAllAsync(b => b.ProductId.Equals(product!.Id));
             var categories =
                 await _categoryDal.GetAllAsync(b => categoryProducts.Select(c => c.CategoryId).Contains(b.Id));
 
             product!.Categories = categories;
 
-            var business = await _businessDal.GetAsync(b => b.Id.ToString().Equals(product.BusinessId.ToString()));
+            var business = await _businessDal.GetAsync(b => b.Id.Equals(product.BusinessId));
             BusinessRules.Run(("STPR-194703", BusinessRules.CheckEntityNull(business)));
 
             product.Business = business!;
 
-            var currentUserId = Guid.Parse(AuthHelper.GetUserId()!);
+            var currentUserId = AuthHelper.GetUserId() ?? throw new ValidationException("STPR-785463",
+                StoreProductServiceMessages.UserNotFound);
+            
             var customerStoreProduct = new CustomerStoreProduct
             {
                 CustomerId = currentUserId,
@@ -264,13 +264,15 @@ public class StoreProductManager : IStoreProductService
             BusinessRules.Run(("STPR-612880", BusinessRules.CheckDtoNull(productManipulateShoppingListDto)));
 
             var product = await _storeProductDal.GetAsync(b =>
-                b.Id.ToString().Equals(productManipulateShoppingListDto.ProductId.ToString()));
+                b.Id.Equals(productManipulateShoppingListDto.ProductId));
             BusinessRules.Run(("STPR-794153", BusinessRules.CheckEntityNull(product)));
 
-            var currentUserId = AuthHelper.GetUserId()!;
+            var currentUserId = AuthHelper.GetUserId() ?? throw new ValidationException("STPR-861862",
+                StoreProductServiceMessages.UserNotFound);
+            
             var customerStoreProduct = await _customerStoreProductDal.GetAsync(b =>
-                b.CustomerId.ToString().Equals(currentUserId) &&
-                b.ProductId.ToString().Equals(product!.Id.ToString()));
+                b.CustomerId.Equals(currentUserId) &&
+                b.ProductId.Equals(product!.Id));
 
             BusinessRules.Run(("STPR-612880", BusinessRules.CheckEntityNull(customerStoreProduct)));
 
@@ -291,14 +293,14 @@ public class StoreProductManager : IStoreProductService
         return result;
     }
 
-    public async Task<ServiceCollectionResult<IList<string>>> GetAllShoppingListsAnonymously()
+    public async Task<ServiceCollectionResult<IList<Guid>>> GetAllShoppingListsAnonymously()
     {
-        var result = new ServiceCollectionResult<IList<string>>();
+        var result = new ServiceCollectionResult<IList<Guid>>();
         try
         {
             var customerStoreProducts = await _customerStoreProductDal.GetAllAsync();
             var groupedCustomerStoreProducts = customerStoreProducts.GroupBy(c => c.CustomerId);
-            var productIds = groupedCustomerStoreProducts.Select(g => g.Select(c => c.ProductId.ToString()).ToList())
+            var productIds = groupedCustomerStoreProducts.Select(g => g.Select(c => c.ProductId).ToList())
                 .ToList();
             result.SetData(productIds, successMessage: StoreProductServiceMessages.ShoppingListsRetrieved);
         }
@@ -321,12 +323,9 @@ public class StoreProductManager : IStoreProductService
 
         try
         {
-            BusinessRules.Run(
-                ("STPR-538394", BusinessRules.CheckDtoNull(productUpdateDto)),
-                ("STPR-217169", BusinessRules.CheckId(productUpdateDto.Id.ToString()))
-            );
+            BusinessRules.Run(("STPR-538394", BusinessRules.CheckDtoNull(productUpdateDto)));
 
-            var product = await _storeProductDal.GetAsync(b => b.Id.ToString().Equals(productUpdateDto.Id.ToString()));
+            var product = await _storeProductDal.GetAsync(b => b.Id.Equals(productUpdateDto.Id));
             BusinessRules.Run(("STPR-780245", BusinessRules.CheckEntityNull(product)));
 
             _mapper.Map(productUpdateDto, product);

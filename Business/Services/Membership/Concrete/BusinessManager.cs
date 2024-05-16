@@ -18,15 +18,13 @@ public class BusinessManager : IBusinessService
     private readonly IBusinessDal _businessDal = ServiceTool.GetService<IBusinessDal>()!;
     private readonly IMapper _mapper = ServiceTool.GetService<IMapper>()!;
 
-    public async Task<ServiceObjectResult<BusinessGetDto?>> GetByIdAsync(string id)
+    public async Task<ServiceObjectResult<BusinessGetDto?>> GetByIdAsync(Guid id)
     {
         var result = new ServiceObjectResult<BusinessGetDto?>();
 
         try
         {
-            BusinessRules.Run(("BSNS-508769", BusinessRules.CheckId(id)));
-
-            var business = await _businessDal.GetAsync(b => id.Equals(b.Id.ToString()));
+            var business = await _businessDal.GetAsync(b => id.Equals(b.Id));
             BusinessRules.Run(("BSNS-386849", BusinessRules.CheckEntityNull(business)));
 
             var businessGetDto = _mapper.Map<BusinessGetDto>(business);
@@ -133,14 +131,14 @@ public class BusinessManager : IBusinessService
             );
 
             var businessToUpdate =
-                await _businessDal.GetAsync(b => businessUpdateDto.Id.ToString().Equals(b.Id.ToString()));
+                await _businessDal.GetAsync(b => businessUpdateDto.Id.Equals(b.Id));
             BusinessRules.Run(("BSNS-257397", BusinessRules.CheckEntityNull(businessToUpdate)));
 
             businessToUpdate = _mapper.Map(businessUpdateDto, businessToUpdate)!;
             await _businessDal.UpdateAsync(businessToUpdate);
 
             var updatedBusiness =
-                await _businessDal.GetAsync(b => businessUpdateDto.Id.ToString().Equals(b.Id.ToString()));
+                await _businessDal.GetAsync(b => businessUpdateDto.Id.Equals(b.Id));
             var businessGetDto = _mapper.Map<BusinessGetDto>(updatedBusiness);
             result.SetData(businessGetDto, BusinessServiceMessages.Updated);
         }
@@ -156,15 +154,13 @@ public class BusinessManager : IBusinessService
         return result;
     }
 
-    public async Task<ServiceObjectResult<BusinessGetDto?>> DeleteByIdAsync(string id)
+    public async Task<ServiceObjectResult<BusinessGetDto?>> DeleteByIdAsync(Guid id)
     {
         var result = new ServiceObjectResult<BusinessGetDto?>();
 
         try
         {
-            BusinessRules.Run(("BSNS-160835", BusinessRules.CheckId(id)));
-
-            var business = await _businessDal.GetAsync(b => id.Equals(b.Id.ToString()));
+            var business = await _businessDal.GetAsync(b => id.Equals(b.Id));
             BusinessRules.Run(("BSNS-188217", BusinessRules.CheckEntityNull(business)));
 
             await _businessDal.SoftDeleteAsync(business!);
