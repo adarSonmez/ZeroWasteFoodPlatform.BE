@@ -51,6 +51,7 @@ public class BusinessModule : IDependencyInjectionModule
 
         services.AddScoped<IMonitoredProductService, MonitoredProductManager>();
         services.AddScoped<IStoreProductService, StoreProductManager>();
+        services.AddScoped<ICategoryService, CategoryManager>();
 
         # endregion Marketing
 
