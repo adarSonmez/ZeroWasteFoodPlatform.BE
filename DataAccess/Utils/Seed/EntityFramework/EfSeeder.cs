@@ -191,6 +191,7 @@ public class EfSeeder : ISeeder
             OriginalPrice = 5.99m,
             PercentDiscount = 50,
             BusinessId = bim.Id,
+            Photo = "https://cdn.cimri.io/market/260x260/dost-1-lt-laktozsuz-sut-_1430964.jpg",
             ExpirationDate = DateTime.Now.AddDays(7),
             CreatedUserId = bim.Id
         };
@@ -203,6 +204,7 @@ public class EfSeeder : ISeeder
             OriginalPrice = 9.99m,
             PercentDiscount = 30,
             BusinessId = bim.Id,
+            Photo = "https://cdn.cimri.io/market/260x260/dost-500-gr-suzme-beyaz-peynir-_1431458.jpg",
             ExpirationDate = DateTime.Now.AddDays(14),
             CreatedUserId = bim.Id
         };
@@ -215,6 +217,7 @@ public class EfSeeder : ISeeder
             OriginalPrice = 7.99m,
             PercentDiscount = 40,
             BusinessId = bim.Id,
+            Photo = "https://www.bim.com.tr/Uploads/aktuel-urunler/1098_buyuk_543X467_tereyag.jpg",
             ExpirationDate = DateTime.Now.AddDays(21),
             CreatedUserId = bim.Id
         };
@@ -227,6 +230,7 @@ public class EfSeeder : ISeeder
             OriginalPrice = 3.99m,
             PercentDiscount = 70,
             BusinessId = bim.Id,
+            Photo = "https://cf.kizlarsoruyor.com/q15507114/5969faa7-da73-418e-8154-b5b84556e25a.jpg",
             ExpirationDate = DateTime.Now.AddDays(10),
             CreatedUserId = bim.Id
         };
@@ -239,6 +243,7 @@ public class EfSeeder : ISeeder
             OriginalPrice = 2.99m,
             PercentDiscount = 80,
             BusinessId = bim.Id,
+            Photo = "https://cdn.cimri.io/market/260x260/havuc-kg-_127978.jpg",
             ExpirationDate = DateTime.Now.AddDays(5),
             CreatedUserId = bim.Id
         };
@@ -251,6 +256,7 @@ public class EfSeeder : ISeeder
             OriginalPrice = 3.99m,
             PercentDiscount = 60,
             BusinessId = bim.Id,
+            Photo = "https://cdn.cimri.io/market/260x260/dost-3-kg-homojenize-yogurt-_1431008.jpg",
             ExpirationDate = DateTime.Now.AddDays(28),
             CreatedUserId = bim.Id
         };
@@ -263,6 +269,7 @@ public class EfSeeder : ISeeder
             OriginalPrice = 19.99m,
             PercentDiscount = 20,
             BusinessId = bim.Id,
+            Photo = "https://cdn.cimri.io/market/260x260/vip-100-gr-gold-kahve-_929183.jpg",
             ExpirationDate = DateTime.Now.AddDays(35),
             CreatedUserId = bim.Id
         };
@@ -275,6 +282,7 @@ public class EfSeeder : ISeeder
             OriginalPrice = 11.99m,
             PercentDiscount = 10,
             BusinessId = bim.Id,
+            Photo = "https://www.ssk.biz.tr/wp-content/uploads/2022/06/yudum-aycicek-yagi.webp",
             ExpirationDate = DateTime.Now.AddDays(42),
             CreatedUserId = bim.Id
         };
@@ -287,6 +295,7 @@ public class EfSeeder : ISeeder
             OriginalPrice = 5.99m,
             PercentDiscount = 50,
             BusinessId = bim.Id,
+            Photo = "https://cdn.cimri.io/market/260x260/cardella-500-gr-ince-uzun-makarna-_1430690.jpg",
             ExpirationDate = DateTime.Now.AddDays(20),
             CreatedUserId = bim.Id
         };
@@ -299,6 +308,7 @@ public class EfSeeder : ISeeder
             OriginalPrice = 3.99m,
             PercentDiscount = 70,
             BusinessId = bim.Id,
+            Photo = "https://www.bim.com.tr/uploads/markalar/6_sogankuru.jpg",
             ExpirationDate = DateTime.Now.AddDays(10),
             CreatedUserId = bim.Id
         };
@@ -311,6 +321,7 @@ public class EfSeeder : ISeeder
             OriginalPrice = 2.99m,
             PercentDiscount = 80,
             BusinessId = bim.Id,
+            Photo = "https://www.bim.com.tr/uploads/markalar/6_elma.jpg",
             ExpirationDate = DateTime.Now.AddDays(5),
             CreatedUserId = bim.Id
         };
@@ -323,6 +334,8 @@ public class EfSeeder : ISeeder
             OriginalPrice = 1.99m,
             PercentDiscount = 90,
             BusinessId = bim.Id,
+            Photo =
+                "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQwnEqhNDq77I-sMzd0yMQt6lR4nMY5qEbwZ-jp8qCspA&s",
             ExpirationDate = DateTime.Now.AddDays(3),
             CreatedUserId = bim.Id
         };
@@ -335,6 +348,7 @@ public class EfSeeder : ISeeder
             OriginalPrice = 5.99m,
             PercentDiscount = 50,
             BusinessId = migros.Id,
+            Photo = "https://images.migrosone.com/sanalmarket/product/11012039/11012039-312495-1650x1650.jpg",
             ExpirationDate = DateTime.Now.AddDays(7),
             CreatedUserId = migros.Id
         };
@@ -347,6 +361,8 @@ public class EfSeeder : ISeeder
             OriginalPrice = 9.99m,
             PercentDiscount = 30,
             BusinessId = migros.Id,
+            Photo =
+                "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR7329uYBvVIN4LucLXaQZ6QoMT7ASDzvAznB4AufUFGg&s",
             ExpirationDate = DateTime.Now.AddDays(14),
             CreatedUserId = migros.Id
         };
@@ -359,6 +375,8 @@ public class EfSeeder : ISeeder
             OriginalPrice = 15.99m,
             PercentDiscount = 20,
             BusinessId = migros.Id,
+            Photo =
+                "https://images.migrosone.com/sanalmarket/product/14150430/tulip-pisirilmis-domuz-kol-eti-urunu-340g-7eea2a-1650x1650.jpg",
             ExpirationDate = DateTime.Now.AddDays(21),
             CreatedUserId = migros.Id
         };
@@ -371,6 +389,7 @@ public class EfSeeder : ISeeder
             OriginalPrice = 12.99m,
             PercentDiscount = 40,
             BusinessId = migros.Id,
+            Photo = "https://images.migrosone.com/sanalmarket/product/13029269/13029269-5fe34b-1650x1650.jpg",
             ExpirationDate = DateTime.Now.AddDays(28),
             CreatedUserId = migros.Id
         };
@@ -383,6 +402,7 @@ public class EfSeeder : ISeeder
             OriginalPrice = 2.99m,
             PercentDiscount = 80,
             BusinessId = migros.Id,
+            Photo = "https://images.migrosone.com/sanalmarket/product/27133000/elma-granny-smith-kg-0e9183.jpg",
             ExpirationDate = DateTime.Now.AddDays(5),
             CreatedUserId = migros.Id
         };
@@ -407,6 +427,8 @@ public class EfSeeder : ISeeder
             OriginalPrice = 9.99m,
             PercentDiscount = 50,
             BusinessId = migros.Id,
+            Photo =
+                "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTQEUdI2nZe3bepobVZR-KcG8NA3i2SQgiBYe4IlcPaug&s",
             ExpirationDate = DateTime.Now.AddDays(20),
             CreatedUserId = migros.Id
         };
@@ -419,6 +441,7 @@ public class EfSeeder : ISeeder
             OriginalPrice = 5.99m,
             PercentDiscount = 50,
             BusinessId = migros.Id,
+            Photo = "https://images.migrosone.com/sanalmarket/product/05030887/05030887-edb3d1-1650x1650.jpg",
             ExpirationDate = DateTime.Now.AddDays(20),
             CreatedUserId = migros.Id
         };
@@ -431,6 +454,8 @@ public class EfSeeder : ISeeder
             OriginalPrice = 5.99m,
             PercentDiscount = 50,
             BusinessId = carrefour.Id,
+            Photo =
+                "https://reimg-carrefour.mncdn.com/mnresize/600/600/productimage/30261237/30261237_0_MC/8815821226034_1581408069490.jpg",
             ExpirationDate = DateTime.Now.AddDays(7),
             CreatedUserId = carrefour.Id
         };
@@ -443,6 +468,8 @@ public class EfSeeder : ISeeder
             OriginalPrice = 11.99m,
             PercentDiscount = 40,
             BusinessId = carrefour.Id,
+            Photo =
+                "https://d39i9qfivfbklq.cloudfront.net/photo_SEO_EN/K/carrefour-alpine-milk-chocolate-bar-3x100g-3082706950.jpg",
             ExpirationDate = DateTime.Now.AddDays(21),
             CreatedUserId = carrefour.Id
         };
@@ -455,6 +482,7 @@ public class EfSeeder : ISeeder
             OriginalPrice = 5.99m,
             PercentDiscount = 50,
             BusinessId = carrefour.Id,
+            Photo = "https://cdn.cimri.io/market/260x260/carrefour-burgu-500-gr-makarna-_270568.jpg",
             ExpirationDate = DateTime.Now.AddDays(20),
             CreatedUserId = carrefour.Id
         };
@@ -467,6 +495,7 @@ public class EfSeeder : ISeeder
             OriginalPrice = 19.99m,
             PercentDiscount = 20,
             BusinessId = carrefour.Id,
+            Photo = "https://cdn.cimri.io/market/260x260/carrefour-1-kg-alabalik-_897705.jpg",
             ExpirationDate = DateTime.Now.AddDays(28),
             CreatedUserId = carrefour.Id
         };
@@ -479,6 +508,7 @@ public class EfSeeder : ISeeder
             OriginalPrice = 9.99m,
             PercentDiscount = 50,
             BusinessId = carrefour.Id,
+            Photo = "https://cdn.cimri.io/market/260x260/carrefour-pilavlik-1-kg-pirinc-_249633.jpg",
             ExpirationDate = DateTime.Now.AddDays(20),
             CreatedUserId = carrefour.Id
         };
@@ -491,6 +521,8 @@ public class EfSeeder : ISeeder
             OriginalPrice = 3.99m,
             PercentDiscount = 70,
             BusinessId = carrefour.Id,
+            Photo =
+                "https://reimg-carrefour.mncdn.com/mnresize/600/600/productimage/30239968/30239968_0_MC/8812739264562_1554103023703.jpg",
             ExpirationDate = DateTime.Now.AddDays(10),
             CreatedUserId = carrefour.Id
         };
@@ -503,6 +535,8 @@ public class EfSeeder : ISeeder
             OriginalPrice = 7.99m,
             PercentDiscount = 60,
             BusinessId = carrefour.Id,
+            Photo =
+                "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS5W8L1qdRHEkqFI8BUJjATFa8owp0dcd9Xrv17utcm8A&s",
             ExpirationDate = DateTime.Now.AddDays(35),
             CreatedUserId = carrefour.Id
         };
@@ -515,6 +549,8 @@ public class EfSeeder : ISeeder
             OriginalPrice = 3.99m,
             PercentDiscount = 80,
             BusinessId = carrefour.Id,
+            Photo =
+                "https://reimg-carrefour.mncdn.com/mnresize/600/600/productimage/30097558/30097558_0_MC/8796990930994_1569494130525.jpg",
             ExpirationDate = DateTime.Now.AddDays(5),
             CreatedUserId = carrefour.Id
         };
@@ -527,6 +563,8 @@ public class EfSeeder : ISeeder
             OriginalPrice = 2.99m,
             PercentDiscount = 90,
             BusinessId = carrefour.Id,
+            Photo =
+                "https://reimg-carrefour.mncdn.com/mnresize/600/600/productimage/30007733/30007733_0_MC/8812741787698_1548850739021.jpg",
             ExpirationDate = DateTime.Now.AddDays(3),
             CreatedUserId = carrefour.Id
         };
@@ -539,6 +577,8 @@ public class EfSeeder : ISeeder
             OriginalPrice = 1.99m,
             PercentDiscount = 90,
             BusinessId = carrefour.Id,
+            Photo =
+                "https://reimg-carrefour.mncdn.com/mnresize/600/600/productimage/30038808/30038808_0_MC/8796528771122_1528879509786.jpg",
             ExpirationDate = DateTime.Now.AddDays(3),
             CreatedUserId = carrefour.Id
         };
@@ -551,6 +591,8 @@ public class EfSeeder : ISeeder
             OriginalPrice = 5.99m,
             PercentDiscount = 50,
             BusinessId = carrefour.Id,
+            Photo =
+                "https://reimg-carrefour.mncdn.com/mnresize/600/600/productimage/30247177/30247177_0_MC/8842509254706_1657725795069.jpg",
             ExpirationDate = DateTime.Now.AddDays(20),
             CreatedUserId = carrefour.Id
         };
@@ -563,6 +605,8 @@ public class EfSeeder : ISeeder
             OriginalPrice = 9.99m,
             PercentDiscount = 50,
             BusinessId = carrefour.Id,
+            Photo =
+                "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTpAUnVFG8P6IvJ5FwWJT5AfGPR1njSmOnzrW2610keJw&s",
             ExpirationDate = DateTime.Now.AddDays(20),
             CreatedUserId = carrefour.Id
         };
@@ -575,6 +619,8 @@ public class EfSeeder : ISeeder
             OriginalPrice = 5.99m,
             PercentDiscount = 50,
             BusinessId = carrefour.Id,
+            Photo =
+                "https://reimg-carrefour.mncdn.com/mnresize/600/600/productimage/30412725/30412725_0_MC/8848930078770_1679989283688.jpg",
             ExpirationDate = DateTime.Now.AddDays(20),
             CreatedUserId = carrefour.Id
         };
@@ -587,6 +633,8 @@ public class EfSeeder : ISeeder
             OriginalPrice = 7.99m,
             PercentDiscount = 50,
             BusinessId = carrefour.Id,
+            Photo =
+                "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSToMpQKEU1rAKDzVekIkV8YUrIuQN8FYVf_f1Pqc9VEg&s",
             ExpirationDate = DateTime.Now.AddDays(20),
             CreatedUserId = carrefour.Id
         };

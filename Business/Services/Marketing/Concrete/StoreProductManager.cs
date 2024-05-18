@@ -198,18 +198,19 @@ public class StoreProductManager : IStoreProductService
                 categoryIds = categories.Select(c => c.Id.ToString()).ToList();
             }
 
+            await _storeProductDal.AddAsync(product);
+            
             foreach (var categoryId in categoryIds)
             {
                 var categoryProduct = new CategoryProduct
                 {
                     ProductId = product.Id,
-                    CategoryId = Guid.Parse(categoryId)
+                    CategoryId = Guid.Parse(categoryId),
                 };
 
                 await _categoryProductDal.AddAsync(categoryProduct);
             }
-
-            await _storeProductDal.AddAsync(product);
+            
             result.SetData(_mapper.Map<StoreProductGetDto>(product), StoreProductServiceMessages.Added);
         }
         catch (ValidationException e)
