@@ -27,9 +27,6 @@ public class CustomerUpdateValidator : AbstractValidator<CustomerUpdateDto>
             .WithMessage("Email should be a valid email address");
         RuleFor(x => x.PhoneNumber).Matches(@"^\+(?:[0-9]●?){6,14}[0-9]$").When(x => x.PhoneNumber != null)
             .WithMessage("Phone number should be a valid phone number");
-        RuleFor(x => x.UseMultiFactorAuthentication).Matches(@"^(true|false)$")
-            .When(x => x.UseMultiFactorAuthentication != null)
-            .WithMessage("Use multi factor authentication should be a boolean (true, false)");
         RuleFor(x => x.Avatar).Matches(@"^.*\.(jpg|jpeg|png)$").When(x => x.Avatar != null)
             .WithMessage("Avatar should be a valid image file. Supported formats are jpg, jpeg, png");
 

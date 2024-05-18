@@ -12,5 +12,5 @@ public class UserUpdateDto : IDto
 
     public string? PhoneNumber { get; set; }
 
-    public string? UseMultiFactorAuthentication { get; set; }
+    public bool? UseMultiFactorAuthentication { get; set; }
 }
