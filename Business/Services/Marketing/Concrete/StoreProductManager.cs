@@ -182,12 +182,32 @@ public class StoreProductManager : IStoreProductService
         {
             BusinessRules.Run(("STPR-412438", BusinessRules.CheckDtoNull(productAddDto)));
             var product = _mapper.Map<StoreProduct>(productAddDto);
-            
+
             var currentUserId = AuthHelper.GetUserId() ?? throw new ValidationException("STPR-145689",
                 StoreProductServiceMessages.UserNotFound);
-            
+
             product.BusinessId = currentUserId;
             product.CreatedUserId = currentUserId;
+
+            var categoryIds = productAddDto.CategoriesIds;
+
+            // TODO: Sent from flutter app without guid's but category names. Fix this.
+            if (categoryIds.Count != 0 && !Guid.TryParse(categoryIds.First(), out _))
+            {
+                var categories = await _categoryDal.GetAllAsync(b => categoryIds.Contains(b.Name));
+                categoryIds = categories.Select(c => c.Id.ToString()).ToList();
+            }
+
+            foreach (var categoryId in categoryIds)
+            {
+                var categoryProduct = new CategoryProduct
+                {
+                    ProductId = product.Id,
+                    CategoryId = Guid.Parse(categoryId)
+                };
+
+                await _categoryProductDal.AddAsync(categoryProduct);
+            }
 
             await _storeProductDal.AddAsync(product);
             result.SetData(_mapper.Map<StoreProductGetDto>(product), StoreProductServiceMessages.Added);
@@ -231,7 +251,7 @@ public class StoreProductManager : IStoreProductService
 
             var currentUserId = AuthHelper.GetUserId() ?? throw new ValidationException("STPR-785463",
                 StoreProductServiceMessages.UserNotFound);
-            
+
             var customerStoreProduct = new CustomerStoreProduct
             {
                 CustomerId = currentUserId,
@@ -269,7 +289,7 @@ public class StoreProductManager : IStoreProductService
 
             var currentUserId = AuthHelper.GetUserId() ?? throw new ValidationException("STPR-861862",
                 StoreProductServiceMessages.UserNotFound);
-            
+
             var customerStoreProduct = await _customerStoreProductDal.GetAsync(b =>
                 b.CustomerId.Equals(currentUserId) &&
                 b.ProductId.Equals(product!.Id));
@@ -329,6 +349,29 @@ public class StoreProductManager : IStoreProductService
             BusinessRules.Run(("STPR-780245", BusinessRules.CheckEntityNull(product)));
 
             _mapper.Map(productUpdateDto, product);
+
+            var categoryIds = productUpdateDto.CategoryIds ?? new List<string>();
+
+            // TODO: Sent from flutter app without guid's but category names. Fix this.
+            if (categoryIds.Count != 0 && !Guid.TryParse(categoryIds.First(), out _))
+            {
+                var categories = await _categoryDal.GetAllAsync(b => categoryIds.Contains(b.Name));
+                categoryIds = categories.Select(c => c.Id.ToString()).ToList();
+            }
+
+            foreach (var categoryId in categoryIds)
+            {
+                var categoryProduct = await _categoryProductDal.GetAsync(b =>
+                    b.ProductId.Equals(product!.Id) && b.CategoryId.Equals(Guid.Parse(categoryId)));
+
+                if (categoryProduct == null)
+                    await _categoryProductDal.AddAsync(new CategoryProduct
+                    {
+                        ProductId = product!.Id,
+                        CategoryId = Guid.Parse(categoryId)
+                    });
+            }
+
             await _storeProductDal.UpdateAsync(product!);
             result.SetData(_mapper.Map<StoreProductGetDto>(product), StoreProductServiceMessages.Updated);
         }

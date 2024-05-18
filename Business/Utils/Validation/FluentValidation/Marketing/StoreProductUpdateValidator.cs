@@ -15,8 +15,6 @@ public class StoreProductUpdateValidator : AbstractValidator<StoreProductUpdateD
 
         # region Optional
 
-        RuleFor(x => x.Name).MinimumLength(2).MinimumLength(127).When(x => x.Name != null)
-            .WithMessage("Product name should be at least 2 characters long and at most 127 characters long");
         RuleFor(x => x.Description).MaximumLength(1023).When(x => x.Description != null)
             .WithMessage("Product description cannot be longer than 1023 characters");
         RuleFor(x => x.Photo).MaximumLength(2047).When(x => x.Photo != null)
