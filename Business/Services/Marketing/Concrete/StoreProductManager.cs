@@ -134,6 +134,41 @@ public class StoreProductManager : IStoreProductService
         return result;
     }
 
+    public async Task<ServiceObjectResult<StoreProductGetDto?>> GetByBarcodeAsync(string barcode)
+    {
+        var result = new ServiceObjectResult<StoreProductGetDto?>();
+
+        try
+        {
+            var product = await _storeProductDal.GetAsync(b => barcode.Equals(b.Barcode));
+            BusinessRules.Run(("STPR-255461", BusinessRules.CheckEntityNull(product)));
+
+            var categoryProducts =
+                await _categoryProductDal.GetAllAsync(b => b.ProductId.Equals(product!.Id));
+            var categories =
+                await _categoryDal.GetAllAsync(b => categoryProducts.Select(c => c.CategoryId).Contains(b.Id));
+
+            product!.Categories = categories;
+
+            var business = await _businessDal.GetAsync(b => b.Id.Equals(product.BusinessId));
+            BusinessRules.Run(("STPR-125488", BusinessRules.CheckEntityNull(business)));
+
+            product.Business = business!;
+
+            result.SetData(_mapper.Map<StoreProductGetDto>(product), StoreProductServiceMessages.Retrieved);
+        }
+        catch (ValidationException e)
+        {
+            result.Fail(e);
+        }
+        catch (Exception e)
+        {
+            result.Fail(new ErrorMessage("STPR-996542", e.Message));
+        }
+
+        return result;
+    }
+
     public async Task<ServiceCollectionResult<StoreProductGetDto>> GetListAsync(
         StoreProductFilterModel? filterModel, int page, int pageSize)
     {
@@ -181,6 +216,8 @@ public class StoreProductManager : IStoreProductService
         try
         {
             BusinessRules.Run(("STPR-412438", BusinessRules.CheckDtoNull(productAddDto)));
+            BusinessRules.Run(("STPR-255225", await CheckIfBarcodeExists(productAddDto.Barcode)));
+
             var product = _mapper.Map<StoreProduct>(productAddDto);
 
             var currentUserId = AuthHelper.GetUserId() ?? throw new ValidationException("STPR-145689",
@@ -199,18 +236,18 @@ public class StoreProductManager : IStoreProductService
             }
 
             await _storeProductDal.AddAsync(product);
-            
+
             foreach (var categoryId in categoryIds)
             {
                 var categoryProduct = new CategoryProduct
                 {
                     ProductId = product.Id,
-                    CategoryId = Guid.Parse(categoryId),
+                    CategoryId = Guid.Parse(categoryId)
                 };
 
                 await _categoryProductDal.AddAsync(categoryProduct);
             }
-            
+
             result.SetData(_mapper.Map<StoreProductGetDto>(product), StoreProductServiceMessages.Added);
         }
         catch (ValidationException e)
@@ -386,5 +423,11 @@ public class StoreProductManager : IStoreProductService
         }
 
         return result;
+    }
+
+    private async Task<string?> CheckIfBarcodeExists(string barcode)
+    {
+        var product = await _storeProductDal.GetAsync(b => barcode.Equals(b.Barcode));
+        return product != null ? StoreProductServiceMessages.BarcodeExists : null;
     }
 }

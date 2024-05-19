@@ -18,7 +18,7 @@ public class RecommendationController : BaseController
     public async Task<IActionResult> GetRecommendedProductsAsync()
     {
         var result = await _productRecommendationService.GetRecommendedProductsAsync();
-
+    
         return result.HasFailed
             ? BadRequest(result)
             : Ok(result);

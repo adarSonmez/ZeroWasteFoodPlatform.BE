@@ -193,7 +193,8 @@ public class EfSeeder : ISeeder
             BusinessId = bim.Id,
             Photo = "https://cdn.cimri.io/market/260x260/dost-1-lt-laktozsuz-sut-_1430964.jpg",
             ExpirationDate = DateTime.Now.AddDays(7),
-            CreatedUserId = bim.Id
+            CreatedUserId = bim.Id,
+            Barcode = "1",
         };
 
         var bimCheese = new StoreProduct
@@ -206,7 +207,8 @@ public class EfSeeder : ISeeder
             BusinessId = bim.Id,
             Photo = "https://cdn.cimri.io/market/260x260/dost-500-gr-suzme-beyaz-peynir-_1431458.jpg",
             ExpirationDate = DateTime.Now.AddDays(14),
-            CreatedUserId = bim.Id
+            CreatedUserId = bim.Id,
+            Barcode = "2",
         };
 
         var bimButter = new StoreProduct
@@ -219,7 +221,8 @@ public class EfSeeder : ISeeder
             BusinessId = bim.Id,
             Photo = "https://www.bim.com.tr/Uploads/aktuel-urunler/1098_buyuk_543X467_tereyag.jpg",
             ExpirationDate = DateTime.Now.AddDays(21),
-            CreatedUserId = bim.Id
+            CreatedUserId = bim.Id,
+            Barcode = "3",
         };
 
         var bimGarlic = new StoreProduct
@@ -232,7 +235,8 @@ public class EfSeeder : ISeeder
             BusinessId = bim.Id,
             Photo = "https://cf.kizlarsoruyor.com/q15507114/5969faa7-da73-418e-8154-b5b84556e25a.jpg",
             ExpirationDate = DateTime.Now.AddDays(10),
-            CreatedUserId = bim.Id
+            CreatedUserId = bim.Id,
+            Barcode = "4",
         };
 
         var bimCarrot = new StoreProduct
@@ -245,7 +249,8 @@ public class EfSeeder : ISeeder
             BusinessId = bim.Id,
             Photo = "https://cdn.cimri.io/market/260x260/havuc-kg-_127978.jpg",
             ExpirationDate = DateTime.Now.AddDays(5),
-            CreatedUserId = bim.Id
+            CreatedUserId = bim.Id,
+            Barcode = "5",
         };
 
         var bimYogurt = new StoreProduct
@@ -258,7 +263,8 @@ public class EfSeeder : ISeeder
             BusinessId = bim.Id,
             Photo = "https://cdn.cimri.io/market/260x260/dost-3-kg-homojenize-yogurt-_1431008.jpg",
             ExpirationDate = DateTime.Now.AddDays(28),
-            CreatedUserId = bim.Id
+            CreatedUserId = bim.Id,
+            Barcode = "6",
         };
 
         var bimCoffee = new StoreProduct
@@ -271,7 +277,8 @@ public class EfSeeder : ISeeder
             BusinessId = bim.Id,
             Photo = "https://cdn.cimri.io/market/260x260/vip-100-gr-gold-kahve-_929183.jpg",
             ExpirationDate = DateTime.Now.AddDays(35),
-            CreatedUserId = bim.Id
+            CreatedUserId = bim.Id,
+            Barcode = "7",
         };
 
         var bimOil = new StoreProduct
@@ -284,7 +291,8 @@ public class EfSeeder : ISeeder
             BusinessId = bim.Id,
             Photo = "https://www.ssk.biz.tr/wp-content/uploads/2022/06/yudum-aycicek-yagi.webp",
             ExpirationDate = DateTime.Now.AddDays(42),
-            CreatedUserId = bim.Id
+            CreatedUserId = bim.Id,
+            Barcode = "8",
         };
 
         var bimPasta = new StoreProduct
@@ -297,7 +305,8 @@ public class EfSeeder : ISeeder
             BusinessId = bim.Id,
             Photo = "https://cdn.cimri.io/market/260x260/cardella-500-gr-ince-uzun-makarna-_1430690.jpg",
             ExpirationDate = DateTime.Now.AddDays(20),
-            CreatedUserId = bim.Id
+            CreatedUserId = bim.Id,
+            Barcode = "9",
         };
 
         var bimOnion = new StoreProduct
@@ -310,7 +319,8 @@ public class EfSeeder : ISeeder
             BusinessId = bim.Id,
             Photo = "https://www.bim.com.tr/uploads/markalar/6_sogankuru.jpg",
             ExpirationDate = DateTime.Now.AddDays(10),
-            CreatedUserId = bim.Id
+            CreatedUserId = bim.Id,
+            Barcode = "10",
         };
 
         var bimApple = new StoreProduct
@@ -323,7 +333,8 @@ public class EfSeeder : ISeeder
             BusinessId = bim.Id,
             Photo = "https://www.bim.com.tr/uploads/markalar/6_elma.jpg",
             ExpirationDate = DateTime.Now.AddDays(5),
-            CreatedUserId = bim.Id
+            CreatedUserId = bim.Id,
+            Barcode = "11",
         };
 
         var bimBanana = new StoreProduct
@@ -337,7 +348,8 @@ public class EfSeeder : ISeeder
             Photo =
                 "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQwnEqhNDq77I-sMzd0yMQt6lR4nMY5qEbwZ-jp8qCspA&s",
             ExpirationDate = DateTime.Now.AddDays(3),
-            CreatedUserId = bim.Id
+            CreatedUserId = bim.Id,
+            Barcode = "12",
         };
 
         var migrosMilk = new StoreProduct
@@ -350,7 +362,8 @@ public class EfSeeder : ISeeder
             BusinessId = migros.Id,
             Photo = "https://images.migrosone.com/sanalmarket/product/11012039/11012039-312495-1650x1650.jpg",
             ExpirationDate = DateTime.Now.AddDays(7),
-            CreatedUserId = migros.Id
+            CreatedUserId = migros.Id,
+            Barcode = "13",
         };
 
         var migrosCheese = new StoreProduct
@@ -364,7 +377,8 @@ public class EfSeeder : ISeeder
             Photo =
                 "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR7329uYBvVIN4LucLXaQZ6QoMT7ASDzvAznB4AufUFGg&s",
             ExpirationDate = DateTime.Now.AddDays(14),
-            CreatedUserId = migros.Id
+            CreatedUserId = migros.Id,
+            Barcode = "14",
         };
 
         var migrosPork = new StoreProduct
@@ -378,7 +392,8 @@ public class EfSeeder : ISeeder
             Photo =
                 "https://images.migrosone.com/sanalmarket/product/14150430/tulip-pisirilmis-domuz-kol-eti-urunu-340g-7eea2a-1650x1650.jpg",
             ExpirationDate = DateTime.Now.AddDays(21),
-            CreatedUserId = migros.Id
+            CreatedUserId = migros.Id,
+            Barcode = "15",
         };
 
         var migrosChicken = new StoreProduct
@@ -391,7 +406,8 @@ public class EfSeeder : ISeeder
             BusinessId = migros.Id,
             Photo = "https://images.migrosone.com/sanalmarket/product/13029269/13029269-5fe34b-1650x1650.jpg",
             ExpirationDate = DateTime.Now.AddDays(28),
-            CreatedUserId = migros.Id
+            CreatedUserId = migros.Id,
+            Barcode = "16",
         };
 
         var migrosApple = new StoreProduct
@@ -404,7 +420,8 @@ public class EfSeeder : ISeeder
             BusinessId = migros.Id,
             Photo = "https://images.migrosone.com/sanalmarket/product/27133000/elma-granny-smith-kg-0e9183.jpg",
             ExpirationDate = DateTime.Now.AddDays(5),
-            CreatedUserId = migros.Id
+            CreatedUserId = migros.Id,
+            Barcode = "17",
         };
 
         var migrosKetchup = new StoreProduct
@@ -416,7 +433,8 @@ public class EfSeeder : ISeeder
             PercentDiscount = 60,
             BusinessId = migros.Id,
             ExpirationDate = DateTime.Now.AddDays(35),
-            CreatedUserId = migros.Id
+            CreatedUserId = migros.Id,
+            Barcode = "18",
         };
 
         var migrosRice = new StoreProduct
@@ -430,7 +448,8 @@ public class EfSeeder : ISeeder
             Photo =
                 "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTQEUdI2nZe3bepobVZR-KcG8NA3i2SQgiBYe4IlcPaug&s",
             ExpirationDate = DateTime.Now.AddDays(20),
-            CreatedUserId = migros.Id
+            CreatedUserId = migros.Id,
+            Barcode = "19",
         };
 
         var migrosPasta = new StoreProduct
@@ -443,7 +462,8 @@ public class EfSeeder : ISeeder
             BusinessId = migros.Id,
             Photo = "https://images.migrosone.com/sanalmarket/product/05030887/05030887-edb3d1-1650x1650.jpg",
             ExpirationDate = DateTime.Now.AddDays(20),
-            CreatedUserId = migros.Id
+            CreatedUserId = migros.Id,
+            Barcode = "20",
         };
 
         var carrefourMilk = new StoreProduct
@@ -457,7 +477,8 @@ public class EfSeeder : ISeeder
             Photo =
                 "https://reimg-carrefour.mncdn.com/mnresize/600/600/productimage/30261237/30261237_0_MC/8815821226034_1581408069490.jpg",
             ExpirationDate = DateTime.Now.AddDays(7),
-            CreatedUserId = carrefour.Id
+            CreatedUserId = carrefour.Id,
+            Barcode = "21",
         };
 
         var carrefourChocolate = new StoreProduct
@@ -471,7 +492,8 @@ public class EfSeeder : ISeeder
             Photo =
                 "https://d39i9qfivfbklq.cloudfront.net/photo_SEO_EN/K/carrefour-alpine-milk-chocolate-bar-3x100g-3082706950.jpg",
             ExpirationDate = DateTime.Now.AddDays(21),
-            CreatedUserId = carrefour.Id
+            CreatedUserId = carrefour.Id,
+            Barcode = "22",
         };
 
         var carrefourPasta = new StoreProduct
@@ -484,7 +506,8 @@ public class EfSeeder : ISeeder
             BusinessId = carrefour.Id,
             Photo = "https://cdn.cimri.io/market/260x260/carrefour-burgu-500-gr-makarna-_270568.jpg",
             ExpirationDate = DateTime.Now.AddDays(20),
-            CreatedUserId = carrefour.Id
+            CreatedUserId = carrefour.Id,
+            Barcode = "23",
         };
 
         var carrefourFish = new StoreProduct
@@ -497,7 +520,8 @@ public class EfSeeder : ISeeder
             BusinessId = carrefour.Id,
             Photo = "https://cdn.cimri.io/market/260x260/carrefour-1-kg-alabalik-_897705.jpg",
             ExpirationDate = DateTime.Now.AddDays(28),
-            CreatedUserId = carrefour.Id
+            CreatedUserId = carrefour.Id,
+            Barcode = "24",
         };
 
         var carrefourRice = new StoreProduct
@@ -510,7 +534,8 @@ public class EfSeeder : ISeeder
             BusinessId = carrefour.Id,
             Photo = "https://cdn.cimri.io/market/260x260/carrefour-pilavlik-1-kg-pirinc-_249633.jpg",
             ExpirationDate = DateTime.Now.AddDays(20),
-            CreatedUserId = carrefour.Id
+            CreatedUserId = carrefour.Id,
+            Barcode = "25",
         };
 
         var carrefourEgg = new StoreProduct
@@ -524,7 +549,8 @@ public class EfSeeder : ISeeder
             Photo =
                 "https://reimg-carrefour.mncdn.com/mnresize/600/600/productimage/30239968/30239968_0_MC/8812739264562_1554103023703.jpg",
             ExpirationDate = DateTime.Now.AddDays(10),
-            CreatedUserId = carrefour.Id
+            CreatedUserId = carrefour.Id,
+            Barcode = "26",
         };
 
         var carrefourPalmoil = new StoreProduct
@@ -538,7 +564,8 @@ public class EfSeeder : ISeeder
             Photo =
                 "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS5W8L1qdRHEkqFI8BUJjATFa8owp0dcd9Xrv17utcm8A&s",
             ExpirationDate = DateTime.Now.AddDays(35),
-            CreatedUserId = carrefour.Id
+            CreatedUserId = carrefour.Id,
+            Barcode = "27",
         };
 
         var carrefourTomato = new StoreProduct
@@ -552,7 +579,8 @@ public class EfSeeder : ISeeder
             Photo =
                 "https://reimg-carrefour.mncdn.com/mnresize/600/600/productimage/30097558/30097558_0_MC/8796990930994_1569494130525.jpg",
             ExpirationDate = DateTime.Now.AddDays(5),
-            CreatedUserId = carrefour.Id
+            CreatedUserId = carrefour.Id,
+            Barcode = "28",
         };
 
         var carrefourOrange = new StoreProduct
@@ -566,7 +594,8 @@ public class EfSeeder : ISeeder
             Photo =
                 "https://reimg-carrefour.mncdn.com/mnresize/600/600/productimage/30007733/30007733_0_MC/8812741787698_1548850739021.jpg",
             ExpirationDate = DateTime.Now.AddDays(3),
-            CreatedUserId = carrefour.Id
+            CreatedUserId = carrefour.Id,
+            Barcode = "29",
         };
 
         var carrefourBanana = new StoreProduct
@@ -580,7 +609,8 @@ public class EfSeeder : ISeeder
             Photo =
                 "https://reimg-carrefour.mncdn.com/mnresize/600/600/productimage/30038808/30038808_0_MC/8796528771122_1528879509786.jpg",
             ExpirationDate = DateTime.Now.AddDays(3),
-            CreatedUserId = carrefour.Id
+            CreatedUserId = carrefour.Id,
+            Barcode = "30",
         };
 
         var carrefourNoodle = new StoreProduct
@@ -594,7 +624,8 @@ public class EfSeeder : ISeeder
             Photo =
                 "https://reimg-carrefour.mncdn.com/mnresize/600/600/productimage/30247177/30247177_0_MC/8842509254706_1657725795069.jpg",
             ExpirationDate = DateTime.Now.AddDays(20),
-            CreatedUserId = carrefour.Id
+            CreatedUserId = carrefour.Id,
+            Barcode = "31",
         };
 
         var carrefourCannedFish = new StoreProduct
@@ -608,7 +639,8 @@ public class EfSeeder : ISeeder
             Photo =
                 "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTpAUnVFG8P6IvJ5FwWJT5AfGPR1njSmOnzrW2610keJw&s",
             ExpirationDate = DateTime.Now.AddDays(20),
-            CreatedUserId = carrefour.Id
+            CreatedUserId = carrefour.Id,
+            Barcode = "32",
         };
 
         var carrefourCannedSoup = new StoreProduct
@@ -622,7 +654,8 @@ public class EfSeeder : ISeeder
             Photo =
                 "https://reimg-carrefour.mncdn.com/mnresize/600/600/productimage/30412725/30412725_0_MC/8848930078770_1679989283688.jpg",
             ExpirationDate = DateTime.Now.AddDays(20),
-            CreatedUserId = carrefour.Id
+            CreatedUserId = carrefour.Id,
+            Barcode = "33",
         };
 
         var carrefourCannedFruit = new StoreProduct
@@ -636,7 +669,8 @@ public class EfSeeder : ISeeder
             Photo =
                 "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSToMpQKEU1rAKDzVekIkV8YUrIuQN8FYVf_f1Pqc9VEg&s",
             ExpirationDate = DateTime.Now.AddDays(20),
-            CreatedUserId = carrefour.Id
+            CreatedUserId = carrefour.Id,
+            Barcode = "34",
         };
 
         var storeProducts = new List<StoreProduct>
@@ -663,7 +697,9 @@ public class EfSeeder : ISeeder
                 "Milk is a nutrient-rich, white liquid food produced by the mammary glands of mammals. It is the primary source of nutrition for young mammals, including breastfed human infants before they are able to digest solid food.",
             ExpirationDate = DateTime.Now.AddDays(7),
             CreatedUserId = adar.Id,
-            OwnerId = adar.Id
+            OwnerId = adar.Id,
+            Barcode = "35"
+            
         };
 
         var adarsCheese = new MonitoredProduct
@@ -673,7 +709,8 @@ public class EfSeeder : ISeeder
                 "Cheese is a dairy product, derived from milk and produced in wide ranges of flavors, textures and forms by coagulation of the milk protein casein.",
             ExpirationDate = DateTime.Now.AddDays(14),
             CreatedUserId = adar.Id,
-            OwnerId = adar.Id
+            OwnerId = adar.Id,
+            Barcode = "36"
         };
 
         var adarsChicken = new MonitoredProduct
@@ -683,7 +720,8 @@ public class EfSeeder : ISeeder
                 "The chicken is a type of domesticated fowl, a subspecies of the red junglefowl. It is one of the most common and widespread domestic animals, with a total population of more than 30 billion as of 2020.",
             ExpirationDate = DateTime.Now.AddDays(28),
             CreatedUserId = adar.Id,
-            OwnerId = adar.Id
+            OwnerId = adar.Id,
+            Barcode = "37"
         };
 
         var adarsApple = new MonitoredProduct
@@ -693,7 +731,8 @@ public class EfSeeder : ISeeder
                 "An apple is an edible fruit produced by an apple tree. Apple trees are cultivated worldwide and are the most widely grown species in the genus Malus.",
             ExpirationDate = DateTime.Now.AddDays(5),
             CreatedUserId = adar.Id,
-            OwnerId = adar.Id
+            OwnerId = adar.Id,
+            Barcode = "38"
         };
 
         var adarsFish = new MonitoredProduct
@@ -703,7 +742,8 @@ public class EfSeeder : ISeeder
                 "Fish are gill-bearing aquatic craniate animals that lack limbs with digits. They form a sister group to the tunicates, together forming the olfactores.",
             ExpirationDate = DateTime.Now.AddDays(28),
             CreatedUserId = adar.Id,
-            OwnerId = adar.Id
+            OwnerId = adar.Id,
+            Barcode = "39"
         };
 
         var adarsPasta = new MonitoredProduct
@@ -713,7 +753,8 @@ public class EfSeeder : ISeeder
                 "Pasta is a type of food typically made from an unleavened dough of wheat flour mixed with water or eggs, and formed into sheets or other shapes, then cooked by boiling or baking.",
             ExpirationDate = DateTime.Now.AddDays(20),
             CreatedUserId = adar.Id,
-            OwnerId = adar.Id
+            OwnerId = adar.Id,
+            Barcode = "40"
         };
 
         var adarsRice = new MonitoredProduct
@@ -723,7 +764,8 @@ public class EfSeeder : ISeeder
                 "Rice is the seed of the grass species Oryza sativa or less commonly Oryza glaberrima. As a cereal grain, it is the most widely consumed staple food for a large part of the world's human population, especially in Asia.",
             ExpirationDate = DateTime.Now.AddDays(20),
             CreatedUserId = adar.Id,
-            OwnerId = adar.Id
+            OwnerId = adar.Id,
+            Barcode = "41"
         };
 
         var adarsTea = new MonitoredProduct
@@ -733,7 +775,8 @@ public class EfSeeder : ISeeder
                 "Tea is a beverage made by steeping processed or fresh tea leaves in water. The term also refers to the plant Camellia sinensis from which the tea is made.",
             ExpirationDate = DateTime.Now.AddDays(35),
             CreatedUserId = adar.Id,
-            OwnerId = adar.Id
+            OwnerId = adar.Id,
+            Barcode = "42"
         };
 
         var adarsCoffee = new MonitoredProduct
@@ -743,7 +786,8 @@ public class EfSeeder : ISeeder
                 "Coffee is a brewed drink prepared from roasted coffee beans, the seeds of berries from certain Coffea species.",
             ExpirationDate = DateTime.Now.AddDays(35),
             CreatedUserId = adar.Id,
-            OwnerId = adar.Id
+            OwnerId = adar.Id,
+            Barcode = "43"
         };
 
         var adarsWiskey = new MonitoredProduct
@@ -753,7 +797,8 @@ public class EfSeeder : ISeeder
                 "Whisky or whiskey is a type of distilled alcoholic beverage made from fermented grain mash. Various grains are used for different varieties, including barley, corn, rye, and wheat.",
             ExpirationDate = DateTime.Now.AddDays(365),
             CreatedUserId = adar.Id,
-            OwnerId = adar.Id
+            OwnerId = adar.Id,
+            Barcode = "44"
         };
 
         var erensYogurt = new MonitoredProduct
@@ -763,7 +808,8 @@ public class EfSeeder : ISeeder
                 "Yogurt, yoghurt or yoghourt is a food produced by bacterial fermentation of milk. The bacteria used to make yogurt are known as yogurt cultures.",
             ExpirationDate = DateTime.Now.AddDays(28),
             CreatedUserId = eren.Id,
-            OwnerId = eren.Id
+            OwnerId = eren.Id,
+            Barcode = "45"
         };
 
         var erensButter = new MonitoredProduct
@@ -773,7 +819,8 @@ public class EfSeeder : ISeeder
                 "Butter is a dairy product made from the fat and protein components of milk or cream. It is a semi-solid emulsion at room temperature, consisting of approximately 80% butterfat.",
             ExpirationDate = DateTime.Now.AddDays(21),
             CreatedUserId = eren.Id,
-            OwnerId = eren.Id
+            OwnerId = eren.Id,
+            Barcode = "46"
         };
 
         var erensOrange = new MonitoredProduct
@@ -783,7 +830,8 @@ public class EfSeeder : ISeeder
                 "The orange is the fruit of various citrus species in the family Rutaceae; it primarily refers to Citrus × sinensis, which is also called sweet orange, to distinguish it from the related Citrus × aurantium, referred to as bitter orange.",
             ExpirationDate = DateTime.Now.AddDays(3),
             CreatedUserId = eren.Id,
-            OwnerId = eren.Id
+            OwnerId = eren.Id,
+            Barcode = "47"
         };
 
         var erensBanana = new MonitoredProduct
@@ -793,7 +841,8 @@ public class EfSeeder : ISeeder
                 "A banana is an elongated, edible fruit – botanically a berry – produced by several kinds of large herbaceous flowering plants in the genus Musa.",
             ExpirationDate = DateTime.Now.AddDays(3),
             CreatedUserId = eren.Id,
-            OwnerId = eren.Id
+            OwnerId = eren.Id,
+            Barcode = "48"
         };
 
         var erensPasta = new MonitoredProduct
@@ -803,7 +852,8 @@ public class EfSeeder : ISeeder
                 "Pasta is a type of food typically made from an unleavened dough of wheat flour mixed with water or eggs, and formed into sheets or other shapes, then cooked by boiling or baking.",
             ExpirationDate = DateTime.Now.AddDays(20),
             CreatedUserId = eren.Id,
-            OwnerId = eren.Id
+            OwnerId = eren.Id,
+            Barcode = "49"
         };
 
         var erensRice = new MonitoredProduct
@@ -813,7 +863,8 @@ public class EfSeeder : ISeeder
                 "Rice is the seed of the grass species Oryza sativa or less commonly Oryza glaberrima. As a cereal grain, it is the most widely consumed staple food for a large part of the world's human population, especially in Asia.",
             ExpirationDate = DateTime.Now.AddDays(20),
             CreatedUserId = eren.Id,
-            OwnerId = eren.Id
+            OwnerId = eren.Id,
+            Barcode = "50"
         };
 
         var erensVodka = new MonitoredProduct
@@ -823,7 +874,8 @@ public class EfSeeder : ISeeder
                 "Vodka is a clear distilled alcoholic beverage with different varieties originating in Poland, Russia, and Sweden. It is composed primarily of water and ethanol, but sometimes with traces of impurities and flavorings.",
             ExpirationDate = DateTime.Now.AddDays(365),
             CreatedUserId = eren.Id,
-            OwnerId = eren.Id
+            OwnerId = eren.Id,
+            Barcode = "51"
         };
 
         var erensTea = new MonitoredProduct
@@ -833,7 +885,8 @@ public class EfSeeder : ISeeder
                 "Tea is a beverage made by steeping processed or fresh tea leaves in water. The term also refers to the plant Camellia sinensis from which the tea is made.",
             ExpirationDate = DateTime.Now.AddDays(35),
             CreatedUserId = eren.Id,
-            OwnerId = eren.Id
+            OwnerId = eren.Id,
+            Barcode = "52"
         };
 
         var erensChocolate = new MonitoredProduct
@@ -843,7 +896,8 @@ public class EfSeeder : ISeeder
                 "Chocolate is a food product made from roasted and ground cacao seeds that is made in the form of a liquid, paste, or in a block, which may also be used as a flavoring ingredient in other foods.",
             ExpirationDate = DateTime.Now.AddDays(21),
             CreatedUserId = eren.Id,
-            OwnerId = eren.Id
+            OwnerId = eren.Id,
+            Barcode = "53"
         };
 
         var erensBeef = new MonitoredProduct
@@ -853,7 +907,8 @@ public class EfSeeder : ISeeder
                 "Beef is the culinary name for meat from cattle, particularly skeletal muscle. Humans have been eating beef since prehistoric times.",
             ExpirationDate = DateTime.Now.AddDays(14),
             CreatedUserId = eren.Id,
-            OwnerId = eren.Id
+            OwnerId = eren.Id,
+            Barcode = "54"
         };
 
         var erensLamb = new MonitoredProduct
@@ -863,7 +918,8 @@ public class EfSeeder : ISeeder
                 "Lamb, hogget, and mutton, generically sheep meat, are the meat of domestic sheep, Ovis aries.",
             ExpirationDate = DateTime.Now.AddDays(14),
             CreatedUserId = eren.Id,
-            OwnerId = eren.Id
+            OwnerId = eren.Id,
+            Barcode = "55"
         };
 
         var barissMilk = new MonitoredProduct
@@ -873,7 +929,8 @@ public class EfSeeder : ISeeder
                 "Milk is a nutrient-rich, white liquid food produced by the mammary glands of mammals. It is the primary source of nutrition for young mammals, including breastfed human infants before they are able to digest solid food.",
             ExpirationDate = DateTime.Now.AddDays(7),
             CreatedUserId = baris.Id,
-            OwnerId = baris.Id
+            OwnerId = baris.Id,
+            Barcode = "56"
         };
 
         var barissBeer = new MonitoredProduct
@@ -883,7 +940,8 @@ public class EfSeeder : ISeeder
                 "Beer is one of the oldest and most widely consumed alcoholic drinks in the world, and the third most popular drink overall after water and tea.",
             ExpirationDate = DateTime.Now.AddDays(14),
             CreatedUserId = baris.Id,
-            OwnerId = baris.Id
+            OwnerId = baris.Id,
+            Barcode = "57"
         };
 
         var barissPork = new MonitoredProduct
@@ -893,7 +951,8 @@ public class EfSeeder : ISeeder
                 "Pork is the culinary name for the meat of a domestic pig. It is the most commonly consumed meat worldwide, with evidence of pig husbandry dating back to 5000 BC.",
             ExpirationDate = DateTime.Now.AddDays(21),
             CreatedUserId = baris.Id,
-            OwnerId = baris.Id
+            OwnerId = baris.Id,
+            Barcode = "58"
         };
 
         var barissChicken = new MonitoredProduct
@@ -903,7 +962,8 @@ public class EfSeeder : ISeeder
                 "The chicken is a type of domesticated fowl, a subspecies of the red junglefowl. It is one of the most common and widespread domestic animals, with a total population of more than 30 billion as of 2020.",
             ExpirationDate = DateTime.Now.AddDays(28),
             CreatedUserId = baris.Id,
-            OwnerId = baris.Id
+            OwnerId = baris.Id,
+            Barcode = "59"
         };
 
         var barissPie = new MonitoredProduct
@@ -913,7 +973,8 @@ public class EfSeeder : ISeeder
                 "A pie is a baked dish that is usually made of a pastry dough casing that covers or completely contains a filling of various sweet or savory ingredients.",
             ExpirationDate = DateTime.Now.AddDays(7),
             CreatedUserId = baris.Id,
-            OwnerId = baris.Id
+            OwnerId = baris.Id,
+            Barcode = "60"
         };
 
         var monitoredProducts = new List<MonitoredProduct>

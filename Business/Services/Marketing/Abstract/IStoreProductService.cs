@@ -29,4 +29,6 @@ public interface IStoreProductService : IService
     Task<ServiceObjectResult<StoreProductGetDto?>> UpdateAsync(StoreProductUpdateDto productUpdateDto);
 
     Task<ServiceObjectResult<StoreProductGetDto?>> DeleteByIdAsync(Guid id);
+
+    Task<ServiceObjectResult<StoreProductGetDto?>> GetByBarcodeAsync(string barcode);
 }

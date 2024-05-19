@@ -22,5 +22,6 @@ public class StoreProductAddValidator : AbstractValidator<StoreProductAddDto>
         RuleFor(x => x.PercentDiscount).NotEmpty().WithMessage("Percent discount is required");
         RuleFor(x => x.PercentDiscount).InclusiveBetween(0, 100)
             .WithMessage("Percent discount must be between 0 and 100");
+        RuleFor(x => x.Barcode).NotEmpty().WithMessage("Barcode is required");
     }
 }

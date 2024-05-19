@@ -16,5 +16,7 @@ public class Product : EntityBase
 
     public DateTime ExpirationDate { get; set; } = DateTime.Now;
 
+    [StringLength(127)] public string Barcode { get; set; } = null!;
+
     public virtual ICollection<Category> Categories { get; set; } = new List<Category>();
 }

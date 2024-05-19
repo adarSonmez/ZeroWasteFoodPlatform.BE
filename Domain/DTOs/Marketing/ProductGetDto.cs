@@ -14,5 +14,7 @@ public class ProductGetDto : IDto
 
     public DateTime? ExpirationDate { get; set; }
 
+    public string Barcode { get; set; } = null!;
+
     public virtual ICollection<CategoryGetDto> Categories { get; set; }
 }

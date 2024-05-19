@@ -17,5 +17,6 @@ public class MonitoredProductAddValidator : AbstractValidator<MonitoredProductAd
         RuleFor(x => x.ExpirationDate).NotEmpty().WithMessage("Expiration date is required");
         RuleFor(x => x.CategoriesIds).NotEmpty().WithMessage("Categories are required");
         RuleFor(x => x.CategoriesIds).Must(x => x.Count > 0).WithMessage("Product must have at least one category");
+        RuleFor(x => x.Barcode).NotEmpty().WithMessage("Barcode is required");
     }
 }

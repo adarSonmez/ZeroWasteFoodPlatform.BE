@@ -36,6 +36,17 @@ public class StoreProductController : BaseController
             : Ok(result);
     }
 
+    [HttpGet("barcode/{barcode}")]
+    public async Task<IActionResult> GetByBarcode(string barcode)
+    {
+        var result = await _storeProductService.GetByBarcodeAsync(barcode);
+
+        return result.HasFailed
+            ? BadRequest(result)
+            : Ok(result);
+    }
+
+
     [HttpGet]
     public async Task<IActionResult> GetList([FromQuery] StoreProductFilterModel? filterModel = null, int page = 1,
         int pageSize = 10)
