@@ -3,7 +3,7 @@ using Domain.Entities.Membership;
 
 namespace Domain.FilterModels.Membership;
 
-public class CustomerFilterModel : IServiceFilterModel<Customer>
+public sealed class CustomerFilterModel : IServiceFilterModel<Customer>
 {
     public string? NameQuery { get; set; } = null;
     public bool? EmailVerified { get; set; } = null;

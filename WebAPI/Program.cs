@@ -56,6 +56,7 @@ builder.Services.AddCors(options =>
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {
+        var a = 0;
         options.TokenValidationParameters = new TokenValidationParameters
         {
             ValidateAudience = true,

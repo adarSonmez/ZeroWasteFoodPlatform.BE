@@ -170,14 +170,54 @@ public class StoreProductManager : IStoreProductService
     }
 
     public async Task<ServiceCollectionResult<StoreProductGetDto>> GetListAsync(
-        StoreProductFilterModel? filterModel, int page, int pageSize)
+        StoreProductFilterModel? filterModel, string? sortBy,
+        string? categoryIds, string? storeIds, double? percentDiscountLow, double? percentDiscountHigh,
+        decimal? originalPriceLow, decimal? originalPriceHigh, int page, int pageSize)
     {
         var result = new ServiceCollectionResult<StoreProductGetDto>();
 
         try
         {
+            Func<IQueryable<StoreProduct>, IOrderedQueryable<StoreProduct>>? orderBy = null;
+
+            if (sortBy != null)
+                orderBy = sortBy switch
+                {
+                    "name" => q => q.OrderBy(p => p.Name),
+                    "price" => q => q.OrderBy(p => p.OriginalPrice),
+                    "discount" => q => q.OrderByDescending(p => p.PercentDiscount),
+                    _ => null
+                };
+
             var filters = filterModel?.ToExpression();
-            var products = await _storeProductDal.GetAllAsync(filters);
+            var products = await _storeProductDal.GetAllAsync(filters, orderBy: orderBy);
+
+            if (categoryIds != null)
+            {
+                var categoryIdsList = categoryIds.Split(',').Select(Guid.Parse).ToList();
+                var categoryProducts =
+                    await _categoryProductDal.GetAllAsync(b => categoryIdsList.Contains(b.CategoryId));
+                var productIds = categoryProducts.Select(c => c.ProductId).ToList();
+                products = products.Where(p => productIds.Contains(p.Id)).ToList();
+            }
+
+            if (storeIds != null)
+            {
+                var storeIdsList = storeIds.Split(',').Select(Guid.Parse).ToList();
+                products = products.Where(p => storeIdsList.Contains(p.BusinessId)).ToList();
+            }
+
+            if (percentDiscountLow != null)
+                products = products.Where(p => p.PercentDiscount >= percentDiscountLow).ToList();
+
+            if (percentDiscountHigh != null)
+                products = products.Where(p => p.PercentDiscount <= percentDiscountHigh).ToList();
+
+            if (originalPriceLow != null)
+                products = products.Where(p => p.OriginalPrice >= originalPriceLow).ToList();
+
+            if (originalPriceHigh != null)
+                products = products.Where(p => p.OriginalPrice <= originalPriceHigh).ToList();
 
             foreach (var product in products)
             {

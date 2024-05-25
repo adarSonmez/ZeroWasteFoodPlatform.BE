@@ -17,7 +17,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Business.DependencyResolvers;
 
-public class BusinessModule : IDependencyInjectionModule
+public sealed class BusinessModule : IDependencyInjectionModule
 {
     public void Load(IServiceCollection services)
     {

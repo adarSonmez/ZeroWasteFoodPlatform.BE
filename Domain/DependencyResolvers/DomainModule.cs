@@ -3,7 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Domain.DependencyResolvers;
 
-public class DomainModule : IDependencyInjectionModule
+public sealed class DomainModule : IDependencyInjectionModule
 {
     public void Load(IServiceCollection services)
     {

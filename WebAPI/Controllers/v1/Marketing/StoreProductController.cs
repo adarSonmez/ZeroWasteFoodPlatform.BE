@@ -48,10 +48,20 @@ public class StoreProductController : BaseController
 
 
     [HttpGet]
-    public async Task<IActionResult> GetList([FromQuery] StoreProductFilterModel? filterModel = null, int page = 1,
+    public async Task<IActionResult> GetList([FromQuery] StoreProductFilterModel? filterModel = null,
+        string? sortBy = null,
+        string? categoryIds = null,
+        string? storeIds = null,
+        double? percentDiscountLow = null,
+        double? percentDiscountHigh = null,
+        decimal? originalPriceLow = null,
+        decimal? originalPriceHigh = null,
+        int page = 1,
         int pageSize = 10)
     {
-        var result = await _storeProductService.GetListAsync(filterModel, page, pageSize);
+        var result =
+            await _storeProductService.GetListAsync(filterModel, sortBy, categoryIds, storeIds, percentDiscountLow,
+                percentDiscountHigh, originalPriceLow, originalPriceHigh, page, pageSize);
 
         return result.HasFailed
             ? BadRequest(result)

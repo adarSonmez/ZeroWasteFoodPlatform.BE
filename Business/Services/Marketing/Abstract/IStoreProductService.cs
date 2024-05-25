@@ -9,8 +9,9 @@ public interface IStoreProductService : IService
 {
     Task<ServiceObjectResult<StoreProductGetDto?>> GetByIdAsync(Guid id);
 
-    Task<ServiceCollectionResult<StoreProductGetDto>> GetListAsync(StoreProductFilterModel? filterModel, int page,
-        int pageSize);
+    Task<ServiceCollectionResult<StoreProductGetDto>> GetListAsync(StoreProductFilterModel? filterModel, string? sortBy,
+        string? categoryIds, string? storeIds, double? percentDiscountLow, double? percentDiscountHigh,
+        decimal? originalPriceLow, decimal? originalPriceHigh, int page, int pageSize);
 
     Task<ServiceCollectionResult<StoreProductGetDto>> GetByUserIdAsync(Guid userId,
         StoreProductFilterModel? filterModel,
