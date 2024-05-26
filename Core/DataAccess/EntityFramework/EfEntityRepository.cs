@@ -23,6 +23,9 @@ public class EfEntityRepository<TEntity, TContext> : IEntityRepository<TEntity>
 
         if (orderBy != null) query = orderBy(query);
 
+        if (typeof(EntityBase).IsAssignableFrom(typeof(TEntity)))
+            query = query.Where(e => !(e as EntityBase)!.IsDeleted);
+
         return await query.ToListAsync();
     }
 
@@ -40,6 +43,9 @@ public class EfEntityRepository<TEntity, TContext> : IEntityRepository<TEntity>
 
         if (orderBy != null) query = orderBy(query);
 
+        if (typeof(EntityBase).IsAssignableFrom(typeof(TEntity)))
+            query = query.Where(e => !(e as EntityBase)!.IsDeleted);
+
         return await query.Skip((currentPage - 1) * pageSize).Take(pageSize).ToListAsync();
     }
 
@@ -54,6 +60,9 @@ public class EfEntityRepository<TEntity, TContext> : IEntityRepository<TEntity>
 
         if (include != null)
             query = include(query);
+
+        if (typeof(EntityBase).IsAssignableFrom(typeof(TEntity)))
+            query = query.Where(e => !(e as EntityBase)!.IsDeleted);
 
         return await query.FirstOrDefaultAsync(predicate);
     }

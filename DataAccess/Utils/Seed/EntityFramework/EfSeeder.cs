@@ -1,5 +1,6 @@
 using Core.Constants;
 using Core.Utils.Hashing;
+using Core.Utils.Price;
 using Core.Utils.Seed.Abstract;
 using DataAccess.Context.EntityFramework;
 using Domain.Entities.Analytics;
@@ -188,13 +189,13 @@ public class EfSeeder : ISeeder
             Name = "Milk",
             Description =
                 "Milk is a nutrient-rich, white liquid food produced by the mammary glands of mammals. It is the primary source of nutrition for young mammals, including breastfed human infants before they are able to digest solid food.",
-            OriginalPrice = 5.99m,
-            PercentDiscount = 50,
+            OriginalPrice = 25.0m,
+            PercentDiscount = PriceHelper.CalculateDiscountRate(DateTime.Now.AddDays(7)),
             BusinessId = bim.Id,
             Photo = "https://cdn.cimri.io/market/260x260/dost-1-lt-laktozsuz-sut-_1430964.jpg",
             ExpirationDate = DateTime.Now.AddDays(7),
             CreatedUserId = bim.Id,
-            Barcode = "1",
+            Barcode = "1"
         };
 
         var bimCheese = new StoreProduct
@@ -202,13 +203,13 @@ public class EfSeeder : ISeeder
             Name = "Cheese",
             Description =
                 "Cheese is a dairy product, derived from milk and produced in wide ranges of flavors, textures and forms by coagulation of the milk protein casein.",
-            OriginalPrice = 9.99m,
-            PercentDiscount = 30,
+            OriginalPrice = 140m,
+            PercentDiscount = PriceHelper.CalculateDiscountRate(DateTime.Now.AddDays(14)),
             BusinessId = bim.Id,
             Photo = "https://cdn.cimri.io/market/260x260/dost-500-gr-suzme-beyaz-peynir-_1431458.jpg",
             ExpirationDate = DateTime.Now.AddDays(14),
             CreatedUserId = bim.Id,
-            Barcode = "2",
+            Barcode = "2"
         };
 
         var bimButter = new StoreProduct
@@ -216,13 +217,13 @@ public class EfSeeder : ISeeder
             Name = "Butter",
             Description =
                 "Butter is a dairy product made from the fat and protein components of milk or cream. It is a semi-solid emulsion at room temperature, consisting of approximately 80% butterfat.",
-            OriginalPrice = 7.99m,
-            PercentDiscount = 40,
+            OriginalPrice = 160m,
+            PercentDiscount = PriceHelper.CalculateDiscountRate(DateTime.Now.AddDays(0)),
             BusinessId = bim.Id,
             Photo = "https://www.bim.com.tr/Uploads/aktuel-urunler/1098_buyuk_543X467_tereyag.jpg",
-            ExpirationDate = DateTime.Now.AddDays(21),
+            ExpirationDate = DateTime.Now.AddDays(0),
             CreatedUserId = bim.Id,
-            Barcode = "3",
+            Barcode = "3"
         };
 
         var bimGarlic = new StoreProduct
@@ -230,13 +231,13 @@ public class EfSeeder : ISeeder
             Name = "Garlic",
             Description =
                 "Garlic is a species in the onion genus, Allium. Its close relatives include the onion, shallot, leek, chive, and Chinese onion.",
-            OriginalPrice = 3.99m,
-            PercentDiscount = 70,
+            OriginalPrice = 35m,
+            PercentDiscount = PriceHelper.CalculateDiscountRate(DateTime.Now.AddDays(10)),
             BusinessId = bim.Id,
             Photo = "https://cf.kizlarsoruyor.com/q15507114/5969faa7-da73-418e-8154-b5b84556e25a.jpg",
             ExpirationDate = DateTime.Now.AddDays(10),
             CreatedUserId = bim.Id,
-            Barcode = "4",
+            Barcode = "4"
         };
 
         var bimCarrot = new StoreProduct
@@ -244,13 +245,13 @@ public class EfSeeder : ISeeder
             Name = "Carrot",
             Description =
                 "The carrot is a root vegetable, usually orange in color, though purple, black, red, white, and yellow cultivars exist.",
-            OriginalPrice = 2.99m,
-            PercentDiscount = 80,
+            OriginalPrice = 15m,
+            PercentDiscount = PriceHelper.CalculateDiscountRate(DateTime.Now.AddDays(5)),
             BusinessId = bim.Id,
             Photo = "https://cdn.cimri.io/market/260x260/havuc-kg-_127978.jpg",
             ExpirationDate = DateTime.Now.AddDays(5),
             CreatedUserId = bim.Id,
-            Barcode = "5",
+            Barcode = "5"
         };
 
         var bimYogurt = new StoreProduct
@@ -258,13 +259,13 @@ public class EfSeeder : ISeeder
             Name = "Yogurt",
             Description =
                 "Yogurt, yoghurt or yoghourt is a food produced by bacterial fermentation of milk. The bacteria used to make yogurt are known as yogurt cultures.",
-            OriginalPrice = 3.99m,
-            PercentDiscount = 60,
+            OriginalPrice = 25m,
+            PercentDiscount = PriceHelper.CalculateDiscountRate(DateTime.Now.AddDays(0)),
             BusinessId = bim.Id,
             Photo = "https://cdn.cimri.io/market/260x260/dost-3-kg-homojenize-yogurt-_1431008.jpg",
-            ExpirationDate = DateTime.Now.AddDays(28),
+            ExpirationDate = DateTime.Now.AddDays(0),
             CreatedUserId = bim.Id,
-            Barcode = "6",
+            Barcode = "6"
         };
 
         var bimCoffee = new StoreProduct
@@ -272,13 +273,13 @@ public class EfSeeder : ISeeder
             Name = "Coffee",
             Description =
                 "Coffee is a brewed drink prepared from roasted coffee beans, the seeds of berries from certain Coffea species.",
-            OriginalPrice = 19.99m,
-            PercentDiscount = 20,
+            OriginalPrice = 200m,
+            PercentDiscount = PriceHelper.CalculateDiscountRate(DateTime.Now.AddDays(6)),
             BusinessId = bim.Id,
             Photo = "https://cdn.cimri.io/market/260x260/vip-100-gr-gold-kahve-_929183.jpg",
-            ExpirationDate = DateTime.Now.AddDays(35),
+            ExpirationDate = DateTime.Now.AddDays(6),
             CreatedUserId = bim.Id,
-            Barcode = "7",
+            Barcode = "7"
         };
 
         var bimOil = new StoreProduct
@@ -286,13 +287,13 @@ public class EfSeeder : ISeeder
             Name = "Oil",
             Description =
                 "An oil is any nonpolar chemical substance that is a viscous liquid at ambient temperatures and is both hydrophobic and lipophilic.",
-            OriginalPrice = 11.99m,
-            PercentDiscount = 10,
+            OriginalPrice = 250m,
+            PercentDiscount = PriceHelper.CalculateDiscountRate(DateTime.Now.AddDays(42)),
             BusinessId = bim.Id,
             Photo = "https://www.ssk.biz.tr/wp-content/uploads/2022/06/yudum-aycicek-yagi.webp",
             ExpirationDate = DateTime.Now.AddDays(42),
             CreatedUserId = bim.Id,
-            Barcode = "8",
+            Barcode = "8"
         };
 
         var bimPasta = new StoreProduct
@@ -300,13 +301,13 @@ public class EfSeeder : ISeeder
             Name = "Pasta",
             Description =
                 "Pasta is a type of food typically made from an unleavened dough of wheat flour mixed with water or eggs, and formed into sheets or other shapes, then cooked by boiling or baking.",
-            OriginalPrice = 5.99m,
-            PercentDiscount = 50,
+            OriginalPrice = 10m,
+            PercentDiscount = PriceHelper.CalculateDiscountRate(DateTime.Now.AddDays(8)),
             BusinessId = bim.Id,
             Photo = "https://cdn.cimri.io/market/260x260/cardella-500-gr-ince-uzun-makarna-_1430690.jpg",
-            ExpirationDate = DateTime.Now.AddDays(20),
+            ExpirationDate = DateTime.Now.AddDays(8),
             CreatedUserId = bim.Id,
-            Barcode = "9",
+            Barcode = "9"
         };
 
         var bimOnion = new StoreProduct
@@ -314,13 +315,13 @@ public class EfSeeder : ISeeder
             Name = "Onion",
             Description =
                 "The onion, also known as the bulb onion or common onion, is a vegetable that is the most widely cultivated species of the genus Allium.",
-            OriginalPrice = 3.99m,
-            PercentDiscount = 70,
+            OriginalPrice = 12m,
+            PercentDiscount = PriceHelper.CalculateDiscountRate(DateTime.Now.AddDays(10)),
             BusinessId = bim.Id,
             Photo = "https://www.bim.com.tr/uploads/markalar/6_sogankuru.jpg",
             ExpirationDate = DateTime.Now.AddDays(10),
             CreatedUserId = bim.Id,
-            Barcode = "10",
+            Barcode = "10"
         };
 
         var bimApple = new StoreProduct
@@ -328,13 +329,13 @@ public class EfSeeder : ISeeder
             Name = "Apple",
             Description =
                 "An apple is an edible fruit produced by an apple tree. Apple trees are cultivated worldwide and are the most widely grown species in the genus Malus.",
-            OriginalPrice = 2.99m,
-            PercentDiscount = 80,
+            OriginalPrice = 13m,
+            PercentDiscount = PriceHelper.CalculateDiscountRate(DateTime.Now.AddDays(5)),
             BusinessId = bim.Id,
             Photo = "https://www.bim.com.tr/uploads/markalar/6_elma.jpg",
             ExpirationDate = DateTime.Now.AddDays(5),
             CreatedUserId = bim.Id,
-            Barcode = "11",
+            Barcode = "11"
         };
 
         var bimBanana = new StoreProduct
@@ -342,14 +343,14 @@ public class EfSeeder : ISeeder
             Name = "Banana",
             Description =
                 "A banana is an elongated, edible fruit – botanically a berry – produced by several kinds of large herbaceous flowering plants in the genus Musa.",
-            OriginalPrice = 1.99m,
-            PercentDiscount = 90,
+            OriginalPrice = 40m,
+            PercentDiscount = PriceHelper.CalculateDiscountRate(DateTime.Now.AddDays(3)),
             BusinessId = bim.Id,
             Photo =
                 "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQwnEqhNDq77I-sMzd0yMQt6lR4nMY5qEbwZ-jp8qCspA&s",
             ExpirationDate = DateTime.Now.AddDays(3),
             CreatedUserId = bim.Id,
-            Barcode = "12",
+            Barcode = "12"
         };
 
         var migrosMilk = new StoreProduct
@@ -357,13 +358,13 @@ public class EfSeeder : ISeeder
             Name = "Milk",
             Description =
                 "Milk is a nutrient-rich, white liquid food produced by the mammary glands of mammals. It is the primary source of nutrition for young mammals, including breastfed human infants before they are able to digest solid food.",
-            OriginalPrice = 5.99m,
-            PercentDiscount = 50,
+            OriginalPrice = 24m,
+            PercentDiscount = PriceHelper.CalculateDiscountRate(DateTime.Now.AddDays(7)),
             BusinessId = migros.Id,
             Photo = "https://images.migrosone.com/sanalmarket/product/11012039/11012039-312495-1650x1650.jpg",
             ExpirationDate = DateTime.Now.AddDays(7),
             CreatedUserId = migros.Id,
-            Barcode = "13",
+            Barcode = "13"
         };
 
         var migrosCheese = new StoreProduct
@@ -371,14 +372,14 @@ public class EfSeeder : ISeeder
             Name = "Cheese",
             Description =
                 "Cheese is a dairy product, derived from milk and produced in wide ranges of flavors, textures and forms by coagulation of the milk protein casein.",
-            OriginalPrice = 9.99m,
-            PercentDiscount = 30,
+            OriginalPrice = 145m,
+            PercentDiscount = PriceHelper.CalculateDiscountRate(DateTime.Now.AddDays(14)),
             BusinessId = migros.Id,
             Photo =
                 "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR7329uYBvVIN4LucLXaQZ6QoMT7ASDzvAznB4AufUFGg&s",
             ExpirationDate = DateTime.Now.AddDays(14),
             CreatedUserId = migros.Id,
-            Barcode = "14",
+            Barcode = "14"
         };
 
         var migrosPork = new StoreProduct
@@ -386,14 +387,14 @@ public class EfSeeder : ISeeder
             Name = "Pork",
             Description =
                 "Pork is the culinary name for the meat of a domestic pig. It is the most commonly consumed meat worldwide, with evidence of pig husbandry dating back to 5000 BC.",
-            OriginalPrice = 15.99m,
-            PercentDiscount = 20,
+            OriginalPrice = 120m,
+            PercentDiscount = PriceHelper.CalculateDiscountRate(DateTime.Now.AddDays(10)),
             BusinessId = migros.Id,
             Photo =
                 "https://images.migrosone.com/sanalmarket/product/14150430/tulip-pisirilmis-domuz-kol-eti-urunu-340g-7eea2a-1650x1650.jpg",
-            ExpirationDate = DateTime.Now.AddDays(21),
+            ExpirationDate = DateTime.Now.AddDays(10),
             CreatedUserId = migros.Id,
-            Barcode = "15",
+            Barcode = "15"
         };
 
         var migrosChicken = new StoreProduct
@@ -401,13 +402,13 @@ public class EfSeeder : ISeeder
             Name = "Chicken",
             Description =
                 "The chicken is a type of domesticated fowl, a subspecies of the red junglefowl. It is one of the most common and widespread domestic animals, with a total population of more than 30 billion as of 2020.",
-            OriginalPrice = 12.99m,
-            PercentDiscount = 40,
+            OriginalPrice = 200m,
+            PercentDiscount = PriceHelper.CalculateDiscountRate(DateTime.Now.AddDays(11)),
             BusinessId = migros.Id,
             Photo = "https://images.migrosone.com/sanalmarket/product/13029269/13029269-5fe34b-1650x1650.jpg",
-            ExpirationDate = DateTime.Now.AddDays(28),
+            ExpirationDate = DateTime.Now.AddDays(11),
             CreatedUserId = migros.Id,
-            Barcode = "16",
+            Barcode = "16"
         };
 
         var migrosApple = new StoreProduct
@@ -415,13 +416,13 @@ public class EfSeeder : ISeeder
             Name = "Apple",
             Description =
                 "An apple is an edible fruit produced by an apple tree. Apple trees are cultivated worldwide and are the most widely grown species in the genus Malus.",
-            OriginalPrice = 2.99m,
-            PercentDiscount = 80,
+            OriginalPrice = 16m,
+            PercentDiscount = PriceHelper.CalculateDiscountRate(DateTime.Now.AddDays(5)),
             BusinessId = migros.Id,
             Photo = "https://images.migrosone.com/sanalmarket/product/27133000/elma-granny-smith-kg-0e9183.jpg",
             ExpirationDate = DateTime.Now.AddDays(5),
             CreatedUserId = migros.Id,
-            Barcode = "17",
+            Barcode = "17"
         };
 
         var migrosKetchup = new StoreProduct
@@ -429,12 +430,12 @@ public class EfSeeder : ISeeder
             Name = "Ketchup",
             Description =
                 "Ketchup is a table condiment or sauce. Although original recipes used egg whites, mushrooms, oysters, grapes, mussels, or walnuts, among other ingredients, the unmodified term now typically refers to tomato ketchup.",
-            OriginalPrice = 7.99m,
-            PercentDiscount = 60,
+            OriginalPrice = 18m,
+            PercentDiscount = PriceHelper.CalculateDiscountRate(DateTime.Now.AddDays(35)),
             BusinessId = migros.Id,
             ExpirationDate = DateTime.Now.AddDays(35),
             CreatedUserId = migros.Id,
-            Barcode = "18",
+            Barcode = "18"
         };
 
         var migrosRice = new StoreProduct
@@ -442,14 +443,14 @@ public class EfSeeder : ISeeder
             Name = "Rice",
             Description =
                 "Rice is the seed of the grass species Oryza sativa or less commonly Oryza glaberrima. As a cereal grain, it is the most widely consumed staple food for a large part of the world's human population, especially in Asia.",
-            OriginalPrice = 9.99m,
-            PercentDiscount = 50,
+            OriginalPrice = 32m,
+            PercentDiscount = PriceHelper.CalculateDiscountRate(DateTime.Now.AddDays(12)),
             BusinessId = migros.Id,
             Photo =
                 "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTQEUdI2nZe3bepobVZR-KcG8NA3i2SQgiBYe4IlcPaug&s",
-            ExpirationDate = DateTime.Now.AddDays(20),
+            ExpirationDate = DateTime.Now.AddDays(12),
             CreatedUserId = migros.Id,
-            Barcode = "19",
+            Barcode = "19"
         };
 
         var migrosPasta = new StoreProduct
@@ -457,13 +458,13 @@ public class EfSeeder : ISeeder
             Name = "Pasta",
             Description =
                 "Pasta is a type of food typically made from an unleavened dough of wheat flour mixed with water or eggs, and formed into sheets or other shapes, then cooked by boiling or baking.",
-            OriginalPrice = 5.99m,
-            PercentDiscount = 50,
+            OriginalPrice = 12m,
+            PercentDiscount = PriceHelper.CalculateDiscountRate(DateTime.Now.AddDays(13)),
             BusinessId = migros.Id,
             Photo = "https://images.migrosone.com/sanalmarket/product/05030887/05030887-edb3d1-1650x1650.jpg",
-            ExpirationDate = DateTime.Now.AddDays(20),
+            ExpirationDate = DateTime.Now.AddDays(13),
             CreatedUserId = migros.Id,
-            Barcode = "20",
+            Barcode = "20"
         };
 
         var carrefourMilk = new StoreProduct
@@ -471,14 +472,14 @@ public class EfSeeder : ISeeder
             Name = "Milk",
             Description =
                 "Milk is a nutrient-rich, white liquid food produced by the mammary glands of mammals. It is the primary source of nutrition for young mammals, including breastfed human infants before they are able to digest solid food.",
-            OriginalPrice = 5.99m,
-            PercentDiscount = 50,
+            OriginalPrice = 30m,
+            PercentDiscount = PriceHelper.CalculateDiscountRate(DateTime.Now.AddDays(7)),
             BusinessId = carrefour.Id,
             Photo =
                 "https://reimg-carrefour.mncdn.com/mnresize/600/600/productimage/30261237/30261237_0_MC/8815821226034_1581408069490.jpg",
             ExpirationDate = DateTime.Now.AddDays(7),
             CreatedUserId = carrefour.Id,
-            Barcode = "21",
+            Barcode = "21"
         };
 
         var carrefourChocolate = new StoreProduct
@@ -486,14 +487,14 @@ public class EfSeeder : ISeeder
             Name = "Chocolate",
             Description =
                 "Chocolate is a food product made from roasted and ground cacao seeds that is made in the form of a liquid, paste, or in a block, which may also be used as a flavoring ingredient in other foods.",
-            OriginalPrice = 11.99m,
-            PercentDiscount = 40,
+            OriginalPrice = 40m,
+            PercentDiscount = PriceHelper.CalculateDiscountRate(DateTime.Now.AddDays(15)),
             BusinessId = carrefour.Id,
             Photo =
                 "https://d39i9qfivfbklq.cloudfront.net/photo_SEO_EN/K/carrefour-alpine-milk-chocolate-bar-3x100g-3082706950.jpg",
-            ExpirationDate = DateTime.Now.AddDays(21),
+            ExpirationDate = DateTime.Now.AddDays(15),
             CreatedUserId = carrefour.Id,
-            Barcode = "22",
+            Barcode = "22"
         };
 
         var carrefourPasta = new StoreProduct
@@ -501,13 +502,13 @@ public class EfSeeder : ISeeder
             Name = "Pasta",
             Description =
                 "Pasta is a type of food typically made from an unleavened dough of wheat flour mixed with water or eggs, and formed into sheets or other shapes, then cooked by boiling or baking.",
-            OriginalPrice = 5.99m,
-            PercentDiscount = 50,
+            OriginalPrice = 16m,
+            PercentDiscount = PriceHelper.CalculateDiscountRate(DateTime.Now.AddDays(16)),
             BusinessId = carrefour.Id,
             Photo = "https://cdn.cimri.io/market/260x260/carrefour-burgu-500-gr-makarna-_270568.jpg",
-            ExpirationDate = DateTime.Now.AddDays(20),
+            ExpirationDate = DateTime.Now.AddDays(16),
             CreatedUserId = carrefour.Id,
-            Barcode = "23",
+            Barcode = "23"
         };
 
         var carrefourFish = new StoreProduct
@@ -515,13 +516,13 @@ public class EfSeeder : ISeeder
             Name = "Fish",
             Description =
                 "Fish are gill-bearing aquatic craniate animals that lack limbs with digits. They form a sister group to the tunicates, together forming the olfactores.",
-            OriginalPrice = 19.99m,
-            PercentDiscount = 20,
+            OriginalPrice = 75m,
+            PercentDiscount = PriceHelper.CalculateDiscountRate(DateTime.Now.AddDays(28)),
             BusinessId = carrefour.Id,
             Photo = "https://cdn.cimri.io/market/260x260/carrefour-1-kg-alabalik-_897705.jpg",
             ExpirationDate = DateTime.Now.AddDays(28),
             CreatedUserId = carrefour.Id,
-            Barcode = "24",
+            Barcode = "24"
         };
 
         var carrefourRice = new StoreProduct
@@ -529,13 +530,13 @@ public class EfSeeder : ISeeder
             Name = "Rice",
             Description =
                 "Rice is the seed of the grass species Oryza sativa or less commonly Oryza glaberrima. As a cereal grain, it is the most widely consumed staple food for a large part of the world's human population, especially in Asia.",
-            OriginalPrice = 9.99m,
-            PercentDiscount = 50,
+            OriginalPrice = 40m,
+            PercentDiscount = PriceHelper.CalculateDiscountRate(DateTime.Now.AddDays(18)),
             BusinessId = carrefour.Id,
             Photo = "https://cdn.cimri.io/market/260x260/carrefour-pilavlik-1-kg-pirinc-_249633.jpg",
-            ExpirationDate = DateTime.Now.AddDays(20),
+            ExpirationDate = DateTime.Now.AddDays(18),
             CreatedUserId = carrefour.Id,
-            Barcode = "25",
+            Barcode = "25"
         };
 
         var carrefourEgg = new StoreProduct
@@ -543,14 +544,14 @@ public class EfSeeder : ISeeder
             Name = "Egg",
             Description =
                 "An egg is the organic vessel containing the zygote in which an animal embryo develops until it can survive on its own, at which point the animal hatches.",
-            OriginalPrice = 3.99m,
-            PercentDiscount = 70,
+            OriginalPrice = 100m,
+            PercentDiscount = PriceHelper.CalculateDiscountRate(DateTime.Now.AddDays(10)),
             BusinessId = carrefour.Id,
             Photo =
                 "https://reimg-carrefour.mncdn.com/mnresize/600/600/productimage/30239968/30239968_0_MC/8812739264562_1554103023703.jpg",
             ExpirationDate = DateTime.Now.AddDays(10),
             CreatedUserId = carrefour.Id,
-            Barcode = "26",
+            Barcode = "26"
         };
 
         var carrefourPalmoil = new StoreProduct
@@ -558,14 +559,14 @@ public class EfSeeder : ISeeder
             Name = "Palm Oil",
             Description =
                 "Palm oil is an edible vegetable oil derived from the mesocarp of the fruit of the oil palms, primarily the African oil palm Elaeis guineensis, and to a lesser extent from the American oil palm Elaeis oleifera and the maripa palm Attalea maripa.",
-            OriginalPrice = 7.99m,
-            PercentDiscount = 60,
+            OriginalPrice = 330m,
+            PercentDiscount = PriceHelper.CalculateDiscountRate(DateTime.Now.AddDays(35)),
             BusinessId = carrefour.Id,
             Photo =
                 "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS5W8L1qdRHEkqFI8BUJjATFa8owp0dcd9Xrv17utcm8A&s",
             ExpirationDate = DateTime.Now.AddDays(35),
             CreatedUserId = carrefour.Id,
-            Barcode = "27",
+            Barcode = "27"
         };
 
         var carrefourTomato = new StoreProduct
@@ -573,14 +574,14 @@ public class EfSeeder : ISeeder
             Name = "Tomato",
             Description =
                 "The tomato is the edible, often red berry of the plant Solanum lycopersicum, commonly known as a tomato plant.",
-            OriginalPrice = 3.99m,
-            PercentDiscount = 80,
+            OriginalPrice = 11m,
+            PercentDiscount = PriceHelper.CalculateDiscountRate(DateTime.Now.AddDays(5)),
             BusinessId = carrefour.Id,
             Photo =
                 "https://reimg-carrefour.mncdn.com/mnresize/600/600/productimage/30097558/30097558_0_MC/8796990930994_1569494130525.jpg",
             ExpirationDate = DateTime.Now.AddDays(5),
             CreatedUserId = carrefour.Id,
-            Barcode = "28",
+            Barcode = "28"
         };
 
         var carrefourOrange = new StoreProduct
@@ -588,14 +589,14 @@ public class EfSeeder : ISeeder
             Name = "Orange",
             Description =
                 "The orange is the fruit of various citrus species in the family Rutaceae; it primarily refers to Citrus × sinensis, which is also called sweet orange, to distinguish it from the related Citrus × aurantium, referred to as bitter orange.",
-            OriginalPrice = 2.99m,
-            PercentDiscount = 90,
+            OriginalPrice = 25m,
+            PercentDiscount = PriceHelper.CalculateDiscountRate(DateTime.Now.AddDays(3)),
             BusinessId = carrefour.Id,
             Photo =
                 "https://reimg-carrefour.mncdn.com/mnresize/600/600/productimage/30007733/30007733_0_MC/8812741787698_1548850739021.jpg",
             ExpirationDate = DateTime.Now.AddDays(3),
             CreatedUserId = carrefour.Id,
-            Barcode = "29",
+            Barcode = "29"
         };
 
         var carrefourBanana = new StoreProduct
@@ -603,14 +604,14 @@ public class EfSeeder : ISeeder
             Name = "Banana",
             Description =
                 "A banana is an elongated, edible fruit – botanically a berry – produced by several kinds of large herbaceous flowering plants in the genus Musa.",
-            OriginalPrice = 1.99m,
-            PercentDiscount = 90,
+            OriginalPrice = 55m,
+            PercentDiscount = PriceHelper.CalculateDiscountRate(DateTime.Now.AddDays(3)),
             BusinessId = carrefour.Id,
             Photo =
                 "https://reimg-carrefour.mncdn.com/mnresize/600/600/productimage/30038808/30038808_0_MC/8796528771122_1528879509786.jpg",
             ExpirationDate = DateTime.Now.AddDays(3),
             CreatedUserId = carrefour.Id,
-            Barcode = "30",
+            Barcode = "30"
         };
 
         var carrefourNoodle = new StoreProduct
@@ -618,14 +619,14 @@ public class EfSeeder : ISeeder
             Name = "Noodle",
             Description =
                 "Noodles are a type of food made from unleavened dough which is rolled flat and cut, stretched or extruded, into long strips or strings.",
-            OriginalPrice = 5.99m,
-            PercentDiscount = 50,
+            OriginalPrice = 16m,
+            PercentDiscount = PriceHelper.CalculateDiscountRate(DateTime.Now.AddDays(4)),
             BusinessId = carrefour.Id,
             Photo =
                 "https://reimg-carrefour.mncdn.com/mnresize/600/600/productimage/30247177/30247177_0_MC/8842509254706_1657725795069.jpg",
-            ExpirationDate = DateTime.Now.AddDays(20),
+            ExpirationDate = DateTime.Now.AddDays(4),
             CreatedUserId = carrefour.Id,
-            Barcode = "31",
+            Barcode = "31"
         };
 
         var carrefourCannedFish = new StoreProduct
@@ -633,14 +634,14 @@ public class EfSeeder : ISeeder
             Name = "Canned Fish",
             Description =
                 "Canned fish are fish which have been processed, sealed in an airtight container such as a sealed tin can, and subjected to heat.",
-            OriginalPrice = 9.99m,
-            PercentDiscount = 50,
+            OriginalPrice = 30m,
+            PercentDiscount = PriceHelper.CalculateDiscountRate(DateTime.Now.AddDays(2)),
             BusinessId = carrefour.Id,
             Photo =
                 "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTpAUnVFG8P6IvJ5FwWJT5AfGPR1njSmOnzrW2610keJw&s",
-            ExpirationDate = DateTime.Now.AddDays(20),
+            ExpirationDate = DateTime.Now.AddDays(2),
             CreatedUserId = carrefour.Id,
-            Barcode = "32",
+            Barcode = "32"
         };
 
         var carrefourCannedSoup = new StoreProduct
@@ -648,14 +649,14 @@ public class EfSeeder : ISeeder
             Name = "Canned Soup",
             Description =
                 "Canned soup is a type of soup designed for long shelf life and is a convenient form of food.",
-            OriginalPrice = 5.99m,
-            PercentDiscount = 50,
+            OriginalPrice = 12m,
+            PercentDiscount = PriceHelper.CalculateDiscountRate(DateTime.Now.AddDays(20)),
             BusinessId = carrefour.Id,
             Photo =
                 "https://reimg-carrefour.mncdn.com/mnresize/600/600/productimage/30412725/30412725_0_MC/8848930078770_1679989283688.jpg",
             ExpirationDate = DateTime.Now.AddDays(20),
             CreatedUserId = carrefour.Id,
-            Barcode = "33",
+            Barcode = "33"
         };
 
         var carrefourCannedFruit = new StoreProduct
@@ -663,14 +664,14 @@ public class EfSeeder : ISeeder
             Name = "Canned Fruit",
             Description =
                 "Canned fruit is fruit that has been processed, sealed in an airtight container such as a sealed tin can, and subjected to heat.",
-            OriginalPrice = 7.99m,
-            PercentDiscount = 50,
+            OriginalPrice = 22m,
+            PercentDiscount = PriceHelper.CalculateDiscountRate(DateTime.Now.AddDays(1)),
             BusinessId = carrefour.Id,
             Photo =
                 "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSToMpQKEU1rAKDzVekIkV8YUrIuQN8FYVf_f1Pqc9VEg&s",
-            ExpirationDate = DateTime.Now.AddDays(20),
+            ExpirationDate = DateTime.Now.AddDays(1),
             CreatedUserId = carrefour.Id,
-            Barcode = "34",
+            Barcode = "34"
         };
 
         var storeProducts = new List<StoreProduct>
@@ -699,7 +700,6 @@ public class EfSeeder : ISeeder
             CreatedUserId = adar.Id,
             OwnerId = adar.Id,
             Barcode = "35"
-            
         };
 
         var adarsCheese = new MonitoredProduct

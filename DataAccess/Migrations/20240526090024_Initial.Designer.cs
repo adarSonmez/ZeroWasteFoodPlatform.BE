@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataAccess.Migrations
 {
     [DbContext(typeof(EfDbContext))]
-    [Migration("20240430191345_Initial")]
+    [Migration("20240526090024_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -147,6 +147,11 @@ namespace DataAccess.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Barcode")
+                        .IsRequired()
+                        .HasMaxLength(127)
+                        .HasColumnType("nvarchar(127)");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");

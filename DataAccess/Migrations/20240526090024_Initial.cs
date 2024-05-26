@@ -111,6 +111,7 @@ namespace DataAccess.Migrations
                     Description = table.Column<string>(type: "nvarchar(1023)", maxLength: 1023, nullable: false),
                     Photo = table.Column<string>(type: "nvarchar(2047)", maxLength: 2047, nullable: true),
                     ExpirationDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Barcode = table.Column<string>(type: "nvarchar(127)", maxLength: 127, nullable: false),
                     ProductType = table.Column<string>(type: "nvarchar(21)", maxLength: 21, nullable: false),
                     OwnerId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     OriginalPrice = table.Column<decimal>(type: "decimal(18,2)", precision: 18, scale: 2, nullable: true),

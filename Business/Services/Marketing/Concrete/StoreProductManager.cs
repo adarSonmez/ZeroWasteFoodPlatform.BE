@@ -7,6 +7,7 @@ using Core.Services.Messages;
 using Core.Services.Result;
 using Core.Utils.Auth;
 using Core.Utils.IoC;
+using Core.Utils.Price;
 using Core.Utils.Rules;
 using DataAccess.Repositories.Abstract.Association;
 using DataAccess.Repositories.Abstract.Marketing;
@@ -191,6 +192,8 @@ public class StoreProductManager : IStoreProductService
 
             var filters = filterModel?.ToExpression();
             var products = await _storeProductDal.GetAllAsync(filters, orderBy: orderBy);
+
+            await UpdateDiscountsIfNecessary(products);
 
             if (categoryIds != null)
             {
@@ -469,5 +472,19 @@ public class StoreProductManager : IStoreProductService
     {
         var product = await _storeProductDal.GetAsync(b => barcode.Equals(b.Barcode));
         return product != null ? StoreProductServiceMessages.BarcodeExists : null;
+    }
+
+    private async Task UpdateDiscountsIfNecessary(IList<StoreProduct> products)
+    {
+        foreach (var product in products)
+            if (product.PercentDiscount < 0)
+            {
+                await _storeProductDal.SoftDeleteAsync(product);
+            }
+            else
+            {
+                product.PercentDiscount = PriceHelper.CalculateDiscountRate(product.ExpirationDate);
+                await _storeProductDal.UpdateAsync(product);
+            }
     }
 }

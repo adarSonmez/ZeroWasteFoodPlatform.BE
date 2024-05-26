@@ -17,7 +17,6 @@ public sealed class EfDbContext : EfDbContextBase
     public DbSet<Category> Category { get; set; } = null!;
     public DbSet<Product> Product { get; set; } = null!;
     public DbSet<CategoryProduct> CategoryProduct { get; set; } = null!;
-
     public DbSet<CustomerStoreProduct> CustomerStoreProduct { get; set; } = null!;
     public DbSet<User> User { get; set; } = null!;
     public DbSet<Report> Report { get; set; } = null!;
