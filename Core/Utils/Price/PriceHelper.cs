@@ -5,6 +5,7 @@ public static class PriceHelper
     /// <summary>
     ///     Gradually increase percentage of discount, so that on the expiration date the discount is 90%.
     ///     Starting discount rate is 20% which is applied 20+ days before the expiration date.
+    ///     If the product is expired, return -1.
     /// </summary>
     /// <param name="expirationDateTime"></param>
     /// <returns>Discount rate</returns>

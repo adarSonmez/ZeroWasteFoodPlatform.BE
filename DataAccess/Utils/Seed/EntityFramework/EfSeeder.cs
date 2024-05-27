@@ -432,6 +432,7 @@ public class EfSeeder : ISeeder
                 "Ketchup is a table condiment or sauce. Although original recipes used egg whites, mushrooms, oysters, grapes, mussels, or walnuts, among other ingredients, the unmodified term now typically refers to tomato ketchup.",
             OriginalPrice = 18m,
             PercentDiscount = PriceHelper.CalculateDiscountRate(DateTime.Now.AddDays(35)),
+            Photo = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTQEUdI2nZe3bepobVZR-KcG8NA3i2SQgiBYe4IlcPaug&s",
             BusinessId = migros.Id,
             ExpirationDate = DateTime.Now.AddDays(35),
             CreatedUserId = migros.Id,
@@ -447,7 +448,7 @@ public class EfSeeder : ISeeder
             PercentDiscount = PriceHelper.CalculateDiscountRate(DateTime.Now.AddDays(12)),
             BusinessId = migros.Id,
             Photo =
-                "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTQEUdI2nZe3bepobVZR-KcG8NA3i2SQgiBYe4IlcPaug&s",
+                "https://images.migrosone.com/sanalmarket/product/01011179/01011179-ff1326-1650x1650.jpg",
             ExpirationDate = DateTime.Now.AddDays(12),
             CreatedUserId = migros.Id,
             Barcode = "19"
