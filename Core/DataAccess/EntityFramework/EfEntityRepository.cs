@@ -12,7 +12,8 @@ public class EfEntityRepository<TEntity, TContext> : IEntityRepository<TEntity>
 {
     public async Task<IList<TEntity>> GetAllAsync(Expression<Func<TEntity, bool>>? predicate = null,
         Func<IQueryable<TEntity>, IQueryable<TEntity>>? include = null,
-        Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>>? orderBy = null, bool enableTracking = false)
+        Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>>? orderBy = null, bool enableTracking = false,
+        bool getDeleted = false)
     {
         await using var context = new TContext();
         IQueryable<TEntity> query = context.Set<TEntity>();
@@ -23,7 +24,7 @@ public class EfEntityRepository<TEntity, TContext> : IEntityRepository<TEntity>
 
         if (orderBy != null) query = orderBy(query);
 
-        if (typeof(EntityBase).IsAssignableFrom(typeof(TEntity)))
+        if (!getDeleted && typeof(EntityBase).IsAssignableFrom(typeof(TEntity)))
             query = query.Where(e => !(e as EntityBase)!.IsDeleted);
 
         return await query.ToListAsync();
@@ -32,7 +33,7 @@ public class EfEntityRepository<TEntity, TContext> : IEntityRepository<TEntity>
     public async Task<IList<TEntity>> GetAllPaginatedAsync(Expression<Func<TEntity, bool>>? predicate = null,
         Func<IQueryable<TEntity>, IQueryable<TEntity>>? include = null,
         Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>>? orderBy = null,
-        bool enableTracking = false, int currentPage = 1, int pageSize = int.MaxValue)
+        bool enableTracking = false, bool getDeleted = false, int currentPage = 1, int pageSize = int.MaxValue)
     {
         await using var context = new TContext();
         IQueryable<TEntity> query = context.Set<TEntity>();
@@ -43,14 +44,15 @@ public class EfEntityRepository<TEntity, TContext> : IEntityRepository<TEntity>
 
         if (orderBy != null) query = orderBy(query);
 
-        if (typeof(EntityBase).IsAssignableFrom(typeof(TEntity)))
+        if (!getDeleted && typeof(EntityBase).IsAssignableFrom(typeof(TEntity)))
             query = query.Where(e => !(e as EntityBase)!.IsDeleted);
 
         return await query.Skip((currentPage - 1) * pageSize).Take(pageSize).ToListAsync();
     }
 
     public async Task<TEntity?> GetAsync(Expression<Func<TEntity, bool>> predicate,
-        Func<IQueryable<TEntity>, IQueryable<TEntity>>? include = null, bool enableTracking = false)
+        Func<IQueryable<TEntity>, IQueryable<TEntity>>? include = null, bool enableTracking = false,
+        bool getDeleted = false)
     {
         await using var context = new TContext();
         IQueryable<TEntity> query = context.Set<TEntity>();
@@ -61,21 +63,22 @@ public class EfEntityRepository<TEntity, TContext> : IEntityRepository<TEntity>
         if (include != null)
             query = include(query);
 
-        if (typeof(EntityBase).IsAssignableFrom(typeof(TEntity)))
+        if (!getDeleted && typeof(EntityBase).IsAssignableFrom(typeof(TEntity)))
             query = query.Where(e => !(e as EntityBase)!.IsDeleted);
 
         return await query.FirstOrDefaultAsync(predicate);
     }
 
-    public Task<IQueryable<TEntity>> Find(Expression<Func<TEntity, bool>> predicate, bool enableTracking = false)
+    public async Task<IQueryable<TEntity>> FindAsync(Expression<Func<TEntity, bool>> predicate,
+        bool enableTracking = false)
     {
-        using var context = new TContext();
+        await using var context = new TContext();
         IQueryable<TEntity> query = context.Set<TEntity>();
 
         if (!enableTracking)
             query = query.AsNoTracking();
 
-        return Task.FromResult(query.Where(predicate));
+        return query.Where(predicate);
     }
 
     public async Task<long> CountAsync(Expression<Func<TEntity, bool>>? predicate = null)

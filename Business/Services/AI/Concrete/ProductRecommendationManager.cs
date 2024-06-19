@@ -24,8 +24,9 @@ public class ProductRecommendationManager : IProductRecommendationService
 
         try
         {
-            var userId = AuthHelper.GetUserId() ?? 
-                         throw new ValidationException("PRCD-154686", ProductRecommendationServiceMessages.UserNotFound);
+            var userId = AuthHelper.GetUserId() ??
+                         throw new ValidationException("PRCD-154686",
+                             ProductRecommendationServiceMessages.UserNotFound);
 
             var currentShoppingListDto = await _customerService.GetShoppingListAsync(userId);
             var currentShoppingList = currentShoppingListDto.Data;

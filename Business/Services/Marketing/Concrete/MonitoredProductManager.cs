@@ -130,10 +130,11 @@ public class MonitoredProductManager : IMonitoredProductService
         {
             BusinessRules.Run(("MNPR-612521", BusinessRules.CheckDtoNull(productAddDto)));
             var product = _mapper.Map<MonitoredProduct>(productAddDto);
-            
+
             var currentUserId = AuthHelper.GetUserId() ??
-                                throw new ValidationException("MNPR-445883", MonitoredProductServiceMessages.UserNotFound);
-            
+                                throw new ValidationException("MNPR-445883",
+                                    MonitoredProductServiceMessages.UserNotFound);
+
             product.OwnerId = currentUserId;
             product.CreatedUserId = currentUserId;
 
@@ -157,7 +158,7 @@ public class MonitoredProductManager : IMonitoredProductService
         var result = new ServiceObjectResult<MonitoredProductGetDto?>();
 
         try
-        { 
+        {
             var product = await _monitoredProductDal.GetAsync(b => b.Id.Equals(id));
             BusinessRules.Run(("MNPR-591741", BusinessRules.CheckEntityNull(product)));
 

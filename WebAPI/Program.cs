@@ -3,16 +3,22 @@ using Business.DependencyResolvers;
 using Core.Constants;
 using Core.DependencyResolvers;
 using Core.Extensions;
+using Core.Middlewares;
 using Core.Utils.DI.Abstact;
 using DataAccess.DependencyResolvers;
 using Domain.DependencyResolvers;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 var configuration = builder.Configuration;
 var env = builder.Environment;
 const string corsPolicyName = "AllowOrigin";
+
+Log.Logger = new LoggerConfiguration()
+    .WriteTo.File("Log/application.log", rollingInterval: RollingInterval.Day)
+    .CreateLogger();
 
 builder.Services.AddCors(options =>
 {
@@ -31,6 +37,9 @@ builder.Services.AddControllers();
 builder.Services.AddControllers().AddNewtonsoftJson();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddHealthChecks();
+
+builder.Services.AddLogging(loggingBuilder => { loggingBuilder.AddSerilog(); });
 
 builder.Services.AddDependencyResolvers(
     new IDependencyInjectionModule[]
@@ -99,12 +108,18 @@ if (app.Environment.IsDevelopment())
 
 app.UseCors(corsPolicyName);
 
+app.UseMiddleware<PerformanceLoggingMiddleware>();
+
 // app.UseHttpsRedirection();
 
 app.UseAuthentication();
 
 app.UseAuthorization();
 
+app.MapHealthChecks("/hc");
+
 app.MapControllers();
 
 app.Run();
+
+Log.CloseAndFlush();

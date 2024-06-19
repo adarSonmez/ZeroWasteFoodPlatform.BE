@@ -17,7 +17,6 @@ public class EfDbContextBase : DbContext
         optionsBuilder.UseSqlServer(configuration.GetConnectionString("DefaultConnection"));
     }
 
-
     public override int SaveChanges()
     {
         OnBeforeSaveChanges();

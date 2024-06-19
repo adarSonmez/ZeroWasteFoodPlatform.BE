@@ -11,7 +11,7 @@ using Domain.DTOs.Marketing;
 
 namespace Business.Services.Marketing.Concrete;
 
-public class CategoryManager: ICategoryService
+public class CategoryManager : ICategoryService
 {
     private readonly ICategoryDal _categoryDal = ServiceTool.GetService<ICategoryDal>()!;
     private readonly IMapper _mapper = ServiceTool.GetService<IMapper>()!;

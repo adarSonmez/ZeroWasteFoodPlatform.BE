@@ -42,7 +42,7 @@ public static class BusinessRules
 
         return customError;
     }
-    
+
     public static string? CheckEmail(string email)
     {
         return !email.IsValidEmail() ? BusinessRulesMessages.EmailFormatIsNotValid : null;
@@ -73,7 +73,7 @@ public static class BusinessRules
     public static string? CheckIdSameWithCurrentUser(Guid id)
     {
         var currentUserId = AuthHelper.GetUserId();
-        
+
         return currentUserId != id ? ServiceResultConstants.IdIsNotSameWithCurrentUser : null;
     }
 }
