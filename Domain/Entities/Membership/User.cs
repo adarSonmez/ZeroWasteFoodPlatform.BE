@@ -1,11 +1,9 @@
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using Core.Domain.Abstract;
 using Domain.Entities.Marketing;
 
 namespace Domain.Entities.Membership;
 
-[Table("Users", Schema = "Membership")]
 public class User : EntityBase
 {
     [StringLength(127)] public string Username { get; set; } = null!;

@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using Domain.Entities.Marketing;
+using Microsoft.EntityFrameworkCore;
 
 namespace Domain.Entities.Membership;
 
@@ -8,11 +9,11 @@ public class Business : User
 {
     [StringLength(1023)] public string Address { get; set; } = null!;
 
-    [StringLength(127)] public string Name { get; set; } = null!;
+    [StringLength(127)] [Unicode] public string Name { get; set; } = null!;
 
     [StringLength(127)] public string? Website { get; set; }
 
-    [StringLength(2047)] public string? Description { get; set; }
+    [StringLength(2047)] [Unicode] public string? Description { get; set; }
 
     [StringLength(1023)]
     public string Logo { get; set; } = "https://png.pngtree.com/element_our/sm/20180418/sm_5ad74b2cb4473.jpg";

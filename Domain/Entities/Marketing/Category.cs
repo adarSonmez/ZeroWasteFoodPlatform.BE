@@ -1,17 +1,16 @@
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using Core.Domain.Abstract;
+using Microsoft.EntityFrameworkCore;
 
 namespace Domain.Entities.Marketing;
 
-[Table("Categories", Schema = "Marketing")]
 public class Category : IEntity
 {
     public Guid Id { get; set; } = Guid.NewGuid();
 
-    [StringLength(63)] public string Name { get; set; } = null!;
+    [StringLength(63)] [Unicode] public string Name { get; set; } = null!;
 
-    [StringLength(2047)] public string? Description { get; set; }
+    [StringLength(2047)] [Unicode] public string? Description { get; set; }
 
     [StringLength(1023)]
     public string Photo { get; set; } =

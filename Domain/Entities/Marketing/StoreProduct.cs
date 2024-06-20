@@ -7,7 +7,7 @@ namespace Domain.Entities.Marketing;
 // Derived entity from Product.cs
 public class StoreProduct : Product
 {
-    [Precision(18, 2)] public decimal OriginalPrice { get; set; }
+    [Precision(9, 2)] public decimal OriginalPrice { get; set; }
 
     public double PercentDiscount { get; set; }
 

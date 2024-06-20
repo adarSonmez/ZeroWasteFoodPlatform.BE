@@ -4,7 +4,6 @@ using Domain.Entities.Marketing;
 
 namespace Domain.Entities.Association;
 
-[Table("CategoryProducts", Schema = "Association")]
 public class CategoryProduct : IEntity
 {
     public Guid CategoryId { get; set; }

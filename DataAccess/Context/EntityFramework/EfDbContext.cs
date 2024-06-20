@@ -43,6 +43,38 @@ public sealed class EfDbContext : EfDbContextBase
 
         # endregion Shadow Properties
 
+        # region Table Names and Schemas
+
+        modelBuilder.HasDefaultSchema("Default");
+
+        modelBuilder.Entity<Category>()
+            .ToTable("Categories", "Marketing");
+
+        modelBuilder.Entity<Product>()
+            .ToTable("Products", "Marketing");
+
+        modelBuilder.Entity<CategoryProduct>()
+            .ToTable("CategoryProducts", "Association");
+
+        modelBuilder.Entity<CustomerStoreProduct>()
+            .ToTable("CustomerStoreProducts", "Association");
+
+        modelBuilder.Entity<User>()
+            .ToTable("Users", "Membership");
+
+        modelBuilder.Entity<Report>()
+            .ToTable("Reports", "Analytics");
+
+        # endregion Table Names and Schemas
+
+        # region Row Versions
+
+        modelBuilder.Entity<Report>()
+            .Property(p => p.RowVersion)
+            .IsRowVersion();
+
+        # endregion Row Versions
+
         # region Derived Entities
 
         modelBuilder.Entity<User>()
@@ -58,13 +90,17 @@ public sealed class EfDbContext : EfDbContextBase
 
         # endregion Derived Entities
 
-        # region Association Entities
+        # region Composite Keys
 
         modelBuilder.Entity<CategoryProduct>()
             .HasKey(cp => new { cp.CategoryId, cp.ProductId });
 
         modelBuilder.Entity<CustomerStoreProduct>()
             .HasKey(csp => new { csp.CustomerId, csp.ProductId });
+
+        # endregion Composite Keys
+
+        # region Restricting Relationships
 
         modelBuilder.Entity<CustomerStoreProduct>()
             .HasOne(csp => csp.Customer)
@@ -78,9 +114,6 @@ public sealed class EfDbContext : EfDbContextBase
             .HasForeignKey(csp => csp.ProductId)
             .OnDelete(DeleteBehavior.Restrict);
 
-        # endregion Association Entities
-
-        # region Restricting Relationships
 
         modelBuilder.Entity<MonitoredProduct>()
             .HasOne(mp => mp.Owner)

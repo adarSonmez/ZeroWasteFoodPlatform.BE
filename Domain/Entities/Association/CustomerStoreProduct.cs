@@ -5,7 +5,6 @@ using Domain.Entities.Membership;
 
 namespace Domain.Entities.Association;
 
-[Table("CustomerStoreProduct", Schema = "Association")]
 public class CustomerStoreProduct : IEntity
 {
     public Guid CustomerId { get; set; }
