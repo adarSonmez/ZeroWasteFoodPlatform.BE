@@ -258,7 +258,6 @@ public class StoreProductManager : IStoreProductService
 
         try
         {
-            BusinessRules.Run(("STPR-412438", BusinessRules.CheckDtoNull(productAddDto)));
             BusinessRules.Run(("STPR-255225", await CheckIfBarcodeExists(productAddDto.Barcode)));
 
             var product = _mapper.Map<StoreProduct>(productAddDto);
@@ -312,8 +311,6 @@ public class StoreProductManager : IStoreProductService
 
         try
         {
-            BusinessRules.Run(("STPR-646480", BusinessRules.CheckDtoNull(productManipulateShoppingListDto)));
-
             var product = await _storeProductDal.GetAsync(b =>
                 b.Id.Equals(productManipulateShoppingListDto.ProductId));
             BusinessRules.Run(("STPR-591299", BusinessRules.CheckEntityNull(product)));
@@ -362,8 +359,6 @@ public class StoreProductManager : IStoreProductService
 
         try
         {
-            BusinessRules.Run(("STPR-612880", BusinessRules.CheckDtoNull(productManipulateShoppingListDto)));
-
             var product = await _storeProductDal.GetAsync(b =>
                 b.Id.Equals(productManipulateShoppingListDto.ProductId));
             BusinessRules.Run(("STPR-794153", BusinessRules.CheckEntityNull(product)));
@@ -424,8 +419,6 @@ public class StoreProductManager : IStoreProductService
 
         try
         {
-            BusinessRules.Run(("STPR-538394", BusinessRules.CheckDtoNull(productUpdateDto)));
-
             var product = await _storeProductDal.GetAsync(b => b.Id.Equals(productUpdateDto.Id));
             BusinessRules.Run(("STPR-780245", BusinessRules.CheckEntityNull(product)));
 

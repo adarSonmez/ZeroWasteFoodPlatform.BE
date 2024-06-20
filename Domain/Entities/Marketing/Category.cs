@@ -17,5 +17,5 @@ public class Category : IEntity
     public string Photo { get; set; } =
         "https://cdn3.iconfinder.com/data/icons/glypho-social-and-other-logos/64/logo-share-512.png";
 
-    public virtual ICollection<Product> Products { get; set; } = new List<Product>();
+    public virtual ICollection<Product> Products { get; set; } = new HashSet<Product>();
 }

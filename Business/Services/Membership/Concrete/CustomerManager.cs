@@ -112,7 +112,6 @@ public class CustomerManager : ICustomerService
         try
         {
             BusinessRules.Run(
-                ("CSTM-950070", BusinessRules.CheckDtoNull(customerUpdateDto)),
                 ("CSTM-377965", await CheckIfUsernameExists(customerUpdateDto.Username, true)),
                 ("CSTM-842305", await CheckIfEmailExists(customerUpdateDto.Email, true))
             );

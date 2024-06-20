@@ -8,15 +8,7 @@ public abstract class EntityBase : IEntity
 
     public bool IsDeleted { get; set; }
 
-    public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
-
-    public DateTime? DeletedAt { get; set; }
-
-    public DateTime? UpdatedAt { get; set; }
-
     public Guid CreatedUserId { get; set; } = Guid.Empty;
 
-    public Guid? DeletedUserId { get; set; }
-
-    public Guid? UpdatedUserId { get; set; }
+    public DateTime CreatedAt { get; set; } = DateTime.Now;
 }

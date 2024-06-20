@@ -18,6 +18,9 @@ public class EfEntityRepository<TEntity, TContext> : IEntityRepository<TEntity>
         await using var context = new TContext();
         IQueryable<TEntity> query = context.Set<TEntity>();
 
+        if (!enableTracking)
+            query = query.AsNoTrackingWithIdentityResolution();
+
         if (predicate != null) query = query.Where(predicate);
 
         if (include != null) query = include(query);
@@ -37,6 +40,9 @@ public class EfEntityRepository<TEntity, TContext> : IEntityRepository<TEntity>
     {
         await using var context = new TContext();
         IQueryable<TEntity> query = context.Set<TEntity>();
+
+        if (!enableTracking)
+            query = query.AsNoTrackingWithIdentityResolution();
 
         if (predicate != null) query = query.Where(predicate);
 
@@ -76,7 +82,7 @@ public class EfEntityRepository<TEntity, TContext> : IEntityRepository<TEntity>
         IQueryable<TEntity> query = context.Set<TEntity>();
 
         if (!enableTracking)
-            query = query.AsNoTracking();
+            query = query.AsNoTrackingWithIdentityResolution();
 
         return query.Where(predicate);
     }

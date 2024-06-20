@@ -1,5 +1,6 @@
-using System.Security.Claims;
+using Core.Constants;
 using Core.Domain.Abstract;
+using Core.Utils.Auth;
 using Core.Utils.IoC;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
@@ -15,6 +16,7 @@ public class EfDbContextBase : DbContext
     {
         var configuration = ServiceTool.GetService<IConfiguration>()!;
         optionsBuilder.UseSqlServer(configuration.GetConnectionString("DefaultConnection"));
+        // optionsBuilder.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
     }
 
     public override int SaveChanges()
@@ -42,24 +44,28 @@ public class EfDbContextBase : DbContext
 
     protected virtual void OnAfterSaveChanges()
     {
-        var currentUserIdStr = _httpContextAccessor?.HttpContext?.User.Claims
-            .FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
-
-        var currentUserId = currentUserIdStr is not null ? Guid.Parse(currentUserIdStr) : Guid.Empty;
+        var currentUserId = AuthHelper.GetUserId()!;
 
         var entries = ChangeTracker.Entries()
             .Where(e => e is { Entity: EntityBase, State: EntityState.Added or EntityState.Modified });
 
         foreach (var entityEntry in entries)
         {
-            ((EntityBase)entityEntry.Entity).UpdatedAt = DateTime.UtcNow;
-            ((EntityBase)entityEntry.Entity).UpdatedUserId = currentUserId;
+            entityEntry.Property(CommonShadowProperties.UpdatedAt).CurrentValue = DateTime.UtcNow;
+            entityEntry.Property(CommonShadowProperties.UpdatedUserId).CurrentValue = currentUserId;
+
+            if (entityEntry.State == EntityState.Added)
+            {
+                ((EntityBase)entityEntry.Entity).CreatedAt = DateTime.UtcNow;
+                ((EntityBase)entityEntry.Entity).CreatedUserId = currentUserId ?? Guid.Empty;
+            }
 
             if (entityEntry.State != EntityState.Deleted)
                 continue;
 
-            ((EntityBase)entityEntry.Entity).DeletedAt = DateTime.UtcNow;
-            ((EntityBase)entityEntry.Entity).DeletedUserId = currentUserId;
+            // TODO:Handle soft delete
+            entityEntry.Property(CommonShadowProperties.DeletedAt).CurrentValue = DateTime.UtcNow;
+            entityEntry.Property(CommonShadowProperties.DeletedUserId).CurrentValue = currentUserId;
         }
     }
 }

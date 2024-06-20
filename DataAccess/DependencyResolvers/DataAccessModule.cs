@@ -1,4 +1,4 @@
-using Core.Utils.DI.Abstact;
+using Core.Utils.DI.Abstract;
 using Core.Utils.Seed.Abstract;
 using DataAccess.Context.EntityFramework;
 using DataAccess.Repositories.Abstract.Analytics;

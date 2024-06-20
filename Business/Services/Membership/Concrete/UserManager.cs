@@ -24,7 +24,6 @@ public class UserManager : IUserService
         try
         {
             BusinessRules.Run(
-                ("USER-342385", BusinessRules.CheckDtoNull(userChangePasswordDto)),
                 ("USER-128747",
                     userChangePasswordDto.NewPassword.Equals(userChangePasswordDto.ConfirmPassword)
                         ? null
@@ -42,7 +41,7 @@ public class UserManager : IUserService
             HashingHelper.CreatePasswordHash(userChangePasswordDto.NewPassword, out var passwordHash,
                 out var passwordSalt);
 
-            user!.PasswordHash = passwordHash;
+            user.PasswordHash = passwordHash;
             user.PasswordSalt = passwordSalt;
 
             var userGetDto = _mapper.Map<UserGetDto>(user);

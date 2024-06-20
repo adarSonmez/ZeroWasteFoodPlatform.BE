@@ -125,7 +125,6 @@ public class BusinessManager : IBusinessService
         try
         {
             BusinessRules.Run(
-                ("BSNS-257397", BusinessRules.CheckDtoNull(businessUpdateDto)),
                 ("BSNS-445608", await CheckIfUsernameExists(businessUpdateDto.Username, true)),
                 ("BSNS-138922", await CheckIfEmailExists(businessUpdateDto.Email, true))
             );

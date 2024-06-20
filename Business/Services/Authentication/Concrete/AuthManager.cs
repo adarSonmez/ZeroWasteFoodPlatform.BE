@@ -37,7 +37,6 @@ public class AuthManager : IAuthService
         {
             if (userLoginDto.Email != null)
                 BusinessRules.Run(
-                    ("AUTH-366764", BusinessRules.CheckDtoNull(userLoginDto)),
                     ("AUTH-584337", BusinessRules.CheckEmail(userLoginDto.Email)));
 
             var user = await _userDal.GetAsync(
@@ -138,7 +137,6 @@ public class AuthManager : IAuthService
         try
         {
             BusinessRules.Run(
-                ("AUTH-310832", BusinessRules.CheckDtoNull(businessRegisterDto)),
                 ("AUTH-906899", BusinessRules.CheckEmail(businessRegisterDto.Email)),
                 ("AUTH-712957", await CheckIfEmailRegisteredBefore(businessRegisterDto.Email)),
                 ("AUTH-770711", await CheckIfUsernameRegisteredBefore(businessRegisterDto.Username))
@@ -175,7 +173,6 @@ public class AuthManager : IAuthService
         try
         {
             BusinessRules.Run(
-                ("AUTH-681668", BusinessRules.CheckDtoNull(customerRegisterDto)),
                 ("AUTH-758067", BusinessRules.CheckEmail(customerRegisterDto.Email)),
                 ("AUTH-824600", await CheckIfEmailRegisteredBefore(customerRegisterDto.Email)),
                 ("AUTH-603241", await CheckIfUsernameRegisteredBefore(customerRegisterDto.Username))

@@ -128,7 +128,6 @@ public class MonitoredProductManager : IMonitoredProductService
 
         try
         {
-            BusinessRules.Run(("MNPR-612521", BusinessRules.CheckDtoNull(productAddDto)));
             var product = _mapper.Map<MonitoredProduct>(productAddDto);
 
             var currentUserId = AuthHelper.GetUserId() ??
@@ -184,8 +183,6 @@ public class MonitoredProductManager : IMonitoredProductService
 
         try
         {
-            BusinessRules.Run(("MNPR-308013", BusinessRules.CheckDtoNull(productUpdateDto)));
-
             var product =
                 await _monitoredProductDal.GetAsync(b => b.Id.Equals(productUpdateDto.Id));
             BusinessRules.Run(("MNPR-927511", BusinessRules.CheckEntityNull(product)));

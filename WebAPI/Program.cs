@@ -4,7 +4,7 @@ using Core.Constants;
 using Core.DependencyResolvers;
 using Core.Extensions;
 using Core.Middlewares;
-using Core.Utils.DI.Abstact;
+using Core.Utils.DI.Abstract;
 using DataAccess.DependencyResolvers;
 using Domain.DependencyResolvers;
 using Microsoft.AspNetCore.Authentication.JwtBearer;

@@ -19,5 +19,5 @@ public class Business : User
 
     [StringLength(1023)] public string? CoverPhoto { get; set; }
 
-    public virtual ICollection<StoreProduct> StoreProducts { get; set; } = new List<StoreProduct>();
+    public virtual ICollection<StoreProduct> StoreProducts { get; set; } = new HashSet<StoreProduct>();
 }

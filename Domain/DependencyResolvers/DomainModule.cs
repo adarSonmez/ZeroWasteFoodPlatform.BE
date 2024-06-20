@@ -1,4 +1,4 @@
-using Core.Utils.DI.Abstact;
+using Core.Utils.DI.Abstract;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Domain.DependencyResolvers;

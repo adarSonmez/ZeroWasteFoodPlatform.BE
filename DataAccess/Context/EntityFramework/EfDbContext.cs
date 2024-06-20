@@ -1,4 +1,6 @@
+using Core.Constants;
 using Core.Context.EntityFramework;
+using Core.Domain.Abstract;
 using Domain.Entities.Analytics;
 using Domain.Entities.Association;
 using Domain.Entities.Marketing;
@@ -12,6 +14,7 @@ public sealed class EfDbContext : EfDbContextBase
     public EfDbContext()
     {
         ChangeTracker.LazyLoadingEnabled = false;
+        // ChangeTracker.AutoDetectChangesEnabled = false;
     }
 
     public DbSet<Category> Category { get; set; } = null!;
@@ -24,6 +27,21 @@ public sealed class EfDbContext : EfDbContextBase
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
+
+        # region Shadow Properties
+
+        foreach (var entityType in modelBuilder.Model.GetEntityTypes())
+        {
+            if (!typeof(EntityBase).IsAssignableFrom(entityType.ClrType))
+                continue;
+
+            modelBuilder.Entity(entityType.ClrType).Property<Guid?>(CommonShadowProperties.UpdatedUserId);
+            modelBuilder.Entity(entityType.ClrType).Property<DateTime?>(CommonShadowProperties.UpdatedAt);
+            modelBuilder.Entity(entityType.ClrType).Property<Guid?>(CommonShadowProperties.DeletedUserId);
+            modelBuilder.Entity(entityType.ClrType).Property<DateTime?>(CommonShadowProperties.DeletedAt);
+        }
+
+        # endregion Shadow Properties
 
         # region Derived Entities
 

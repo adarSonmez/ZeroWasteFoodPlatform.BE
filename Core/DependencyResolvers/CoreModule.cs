@@ -1,7 +1,7 @@
 using System.Diagnostics;
 using Core.Security.SessionManagement;
 using Core.Security.SessionManagement.Jwt;
-using Core.Utils.DI.Abstact;
+using Core.Utils.DI.Abstract;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 

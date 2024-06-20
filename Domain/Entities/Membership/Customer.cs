@@ -13,5 +13,5 @@ public class Customer : User
     [StringLength(1023)]
     public string Avatar { get; set; } = "https://static.zooniverse.org/www.zooniverse.org/assets/simple-avatar.png";
 
-    public virtual ICollection<CustomerStoreProduct> ShoppingList { get; set; } = new List<CustomerStoreProduct>();
+    public virtual ICollection<CustomerStoreProduct> ShoppingList { get; set; } = new HashSet<CustomerStoreProduct>();
 }

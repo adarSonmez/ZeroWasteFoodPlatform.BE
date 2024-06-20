@@ -1,4 +1,4 @@
-namespace Core.Utils;
+namespace Core.Constants;
 
 internal static class ValidationConstants
 {

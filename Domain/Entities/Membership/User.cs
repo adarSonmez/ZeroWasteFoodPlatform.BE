@@ -34,5 +34,5 @@ public class User : EntityBase
 
     [StringLength(15)] public string Role { get; set; } = null!;
 
-    public virtual ICollection<MonitoredProduct> MonitoredProduct { get; set; } = new List<MonitoredProduct>();
+    public virtual ICollection<MonitoredProduct> MonitoredProduct { get; set; } = new HashSet<MonitoredProduct>();
 }

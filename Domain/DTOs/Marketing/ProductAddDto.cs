@@ -14,5 +14,5 @@ public class ProductAddDto : IDto
 
     public string Barcode { get; set; } = null!;
 
-    public ICollection<string> CategoriesIds { get; set; } = new List<string>();
+    public ICollection<string> CategoriesIds { get; set; } = new HashSet<string>();
 }

@@ -10,7 +10,7 @@ using Business.Services.Marketing.Abstract;
 using Business.Services.Marketing.Concrete;
 using Business.Services.Membership.Abstract;
 using Business.Services.Membership.Concrete;
-using Core.Utils.DI.Abstact;
+using Core.Utils.DI.Abstract;
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using Microsoft.Extensions.DependencyInjection;
