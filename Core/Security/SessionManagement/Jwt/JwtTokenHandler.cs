@@ -7,6 +7,9 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace Core.Security.SessionManagement.Jwt;
 
+/// <summary>
+/// Represents a handler for generating and validating JWT tokens.
+/// </summary>
 public class JwtTokenHandler : ITokenHandler
 {
     private readonly IConfiguration _configuration;
@@ -16,12 +19,33 @@ public class JwtTokenHandler : ITokenHandler
         _configuration = configuration;
     }
 
-    public Token? GenerateToken(Guid userId, string username, string email, string role,
-        bool? infiniteExpiration = false)
+    /// <summary>
+    /// Gets the value of the requested claim from the JWT token.
+    /// </summary>
+    /// <param name="token">The JWT token.</param>
+    /// <param name="requestedClaim">The requested claim.</param>
+    /// <returns>The value of the requested claim.</returns>
+    public static string? GetClaim(string token, string requestedClaim)
     {
-        Token? token = new();
-        SymmetricSecurityKey symmetricSecurityKey = new(Encoding.UTF8.GetBytes(_configuration["Jwt:SecretKey"]!));
-        SigningCredentials signingCredentials = new(symmetricSecurityKey, SecurityAlgorithms.HmacSha256);
+        var handler = new JwtSecurityTokenHandler();
+        var jsonToken = handler.ReadToken(token) as JwtSecurityToken;
+        return jsonToken?.Claims.FirstOrDefault(c => c.Type == requestedClaim)?.Value;
+    }
+
+    /// <summary>
+    /// Generates a JWT token with the specified user information.
+    /// </summary>
+    /// <param name="userId">The user ID.</param>
+    /// <param name="username">The username.</param>
+    /// <param name="email">The email.</param>
+    /// <param name="role">The role.</param>
+    /// <param name="infiniteExpiration">Indicates if the token should have an infinite expiration.</param>
+    /// <returns>The generated token.</returns>
+    public Token? GenerateToken(Guid userId, string username, string email, string role, bool? infiniteExpiration = false)
+    {
+        Token? token = new Token();
+        SymmetricSecurityKey symmetricSecurityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:SecretKey"]));
+        SigningCredentials signingCredentials = new SigningCredentials(symmetricSecurityKey, SecurityAlgorithms.HmacSha256);
 
         token.ExpirationTime = DateTime.Now.AddMinutes(Convert.ToDouble(_configuration["Jwt:AccessExpiration"]));
         var jwtSecurityToken = new JwtSecurityToken(
@@ -40,30 +64,35 @@ public class JwtTokenHandler : ITokenHandler
         return token;
     }
 
+    /// <summary>
+    /// Sets the claims for the JWT token.
+    /// </summary>
+    /// <param name="userId">The user ID.</param>
+    /// <param name="username">The username.</param>
+    /// <param name="email">The email.</param>
+    /// <param name="role">The role.</param>
+    /// <returns>The claims for the JWT token.</returns>
     private IEnumerable<Claim> SetClaims(string userId, string username, string email, string role)
     {
-        List<Claim> claims =
-        [
-            new Claim(ClaimTypes.NameIdentifier, userId),
-            new Claim(ClaimTypes.Email, email),
-            new Claim(ClaimTypes.Name, username),
-            new Claim(ClaimTypes.Role, role)
-        ];
+        List<Claim> claims = new List<Claim>
+            {
+                new Claim(ClaimTypes.NameIdentifier, userId),
+                new Claim(ClaimTypes.Email, email),
+                new Claim(ClaimTypes.Name, username),
+                new Claim(ClaimTypes.Role, role)
+            };
         return claims.AsEnumerable();
     }
 
+    /// <summary>
+    /// Creates a refresh token.
+    /// </summary>
+    /// <returns>The refresh token.</returns>
     private string CreateRefreshToken()
     {
         var number = new byte[32];
         using var rng = RandomNumberGenerator.Create();
         rng.GetBytes(number);
         return Convert.ToBase64String(number);
-    }
-
-    public static string? GetClaim(string token, string requestedClaim)
-    {
-        var handler = new JwtSecurityTokenHandler();
-        var jsonToken = handler.ReadToken(token) as JwtSecurityToken;
-        return jsonToken?.Claims.FirstOrDefault(c => c.Type == requestedClaim)?.Value;
     }
 }

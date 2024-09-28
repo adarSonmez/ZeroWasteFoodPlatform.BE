@@ -1,5 +1,8 @@
 namespace Core.Constants;
 
+/// <summary>
+/// This class contains constant string values for common shadow properties.
+/// </summary>
 public static class CommonShadowProperties
 {
     public const string UpdatedAt = nameof(UpdatedAt);

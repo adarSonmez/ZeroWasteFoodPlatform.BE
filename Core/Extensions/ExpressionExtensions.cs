@@ -1,13 +1,22 @@
+using Core.Domain.Abstract;
+using Core.Services;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq.Expressions;
 using System.Reflection;
-using Core.Domain.Abstract;
-using Core.Services;
 
 namespace Core.Extensions;
 
+/// <summary>
+/// Provides extension methods for working with expressions.
+/// </summary>
 public static class ExpressionExtensions
 {
+    /// <summary>
+    /// Converts the given <see cref="IServiceFilterModel{T}"/> to an expression.
+    /// </summary>
+    /// <typeparam name="T">The type of entity.</typeparam>
+    /// <param name="modelBase">The service filter model.</param>
+    /// <returns>The expression representing the filter criteria.</returns>
     public static Expression<Func<T, bool>>? ToExpression<T>(this IServiceFilterModel<T> modelBase)
         where T : class, IEntity, new()
     {

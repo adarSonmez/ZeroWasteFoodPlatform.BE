@@ -7,6 +7,9 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Core.DependencyResolvers;
 
+/// <summary>
+/// Deoendency injection module for the Core layer.
+/// </summary>
 public class CoreModule : IDependencyInjectionModule
 {
     public void Load(IServiceCollection services)

@@ -1,5 +1,8 @@
 namespace Core.Utils.Rules;
 
+/// <summary>
+/// Contains utility methods for performing common business rules checks.
+/// </summary>
 internal static class BusinessRulesMessages
 {
     internal const string NullObjectPassed = "Null object passed!";

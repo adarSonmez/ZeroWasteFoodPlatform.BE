@@ -2,12 +2,23 @@ using Newtonsoft.Json;
 
 namespace Core.Services.Result;
 
+/// <summary>
+/// Represents a service result that contains an object of type <typeparamref name="T"/>.
+/// </summary>
+/// <typeparam name="T">The type of the data object.</typeparam>
 public class ServiceObjectResult<T> : ServiceResult
 {
-    [JsonProperty] public bool HasData { get; private set; }
+    [JsonProperty]
+    public bool HasData { get; private set; }
 
-    [JsonProperty] public T? Data { get; private set; }
+    [JsonProperty]
+    public T? Data { get; private set; }
 
+    /// <summary>
+    /// Sets the data object and marks the result as successful.
+    /// </summary>
+    /// <param name="data">The data object to set.</param>
+    /// <param name="message">The success message (optional).</param>
     public void SetData(T? data, string? message = null)
     {
         if (data == null)
@@ -24,8 +35,9 @@ public class ServiceObjectResult<T> : ServiceResult
         }
     }
 
-    # region Fail Overloads
+    #region Fail Overloads
 
+    /// <inheritdoc/>
     public override void Fail()
     {
         base.Fail();
@@ -33,6 +45,7 @@ public class ServiceObjectResult<T> : ServiceResult
         HasData = false;
     }
 
+    /// <inheritdoc/>
     public override void Fail(string code, string description)
     {
         base.Fail(code, description);
@@ -40,6 +53,7 @@ public class ServiceObjectResult<T> : ServiceResult
         HasData = false;
     }
 
+    /// <inheritdoc/>
     public override void Fail(string description)
     {
         base.Fail(description);
@@ -47,6 +61,7 @@ public class ServiceObjectResult<T> : ServiceResult
         HasData = false;
     }
 
+    /// <inheritdoc/>
     public override void Fail(ServiceResult? result)
     {
         base.Fail(result);
@@ -54,6 +69,7 @@ public class ServiceObjectResult<T> : ServiceResult
         HasData = false;
     }
 
+    /// <inheritdoc/>
     public override void Fail(Exception ex)
     {
         base.Fail(ex);
@@ -61,5 +77,5 @@ public class ServiceObjectResult<T> : ServiceResult
         HasData = false;
     }
 
-    # endregion Fail Overloads
+    #endregion Fail Overloads
 }

@@ -73,12 +73,11 @@ public sealed class EfDbContext : EfDbContextBase
             .Property(p => p.RowVersion)
             .IsRowVersion();
 
-        # endregion Row Versions
+        #endregion Row Versions
 
-        # region Derived Entities
+        #region Derived Entities (TPH)
 
         modelBuilder.Entity<User>()
-            .ToTable("Users", "Membership")
             .HasDiscriminator<string>("UserType")
             .HasValue<Business>("Business")
             .HasValue<Customer>("Customer");
@@ -88,9 +87,19 @@ public sealed class EfDbContext : EfDbContextBase
             .HasValue<MonitoredProduct>("MonitoredProduct")
             .HasValue<StoreProduct>("StoreProduct");
 
-        # endregion Derived Entities
+        /* 
+         * Here is an example of a TPT example:
+         *    modelBuilder.Entity<Product>().ToTable("Products");
+         *    modelBuilder.Entity<MonitoredProduct>().ToTable("MonitoredProducts");
+         *    modelBuilder.Entity<StoreProduct>().ToTable("StoreProducts");
+         * 
+         * Here is an example of a TPC example:
+         *    modelBuilder.Entity<Product>().UseTpcMappingStrategy();
+         */
 
-        # region Composite Keys
+        #endregion Derived Entities
+
+        #region Composite Keys
 
         modelBuilder.Entity<CategoryProduct>()
             .HasKey(cp => new { cp.CategoryId, cp.ProductId });
@@ -98,9 +107,17 @@ public sealed class EfDbContext : EfDbContextBase
         modelBuilder.Entity<CustomerStoreProduct>()
             .HasKey(csp => new { csp.CustomerId, csp.ProductId });
 
-        # endregion Composite Keys
+        #endregion Composite Keys
 
-        # region Restricting Relationships
+        #region Auto Includes
+
+        modelBuilder.Entity<Product>()
+            .Navigation(p => p.Categories)
+            .AutoInclude();
+
+        #endregion Auto Includes
+
+        #region Restricting Relationships
 
         modelBuilder.Entity<CustomerStoreProduct>()
             .HasOne(csp => csp.Customer)

@@ -1,14 +1,15 @@
 namespace Core.Utils.Price;
 
+/// <summary>
+/// Helper class for calculating discount rates.
+/// </summary>
 public static class PriceHelper
 {
     /// <summary>
-    ///     Gradually increase percentage of discount, so that on the expiration date the discount is 90%.
-    ///     Starting discount rate is 20% which is applied 20+ days before the expiration date.
-    ///     If the product is expired, return -1.
+    /// Calculates the discount rate based on the expiration date.
     /// </summary>
-    /// <param name="expirationDateTime"></param>
-    /// <returns>Discount rate</returns>
+    /// <param name="expirationDateTime">The expiration date and time.</param>
+    /// <returns>The discount rate.</returns>
     public static int CalculateDiscountRate(DateTime expirationDateTime)
     {
         var today = DateTime.Today;

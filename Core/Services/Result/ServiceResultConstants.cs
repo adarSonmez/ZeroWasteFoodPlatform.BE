@@ -1,5 +1,8 @@
 namespace Core.Services.Result;
 
+/// <summary>
+/// Constants for service result messages.
+/// </summary>
 internal static class ServiceResultConstants
 {
     internal const string NoItemsFound = "No items found!";

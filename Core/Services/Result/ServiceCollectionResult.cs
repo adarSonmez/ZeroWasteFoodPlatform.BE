@@ -3,22 +3,39 @@ using Newtonsoft.Json;
 
 namespace Core.Services.Result;
 
+/// <summary>
+/// Represents a collection result of a service operation.
+/// </summary>
+/// <typeparam name="T">The type of data in the collection.</typeparam>
 public class ServiceCollectionResult<T> : ServiceResult
 {
-    [JsonProperty] public bool HasData { get; private set; }
+    [JsonProperty]
+    public bool HasData { get; private set; }
 
-    [JsonProperty] public IList<T>? Data { get; private set; }
+    [JsonProperty]
+    public IList<T>? Data { get; private set; }
 
-    [JsonProperty] public int TotalItemCount { get; private set; }
+    [JsonProperty]
+    public int TotalItemCount { get; private set; }
 
-    [JsonProperty] public int TotalPageCount { get; private set; }
+    [JsonProperty]
+    public int TotalPageCount { get; private set; }
 
-    [JsonProperty] public int CurrentPage { get; private set; }
+    [JsonProperty]
+    public int CurrentPage { get; private set; }
 
-    [JsonProperty] public int? NextPage { get; private set; }
+    [JsonProperty]
+    public int? NextPage { get; private set; }
 
-    # region Set Data Overloads
+    #region Set Data Overloads
 
+    /// <summary>
+    /// Sets the data for the collection result.
+    /// </summary>
+    /// <param name="data">The data to be set.</param>
+    /// <param name="page">The current page number.</param>
+    /// <param name="pageSize">The maximum number of items per page.</param>
+    /// <param name="successMessage">The success message to be displayed.</param>
     public void SetData(IEnumerable<T> data, int page = 1, int pageSize = int.MaxValue, string? successMessage = null)
     {
         var dataList = data.ToList();
@@ -45,9 +62,9 @@ public class ServiceCollectionResult<T> : ServiceResult
         Data = data;
     }
 
-    # endregion Set Data Overloads
+    #endregion Set Data Overloads
 
-    # region Helper Methods
+    #region Helper Methods
 
     private void SetTotalPageCount(int dataListCount, int pageSize)
     {
@@ -79,10 +96,13 @@ public class ServiceCollectionResult<T> : ServiceResult
         NextPage = null;
     }
 
-    # endregion Helper Methods
+    #endregion Helper Methods
 
-    # region Fail Overloads
+    #region Fail Overloads
 
+    /// <summary>
+    /// Marks the service operation as failed.
+    /// </summary>
     public override void Fail()
     {
         base.Fail();
@@ -90,6 +110,11 @@ public class ServiceCollectionResult<T> : ServiceResult
         HasData = false;
     }
 
+    /// <summary>
+    /// Marks the service operation as failed with the specified code and description.
+    /// </summary>
+    /// <param name="code">The error code.</param>
+    /// <param name="description">The error description.</param>
     public override void Fail(string code, string description)
     {
         base.Fail(code, description);
@@ -97,6 +122,10 @@ public class ServiceCollectionResult<T> : ServiceResult
         HasData = false;
     }
 
+    /// <summary>
+    /// Marks the service operation as failed with the specified description.
+    /// </summary>
+    /// <param name="description">The error description.</param>
     public override void Fail(string description)
     {
         base.Fail(description);
@@ -104,6 +133,10 @@ public class ServiceCollectionResult<T> : ServiceResult
         HasData = false;
     }
 
+    /// <summary>
+    /// Marks the service operation as failed with the specified result.
+    /// </summary>
+    /// <param name="result">The result to be used for failure.</param>
     public override void Fail(ServiceResult? result)
     {
         base.Fail(result);
@@ -111,6 +144,10 @@ public class ServiceCollectionResult<T> : ServiceResult
         HasData = false;
     }
 
+    /// <summary>
+    /// Marks the service operation as failed with the specified exception.
+    /// </summary>
+    /// <param name="ex">The exception that caused the failure.</param>
     public override void Fail(Exception ex)
     {
         base.Fail(ex);
@@ -118,5 +155,5 @@ public class ServiceCollectionResult<T> : ServiceResult
         HasData = false;
     }
 
-    # endregion Fail Overloads
+    #endregion Fail Overloads
 }

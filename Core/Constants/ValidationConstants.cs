@@ -1,5 +1,8 @@
 namespace Core.Constants;
 
+/// <summary>
+/// Contains constants related to validation.
+/// </summary>
 internal static class ValidationConstants
 {
     internal const string DefaultValidationExceptionCode = "VLDT-000001";

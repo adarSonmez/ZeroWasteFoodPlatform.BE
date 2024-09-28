@@ -8,17 +8,12 @@ using Microsoft.Extensions.Configuration;
 
 namespace Core.Context.EntityFramework;
 
+/// <summary>
+/// Represents the base class for Entity Framework DbContext in the Core context.
+/// </summary>
 public class EfDbContextBase : DbContext
 {
-    private readonly IHttpContextAccessor? _httpContextAccessor = ServiceTool.GetService<IHttpContextAccessor>();
-
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    {
-        var configuration = ServiceTool.GetService<IConfiguration>()!;
-        optionsBuilder.UseSqlServer(configuration.GetConnectionString("DefaultConnection"));
-        // optionsBuilder.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
-    }
-
+    /// <inheritdoc/>
     public override int SaveChanges()
     {
         OnBeforeSaveChanges();
@@ -28,6 +23,7 @@ public class EfDbContextBase : DbContext
         return result;
     }
 
+    /// <inheritdoc/>
     public override async Task<int> SaveChangesAsync(CancellationToken token = default)
     {
         OnBeforeSaveChanges();
@@ -37,11 +33,24 @@ public class EfDbContextBase : DbContext
         return result;
     }
 
-    protected virtual void OnBeforeSaveChanges()
+    /// <inheritdoc/>
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        // do something before save changes
+        var configuration = ServiceTool.GetService<IConfiguration>()!;
+        optionsBuilder.UseSqlServer(configuration.GetConnectionString("DefaultConnection"));
+        // optionsBuilder.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
     }
 
+    /// <summary>
+    /// Performs actions before saving changes in the DbContext.
+    /// </summary>
+    protected virtual void OnBeforeSaveChanges()
+    {
+    }
+
+    /// <summary>
+    /// Performs actions after saving changes in the DbContext.
+    /// </summary>
     protected virtual void OnAfterSaveChanges()
     {
         var currentUserId = AuthHelper.GetUserId()!;

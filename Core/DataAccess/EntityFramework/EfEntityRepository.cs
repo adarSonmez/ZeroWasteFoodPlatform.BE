@@ -1,15 +1,21 @@
-using System.Linq.Expressions;
 using Core.Context.EntityFramework;
 using Core.DataAccess.Abstract;
 using Core.Domain.Abstract;
 using Microsoft.EntityFrameworkCore;
+using System.Linq.Expressions;
 
 namespace Core.DataAccess.EntityFramework;
 
+/// <summary>
+/// Represents the Entity Framework implementation of the IEntityRepository interface.
+/// </summary>
+/// <typeparam name="TEntity">The type of entity.</typeparam>
+/// <typeparam name="TContext">The type of DbContext.</typeparam>
 public class EfEntityRepository<TEntity, TContext> : IEntityRepository<TEntity>
     where TEntity : class, IEntity, new()
     where TContext : EfDbContextBase, new()
 {
+    /// <inheritdoc/>
     public async Task<IList<TEntity>> GetAllAsync(Expression<Func<TEntity, bool>>? predicate = null,
         Func<IQueryable<TEntity>, IQueryable<TEntity>>? include = null,
         Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>>? orderBy = null, bool enableTracking = false,
@@ -33,6 +39,7 @@ public class EfEntityRepository<TEntity, TContext> : IEntityRepository<TEntity>
         return await query.ToListAsync();
     }
 
+    /// <inheritdoc/>
     public async Task<IList<TEntity>> GetAllPaginatedAsync(Expression<Func<TEntity, bool>>? predicate = null,
         Func<IQueryable<TEntity>, IQueryable<TEntity>>? include = null,
         Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>>? orderBy = null,
@@ -56,6 +63,7 @@ public class EfEntityRepository<TEntity, TContext> : IEntityRepository<TEntity>
         return await query.Skip((currentPage - 1) * pageSize).Take(pageSize).ToListAsync();
     }
 
+    /// <inheritdoc/>
     public async Task<TEntity?> GetAsync(Expression<Func<TEntity, bool>> predicate,
         Func<IQueryable<TEntity>, IQueryable<TEntity>>? include = null, bool enableTracking = false,
         bool getDeleted = false)
@@ -75,6 +83,7 @@ public class EfEntityRepository<TEntity, TContext> : IEntityRepository<TEntity>
         return await query.FirstOrDefaultAsync(predicate);
     }
 
+    /// <inheritdoc/>
     public async Task<IQueryable<TEntity>> FindAsync(Expression<Func<TEntity, bool>> predicate,
         bool enableTracking = false)
     {
@@ -87,6 +96,7 @@ public class EfEntityRepository<TEntity, TContext> : IEntityRepository<TEntity>
         return query.Where(predicate);
     }
 
+    /// <inheritdoc/>
     public async Task<long> CountAsync(Expression<Func<TEntity, bool>>? predicate = null)
     {
         await using var context = new TContext();
@@ -97,6 +107,7 @@ public class EfEntityRepository<TEntity, TContext> : IEntityRepository<TEntity>
         return await query.LongCountAsync();
     }
 
+    /// <inheritdoc/>
     public async Task<TEntity> AddAsync(TEntity entity)
     {
         await using var context = new TContext();
@@ -105,6 +116,7 @@ public class EfEntityRepository<TEntity, TContext> : IEntityRepository<TEntity>
         return entity;
     }
 
+    /// <inheritdoc/>
     public async Task<IList<TEntity>> AddRangeAsync(IEnumerable<TEntity> entities)
     {
         var enumerable = entities as TEntity[] ?? entities.ToArray();
@@ -114,6 +126,7 @@ public class EfEntityRepository<TEntity, TContext> : IEntityRepository<TEntity>
         return enumerable.ToList();
     }
 
+    /// <inheritdoc/>
     public async Task<TEntity> UpdateAsync(TEntity entity)
     {
         await using var context = new TContext();
@@ -122,6 +135,7 @@ public class EfEntityRepository<TEntity, TContext> : IEntityRepository<TEntity>
         return entity;
     }
 
+    /// <inheritdoc/>
     public async Task HardDeleteAsync(TEntity entity)
     {
         await using var context = new TContext();
@@ -129,6 +143,7 @@ public class EfEntityRepository<TEntity, TContext> : IEntityRepository<TEntity>
         await context.SaveChangesAsync();
     }
 
+    /// <inheritdoc/>
     public async Task HardDeleteAsync(string id)
     {
         await using var context = new TContext();
@@ -139,6 +154,7 @@ public class EfEntityRepository<TEntity, TContext> : IEntityRepository<TEntity>
         await context.SaveChangesAsync();
     }
 
+    /// <inheritdoc/>
     public async Task HardDeleteMatchingAsync(IEnumerable<string> ids)
     {
         await using var context = new TContext();
@@ -152,6 +168,7 @@ public class EfEntityRepository<TEntity, TContext> : IEntityRepository<TEntity>
         await context.SaveChangesAsync();
     }
 
+    /// <inheritdoc/>
     public async Task HardDeleteMatchingAsync(params TEntity[] entities)
     {
         await using var context = new TContext();
@@ -159,6 +176,7 @@ public class EfEntityRepository<TEntity, TContext> : IEntityRepository<TEntity>
         await context.SaveChangesAsync();
     }
 
+    /// <inheritdoc/>
     public async Task HardDeleteMatchingAsync(IEnumerable<TEntity> entities)
     {
         await using var context = new TContext();
@@ -166,6 +184,7 @@ public class EfEntityRepository<TEntity, TContext> : IEntityRepository<TEntity>
         await context.SaveChangesAsync();
     }
 
+    /// <inheritdoc/>
     public async Task SoftDeleteAsync(TEntity entity)
     {
         (entity as EntityBase)!.IsDeleted = true;
@@ -174,6 +193,7 @@ public class EfEntityRepository<TEntity, TContext> : IEntityRepository<TEntity>
         await context.SaveChangesAsync();
     }
 
+    /// <inheritdoc/>
     public async Task SoftDeleteAsync(string id)
     {
         await using var context = new TContext();
@@ -186,6 +206,7 @@ public class EfEntityRepository<TEntity, TContext> : IEntityRepository<TEntity>
         await context.SaveChangesAsync();
     }
 
+    /// <inheritdoc/>
     public async Task SoftDeleteMatchingAsync(IEnumerable<string> ids)
     {
         await using var context = new TContext();
@@ -202,6 +223,7 @@ public class EfEntityRepository<TEntity, TContext> : IEntityRepository<TEntity>
         await context.SaveChangesAsync();
     }
 
+    /// <inheritdoc/>
     public async Task SoftDeleteMatchingAsync(params TEntity[] entities)
     {
         await using var context = new TContext();
@@ -211,6 +233,7 @@ public class EfEntityRepository<TEntity, TContext> : IEntityRepository<TEntity>
         await context.SaveChangesAsync();
     }
 
+    /// <inheritdoc/>
     public async Task SoftDeleteMatchingAsync(IEnumerable<TEntity> entities)
     {
         await using var context = new TContext();

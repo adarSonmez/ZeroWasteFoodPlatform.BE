@@ -1,9 +1,13 @@
 using System.ComponentModel.DataAnnotations;
 using Core.Domain.Abstract;
 using Domain.Entities.Marketing;
+using Microsoft.EntityFrameworkCore;
 
 namespace Domain.Entities.Membership;
 
+[Index(nameof(Username), IsUnique = true)]
+[Index(nameof(Email), IsUnique = true)]
+[Index(nameof(PhoneNumber), IsUnique = true)]
 public class User : EntityBase
 {
     [StringLength(127)] public string Username { get; set; } = null!;

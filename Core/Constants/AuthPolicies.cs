@@ -1,5 +1,8 @@
 namespace Core.Constants;
 
+/// <summary>
+/// Contains constants for authentication policies.
+/// </summary>
 public static class AuthPolicies
 {
     public const string AllowAll = "AllowAll";
