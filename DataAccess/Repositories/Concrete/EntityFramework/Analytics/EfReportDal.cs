@@ -5,6 +5,9 @@ using Domain.Entities.Analytics;
 
 namespace DataAccess.Repositories.Concrete.EntityFramework.Analytics;
 
+/// <summary>
+/// Represents the concrete implementation of the IReportDal interface using Entity Framework.
+/// </summary>
 public class EfReportDal : EfEntityRepository<Report, EfDbContext>, IReportDal
 {
 }

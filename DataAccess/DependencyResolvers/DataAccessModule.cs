@@ -14,8 +14,12 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace DataAccess.DependencyResolvers;
 
+/// <summary>
+/// Represents a module for configuring dependency injection for the data access layer.
+/// </summary>
 public sealed class DataAccessModule : IDependencyInjectionModule
 {
+    /// <inheritdoc />
     public void Load(IServiceCollection services)
     {
         #region DbContext

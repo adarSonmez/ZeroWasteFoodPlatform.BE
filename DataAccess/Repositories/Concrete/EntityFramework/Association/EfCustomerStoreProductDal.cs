@@ -5,6 +5,9 @@ using Domain.Entities.Association;
 
 namespace DataAccess.Repositories.Concrete.EntityFramework.Association;
 
+/// <summary>
+/// Represents the concrete implementation of the <see cref="ICustomerStoreProductDal"/> interface using Entity Framework.
+/// </summary>
 public class EfCustomerStoreProductDal : EfEntityRepository<CustomerStoreProduct, EfDbContext>, ICustomerStoreProductDal
 {
 }

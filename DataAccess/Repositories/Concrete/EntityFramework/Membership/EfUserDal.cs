@@ -5,6 +5,9 @@ using Domain.Entities.Membership;
 
 namespace DataAccess.Repositories.Concrete.EntityFramework.Membership;
 
+/// <summary>
+/// Represents the concrete implementation of the IUserDal interface using Entity Framework.
+/// </summary>
 public class EfUserDal : EfEntityRepository<User, EfDbContext>, IUserDal
 {
 }

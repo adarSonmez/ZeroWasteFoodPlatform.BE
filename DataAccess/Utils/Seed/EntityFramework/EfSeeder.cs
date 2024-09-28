@@ -13,8 +13,12 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace DataAccess.Utils.Seed.EntityFramework;
 
+/// <summary>
+/// Entity framework based implementation of <seealso cref="ISeeder"/> interface
+/// </summary>
 public class EfSeeder : ISeeder
 {
+    /// <inheritdoc/>
     public void Seed(IApplicationBuilder builder)
     {
         var context = builder.ApplicationServices
@@ -167,14 +171,13 @@ public class EfSeeder : ISeeder
         var seafood = new Category { Name = "Seafood", Description = "Fish, Crab, Lobster, Shrimp, Squid" };
         var pasta = new Category { Name = "Pasta", Description = "Macaroni, Noodle, Spaghetti, Vermicelli, Lasagna" };
         var cereal = new Category
-            { Name = "Cereal", Description = "Cornflakes, Oatmeal, Rice Krispies, Wheaties, Cheerios" };
+        { Name = "Cereal", Description = "Cornflakes, Oatmeal, Rice Krispies, Wheaties, Cheerios" };
 
         var categories = new List<Category>
         {
             diary, meat, fruit, vegetable, bakery, drink, snack, canned, frozen, grain, spice, sauce, oil, egg, dessert,
             seafood, pasta, cereal
         };
-
 
         context.Category.AddRange(categories);
         context.SaveChanges();
@@ -685,7 +688,6 @@ public class EfSeeder : ISeeder
             carrefourCannedFish, carrefourCannedSoup, carrefourCannedFruit
         };
 
-
         context.Product.AddRange(storeProducts);
         context.SaveChanges();
 
@@ -987,7 +989,6 @@ public class EfSeeder : ISeeder
             erensChocolate, erensBeef, erensLamb, barissMilk, barissBeer, barissPork, barissChicken, barissPie
         };
 
-
         context.Product.AddRange(monitoredProducts);
         context.SaveChanges();
 
@@ -1058,7 +1059,6 @@ public class EfSeeder : ISeeder
             new() { ProductId = barissChicken.Id, CategoryId = meat.Id },
             new() { ProductId = barissPie.Id, CategoryId = dessert.Id }
         };
-
 
         context.CategoryProduct.AddRange(categoryProducts);
         context.SaveChanges();

@@ -9,6 +9,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DataAccess.Context.EntityFramework;
 
+/// <summary>
+/// Represents the Entity Framework database context for the application.
+/// </summary>
 public sealed class EfDbContext : EfDbContextBase
 {
     public EfDbContext()
@@ -24,6 +27,7 @@ public sealed class EfDbContext : EfDbContextBase
     public DbSet<User> User { get; set; } = null!;
     public DbSet<Report> Report { get; set; } = null!;
 
+    /// <inheritdoc />
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
@@ -87,12 +91,12 @@ public sealed class EfDbContext : EfDbContextBase
             .HasValue<MonitoredProduct>("MonitoredProduct")
             .HasValue<StoreProduct>("StoreProduct");
 
-        /* 
+        /*
          * Here is an example of a TPT example:
          *    modelBuilder.Entity<Product>().ToTable("Products");
          *    modelBuilder.Entity<MonitoredProduct>().ToTable("MonitoredProducts");
          *    modelBuilder.Entity<StoreProduct>().ToTable("StoreProducts");
-         * 
+         *
          * Here is an example of a TPC example:
          *    modelBuilder.Entity<Product>().UseTpcMappingStrategy();
          */
@@ -130,7 +134,6 @@ public sealed class EfDbContext : EfDbContextBase
             .WithMany(p => p.InterestedCustomers)
             .HasForeignKey(csp => csp.ProductId)
             .OnDelete(DeleteBehavior.Restrict);
-
 
         modelBuilder.Entity<MonitoredProduct>()
             .HasOne(mp => mp.Owner)

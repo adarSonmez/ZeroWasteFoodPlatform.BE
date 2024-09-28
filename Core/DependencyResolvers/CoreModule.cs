@@ -12,6 +12,7 @@ namespace Core.DependencyResolvers;
 /// </summary>
 public class CoreModule : IDependencyInjectionModule
 {
+    /// <inheritdoc />
     public void Load(IServiceCollection services)
     {
         services.AddMemoryCache();
