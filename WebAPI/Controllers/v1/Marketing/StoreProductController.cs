@@ -1,6 +1,6 @@
 using Business.Services.Marketing.Abstract;
 using Core.Api.Abstract;
-using Core.Constants;
+using Core.Constants.StringConstants;
 using Core.Utils.IoC;
 using Domain.DTOs.Marketing;
 using Domain.FilterModels.Marketing;

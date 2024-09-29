@@ -1,9 +1,10 @@
+using Core.Utils.IoC;
+using Microsoft.Extensions.Configuration;
+using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
-using Microsoft.Extensions.Configuration;
-using Microsoft.IdentityModel.Tokens;
 
 namespace Core.Security.SessionManagement.Jwt;
 
@@ -12,13 +13,6 @@ namespace Core.Security.SessionManagement.Jwt;
 /// </summary>
 public class JwtTokenHandler : ITokenHandler
 {
-    private readonly IConfiguration _configuration;
-
-    public JwtTokenHandler(IConfiguration configuration)
-    {
-        _configuration = configuration;
-    }
-
     /// <summary>
     /// Gets the value of the requested claim from the JWT token.
     /// </summary>
@@ -43,14 +37,15 @@ public class JwtTokenHandler : ITokenHandler
     /// <returns>The generated token.</returns>
     public Token? GenerateToken(Guid userId, string username, string email, string role, bool? infiniteExpiration = false)
     {
-        Token? token = new Token();
-        SymmetricSecurityKey symmetricSecurityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:SecretKey"]));
-        SigningCredentials signingCredentials = new SigningCredentials(symmetricSecurityKey, SecurityAlgorithms.HmacSha256);
+        Token? token = new();
+        var configuration = ServiceTool.GetService<IConfiguration>()!;
+        var symmetricSecurityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["Jwt:SecretKey"]!));
+        var signingCredentials = new SigningCredentials(symmetricSecurityKey, SecurityAlgorithms.HmacSha256);
 
-        token.ExpirationTime = DateTime.Now.AddMinutes(Convert.ToDouble(_configuration["Jwt:AccessExpiration"]));
+        token.ExpirationTime = DateTime.Now.AddMinutes(Convert.ToDouble(configuration["Jwt:AccessExpiration"]));
         var jwtSecurityToken = new JwtSecurityToken(
-            _configuration["Jwt:Issuer"],
-            _configuration["Jwt:Audience"],
+            configuration["Jwt:Issuer"],
+            configuration["Jwt:Audience"],
             expires: infiniteExpiration == true ? DateTime.MaxValue : token.ExpirationTime,
             notBefore: DateTime.Now,
             signingCredentials: signingCredentials,

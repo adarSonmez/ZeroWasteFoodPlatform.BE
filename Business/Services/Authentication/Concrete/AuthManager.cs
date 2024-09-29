@@ -3,7 +3,7 @@ using AutoMapper;
 using Business.Constants.Messages.Services.Authentication;
 using Business.Services.Authentication.Abstract;
 using Business.Services.Communication.Abstract;
-using Core.Constants;
+using Core.Constants.StringConstants;
 using Core.ExceptionHandling;
 using Core.Security.SessionManagement;
 using Core.Services.Messages;

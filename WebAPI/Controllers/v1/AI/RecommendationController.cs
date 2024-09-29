@@ -1,6 +1,6 @@
 using Business.Services.AI.Abstract;
 using Core.Api.Abstract;
-using Core.Constants;
+using Core.Constants.StringConstants;
 using Core.Utils.IoC;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

@@ -18,7 +18,7 @@ public interface IEntityRepository<T> where T : class, IEntity, new()
     /// <param name="enableTracking">Indicates whether to enable entity tracking.</param>
     /// <param name="getDeleted">Indicates whether to include deleted entities.</param>
     /// <returns>A task that represents the asynchronous operation. The task result contains the list of entities.</returns>
-    Task<IList<T>> GetAllAsync(Expression<Func<T, bool>>? predicate = null,
+    Task<IEnumerable<T>> GetAllAsync(Expression<Func<T, bool>>? predicate = null,
         Func<IQueryable<T>, IQueryable<T>>? include = null,
         Func<IQueryable<T>, IOrderedQueryable<T>>? orderBy = null,
         bool enableTracking = false, bool getDeleted = false);
@@ -34,7 +34,7 @@ public interface IEntityRepository<T> where T : class, IEntity, new()
     /// <param name="page">The page number.</param>
     /// <param name="pageSize">The page size.</param>
     /// <returns>A task that represents the asynchronous operation. The task result contains the list of entities.</returns>
-    Task<IList<T>> GetAllPaginatedAsync(Expression<Func<T, bool>>? predicate = null,
+    Task<IEnumerable<T>> GetAllPaginatedAsync(Expression<Func<T, bool>>? predicate = null,
         Func<IQueryable<T>, IQueryable<T>>? include = null,
         Func<IQueryable<T>, IOrderedQueryable<T>>? orderBy = null,
         bool enableTracking = false, bool getDeleted = false, int page = 1, int pageSize = int.MaxValue);
@@ -78,7 +78,7 @@ public interface IEntityRepository<T> where T : class, IEntity, new()
     /// </summary>
     /// <param name="entities">The entities to add.</param>
     /// <returns>A task that represents the asynchronous operation. The task result contains the list of added entities.</returns>
-    Task<IList<T>> AddRangeAsync(IEnumerable<T> entities);
+    Task<IEnumerable<T>> AddRangeAsync(IEnumerable<T> entities);
 
     /// <summary>
     /// Updates an existing entity asynchronously.

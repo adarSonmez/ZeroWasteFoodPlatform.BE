@@ -15,8 +15,10 @@ public class EfEntityRepository<TEntity, TContext> : IEntityRepository<TEntity>
     where TEntity : class, IEntity, new()
     where TContext : EfDbContextBase, new()
 {
+    #region Query Methods
+
     /// <inheritdoc/>
-    public async Task<IList<TEntity>> GetAllAsync(Expression<Func<TEntity, bool>>? predicate = null,
+    public async Task<IEnumerable<TEntity>> GetAllAsync(Expression<Func<TEntity, bool>>? predicate = null,
         Func<IQueryable<TEntity>, IQueryable<TEntity>>? include = null,
         Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>>? orderBy = null, bool enableTracking = false,
         bool getDeleted = false)
@@ -40,7 +42,7 @@ public class EfEntityRepository<TEntity, TContext> : IEntityRepository<TEntity>
     }
 
     /// <inheritdoc/>
-    public async Task<IList<TEntity>> GetAllPaginatedAsync(Expression<Func<TEntity, bool>>? predicate = null,
+    public async Task<IEnumerable<TEntity>> GetAllPaginatedAsync(Expression<Func<TEntity, bool>>? predicate = null,
         Func<IQueryable<TEntity>, IQueryable<TEntity>>? include = null,
         Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>>? orderBy = null,
         bool enableTracking = false, bool getDeleted = false, int currentPage = 1, int pageSize = int.MaxValue)
@@ -107,6 +109,10 @@ public class EfEntityRepository<TEntity, TContext> : IEntityRepository<TEntity>
         return await query.LongCountAsync();
     }
 
+    #endregion Query Methods
+
+    #region Create Methods
+
     /// <inheritdoc/>
     public async Task<TEntity> AddAsync(TEntity entity)
     {
@@ -117,14 +123,17 @@ public class EfEntityRepository<TEntity, TContext> : IEntityRepository<TEntity>
     }
 
     /// <inheritdoc/>
-    public async Task<IList<TEntity>> AddRangeAsync(IEnumerable<TEntity> entities)
+    public async Task<IEnumerable<TEntity>> AddRangeAsync(IEnumerable<TEntity> entities)
     {
-        var enumerable = entities as TEntity[] ?? entities.ToArray();
         await using var context = new TContext();
-        await context.AddRangeAsync(enumerable.ToList());
+        await context.AddRangeAsync(entities);
         await context.SaveChangesAsync();
-        return enumerable.ToList();
+        return entities;
     }
+
+    #endregion Create Methods
+
+    #region Update Methods
 
     /// <inheritdoc/>
     public async Task<TEntity> UpdateAsync(TEntity entity)
@@ -134,6 +143,10 @@ public class EfEntityRepository<TEntity, TContext> : IEntityRepository<TEntity>
         await context.SaveChangesAsync();
         return entity;
     }
+
+    #endregion Update Methods
+
+    #region Hard Delete Methods
 
     /// <inheritdoc/>
     public async Task HardDeleteAsync(TEntity entity)
@@ -183,6 +196,10 @@ public class EfEntityRepository<TEntity, TContext> : IEntityRepository<TEntity>
         context.RemoveRange(entities);
         await context.SaveChangesAsync();
     }
+
+    #endregion Hard Delete Methods
+
+    #region Soft Delete Methods
 
     /// <inheritdoc/>
     public async Task SoftDeleteAsync(TEntity entity)
@@ -243,4 +260,6 @@ public class EfEntityRepository<TEntity, TContext> : IEntityRepository<TEntity>
         context.UpdateRange(enumerable.ToList());
         await context.SaveChangesAsync();
     }
+
+    #endregion Soft Delete Methods
 }

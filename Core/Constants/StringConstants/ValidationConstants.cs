@@ -1,4 +1,4 @@
-namespace Core.Constants;
+namespace Core.Constants.StringConstants;
 
 /// <summary>
 /// Contains constants related to validation.

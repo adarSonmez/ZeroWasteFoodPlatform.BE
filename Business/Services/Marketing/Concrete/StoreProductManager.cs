@@ -97,7 +97,7 @@ public class StoreProductManager : IStoreProductService
             }
 
             var productGetDtos = _mapper.Map<List<StoreProductGetDto>>(products);
-            result.SetData(productGetDtos, page, pageSize, StoreProductServiceMessages.ListRetrieved);
+            result.SetData(productGetDtos, StoreProductServiceMessages.ListRetrieved, page, pageSize);
         }
         catch (ValidationException e)
         {
@@ -238,7 +238,7 @@ public class StoreProductManager : IStoreProductService
             }
 
             var productGetDtos = _mapper.Map<List<StoreProductGetDto>>(products);
-            result.SetData(productGetDtos, page, pageSize, StoreProductServiceMessages.ListRetrieved);
+            result.SetData(productGetDtos, StoreProductServiceMessages.ListRetrieved, page, pageSize);
         }
         catch (ValidationException e)
         {

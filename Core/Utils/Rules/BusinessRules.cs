@@ -15,27 +15,32 @@ public static class BusinessRules
     /// Runs the specified business rules checks and throws a ValidationException if any check fails.
     /// </summary>
     /// <param name="checkResults">The results of the business rules checks.</param>
-    public static void Run(params (string errCode, string? msg)[] checkResults)
+    public static void Run(params (string errCode, string msg)[] checkResults)
     {
         foreach (var (errCode, msg) in checkResults)
         {
-            if (!string.IsNullOrEmpty(msg))
-            {
-                throw new ValidationException(errCode, msg);
-            }
+            throw new ValidationException(errCode, msg);
         }
     }
+
+    #region Validation Checks
 
     /// <summary>
     /// Checks if the specified entity object is null and returns an error message if it is.
     /// </summary>
     /// <typeparam name="TEntity">The type of the entity.</typeparam>
     /// <param name="obj">The entity object to check.</param>
+    /// <param name="customError">The custom error message to return if the entity is null.</param>
     /// <returns>The error message if the entity is null; otherwise, null.</returns>
-    public static string? CheckEntityNull<TEntity>(TEntity? obj)
+    public static string? CheckEntityNull<TEntity>(TEntity? obj, string? customError = null)
         where TEntity : IEntity
     {
-        return CheckEntityNull(obj, $"{typeof(TEntity).Name} Not Found!");
+        if (obj is not null)
+            return null;
+
+        customError ??= $"{typeof(TEntity).Name} Not Found!";
+
+        return customError;
     }
 
     /// <summary>
@@ -49,14 +54,7 @@ public static class BusinessRules
         where TDto : IDto
     {
         if (obj is not null)
-        {
             return null;
-        }
-
-        if (string.IsNullOrEmpty(customError))
-        {
-            customError = BusinessRulesMessages.NullObjectPassed;
-        }
 
         return customError;
     }
@@ -77,15 +75,17 @@ public static class BusinessRules
     /// <param name="str">The string to check.</param>
     /// <param name="customError">The custom error message to return if the string is null or empty.</param>
     /// <returns>The error message if the string is null or empty; otherwise, null.</returns>
-    public static string? CheckStringNullOrEmpty(string? str, string? customError = null)
+    public static string? CheckStringNullOrEmpty(string? str, string customError = BusinessRulesMessages.StringCannotBeNullOrEmpty)
     {
         if (string.IsNullOrEmpty(str))
-        {
-            return string.IsNullOrEmpty(customError) ? BusinessRulesMessages.StringCannotBeNullOrEmpty : customError;
-        }
+            return customError;
 
         return null;
     }
+
+    #endregion Validation Checks
+
+    #region Authorization Checks
 
     /// <summary>
     /// Checks if the specified email address is different from the current user's email address.
@@ -123,26 +123,5 @@ public static class BusinessRules
         return currentUserId != id ? ServiceResultConstants.IdIsNotSameWithCurrentUser : null;
     }
 
-    /// <summary>
-    /// Checks if the specified entity object is null and returns an error message if it is.
-    /// </summary>
-    /// <typeparam name="TEntity">The type of the entity.</typeparam>
-    /// <param name="obj">The entity object to check.</param>
-    /// <param name="customError">The custom error message to return if the entity is null.</param>
-    /// <returns>The error message if the entity is null; otherwise, null.</returns>
-    private static string? CheckEntityNull<TEntity>(TEntity? obj, string customError)
-        where TEntity : IEntity
-    {
-        if (obj is not null)
-        {
-            return null;
-        }
-
-        if (string.IsNullOrEmpty(customError))
-        {
-            customError = BusinessRulesMessages.NullObjectPassed;
-        }
-
-        return customError;
-    }
+    #endregion Authorization Checks
 }

@@ -1,5 +1,4 @@
 using Core.Extensions;
-using Newtonsoft.Json;
 
 namespace Core.Services.Result;
 
@@ -9,23 +8,21 @@ namespace Core.Services.Result;
 /// <typeparam name="T">The type of data in the collection.</typeparam>
 public class ServiceCollectionResult<T> : ServiceResult
 {
-    [JsonProperty]
-    public bool HasData { get; private set; }
+    #region Collection Properties
 
-    [JsonProperty]
-    public IList<T>? Data { get; private set; }
+    public IEnumerable<T> Data { get; private set; } = [];
 
-    [JsonProperty]
-    public int TotalItemCount { get; private set; }
-
-    [JsonProperty]
-    public int TotalPageCount { get; private set; }
-
-    [JsonProperty]
     public int CurrentPage { get; private set; }
 
-    [JsonProperty]
+    public int PageSize { get; private set; }
+
+    public int TotalItemCount { get; private set; }
+
+    public int TotalPageCount { get; private set; }
+
     public int? NextPage { get; private set; }
+
+    #endregion Collection Properties
 
     #region Set Data Overloads
 
@@ -33,127 +30,40 @@ public class ServiceCollectionResult<T> : ServiceResult
     /// Sets the data for the collection result.
     /// </summary>
     /// <param name="data">The data to be set.</param>
+    /// <param name="successMessage">The success message to be displayed.</param>
     /// <param name="page">The current page number.</param>
     /// <param name="pageSize">The maximum number of items per page.</param>
-    /// <param name="successMessage">The success message to be displayed.</param>
-    public void SetData(IEnumerable<T> data, int page = 1, int pageSize = int.MaxValue, string? successMessage = null)
+    public void SetData(IEnumerable<T> data, string successMessage, int page = 1, int pageSize = int.MaxValue)
     {
-        var dataList = data.ToList();
-        SetTotalItemCount(dataList.Count);
-        SetTotalPageCount(dataList.Count, pageSize);
-        SetCurrentPage(page, pageSize);
-        SetData(dataList.Paginate(page, pageSize), successMessage);
+        TotalItemCount = data.Count();
+        TotalPageCount = (int)Math.Ceiling((double)TotalItemCount / pageSize);
+        CurrentPage = page;
+        PageSize = pageSize;
+
+        if (PageSize < int.MaxValue && TotalItemCount > PageSize && CurrentPage < TotalPageCount)
+            NextPage = CurrentPage + 1;
+        else
+            NextPage = null;
+
+        SetData(data.Paginate(page, pageSize), successMessage);
     }
 
-    private void SetData(IList<T>? data, string? successMessage = null)
+    private void SetData(IEnumerable<T>? data, string successMessage)
     {
-        if (data == null || data.Count == 0)
+        if (data == null || !data.Any())
         {
             Warning(ServiceResultConstants.NoItemsFound);
         }
         else
         {
+            Data = data;
             HasData = true;
-            Success(successMessage ?? ServiceResultConstants.Success);
+            Success(successMessage);
         }
 
         DataType = typeof(T).Name;
         IsList = true;
-        Data = data;
     }
 
     #endregion Set Data Overloads
-
-    #region Helper Methods
-
-    private void SetTotalPageCount(int dataListCount, int pageSize)
-    {
-        TotalPageCount = (int)Math.Ceiling((double)dataListCount / pageSize);
-    }
-
-    private void SetTotalItemCount(int? totalItemCount)
-    {
-        TotalItemCount = totalItemCount.GetValueOrDefault(0);
-    }
-
-    private void SetCurrentPage(int currentPage = 1, int pageSize = int.MaxValue)
-    {
-        CurrentPage = currentPage;
-
-        if (pageSize < int.MaxValue && TotalItemCount > pageSize && CurrentPage < TotalPageCount)
-            SetNextPage();
-        else
-            ClearNextPage();
-    }
-
-    private void SetNextPage()
-    {
-        NextPage = CurrentPage + 1;
-    }
-
-    private void ClearNextPage()
-    {
-        NextPage = null;
-    }
-
-    #endregion Helper Methods
-
-    #region Fail Overloads
-
-    /// <summary>
-    /// Marks the service operation as failed.
-    /// </summary>
-    public override void Fail()
-    {
-        base.Fail();
-        Data = null;
-        HasData = false;
-    }
-
-    /// <summary>
-    /// Marks the service operation as failed with the specified code and description.
-    /// </summary>
-    /// <param name="code">The error code.</param>
-    /// <param name="description">The error description.</param>
-    public override void Fail(string code, string description)
-    {
-        base.Fail(code, description);
-        Data = null;
-        HasData = false;
-    }
-
-    /// <summary>
-    /// Marks the service operation as failed with the specified description.
-    /// </summary>
-    /// <param name="description">The error description.</param>
-    public override void Fail(string description)
-    {
-        base.Fail(description);
-        Data = null;
-        HasData = false;
-    }
-
-    /// <summary>
-    /// Marks the service operation as failed with the specified result.
-    /// </summary>
-    /// <param name="result">The result to be used for failure.</param>
-    public override void Fail(ServiceResult? result)
-    {
-        base.Fail(result);
-        Data = null;
-        HasData = false;
-    }
-
-    /// <summary>
-    /// Marks the service operation as failed with the specified exception.
-    /// </summary>
-    /// <param name="ex">The exception that caused the failure.</param>
-    public override void Fail(Exception ex)
-    {
-        base.Fail(ex);
-        Data = null;
-        HasData = false;
-    }
-
-    #endregion Fail Overloads
 }

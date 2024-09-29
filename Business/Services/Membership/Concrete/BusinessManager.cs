@@ -104,7 +104,7 @@ public class BusinessManager : IBusinessService
             var filters = filterModel?.ToExpression();
             var businesses = await _businessDal.GetAllAsync(filters);
             var businessGetDtos = _mapper.Map<List<BusinessGetDto>>(businesses);
-            result.SetData(businessGetDtos, page, pageSize, BusinessServiceMessages.ListRetrieved);
+            result.SetData(businessGetDtos, BusinessServiceMessages.ListRetrieved, page, pageSize);
         }
         catch (ValidationException e)
         {

@@ -52,7 +52,7 @@ public class ReportManager : IReportService
             var filters = filterModel?.ToExpression();
             var reports = await _reportDal.GetAllAsync(filters);
             var reportGetDtos = _mapper.Map<List<ReportGetDto>>(reports);
-            result.SetData(reportGetDtos, page, pageSize, ReportServiceMessages.ListRetrieved);
+            result.SetData(reportGetDtos, ReportServiceMessages.ListRetrieved, page, pageSize);
         }
         catch (ValidationException e)
         {

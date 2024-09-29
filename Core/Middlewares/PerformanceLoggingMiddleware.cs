@@ -13,6 +13,7 @@ public class PerformanceLoggingMiddleware
 {
     private static readonly ConcurrentDictionary<string, (long totalTime, int requestCount)> RouteStats = new();
     private readonly ILogger<PerformanceLoggingMiddleware> _logger;
+    private readonly RequestDelegate _next;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="PerformanceLoggingMiddleware"/> class.
@@ -22,6 +23,7 @@ public class PerformanceLoggingMiddleware
     public PerformanceLoggingMiddleware(RequestDelegate next, ILogger<PerformanceLoggingMiddleware> logger)
     {
         _logger = logger;
+        _next = next;
     }
 
     /// <summary>
@@ -32,7 +34,7 @@ public class PerformanceLoggingMiddleware
     public async Task Invoke(HttpContext context)
     {
         var stopwatch = Stopwatch.StartNew();
-        await next(context);
+        await _next(context);
         stopwatch.Stop();
         var route = context.Request.Path.Value;
 

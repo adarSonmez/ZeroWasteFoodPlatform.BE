@@ -1,4 +1,4 @@
-namespace Core.Constants;
+namespace Core.Constants.StringConstants;
 
 /// <summary>
 /// This class contains constant string values for common shadow properties.

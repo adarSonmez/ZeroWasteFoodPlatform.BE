@@ -75,7 +75,7 @@ public class MonitoredProductManager : IMonitoredProductService
             }
 
             var productGetDtos = _mapper.Map<List<MonitoredProductGetDto>>(products);
-            result.SetData(productGetDtos, page, pageSize, MonitoredProductServiceMessages.ListRetrieved);
+            result.SetData(productGetDtos, MonitoredProductServiceMessages.ListRetrieved, page, pageSize);
         }
         catch (ValidationException e)
         {

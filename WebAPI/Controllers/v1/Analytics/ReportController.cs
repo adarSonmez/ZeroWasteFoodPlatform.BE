@@ -1,6 +1,6 @@
 using Business.Services.Analytics.Abstract;
 using Core.Api.Abstract;
-using Core.Constants;
+using Core.Constants.StringConstants;
 using Core.Utils.IoC;
 using Domain.FilterModels.Analytics;
 using Microsoft.AspNetCore.Authorization;

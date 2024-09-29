@@ -2,7 +2,6 @@ using Core.Domain.Abstract;
 
 namespace Domain.DTOs.Analytics
 {
-
     public class ReportGetDto : IDto
     {
         public Guid Id { get; set; }

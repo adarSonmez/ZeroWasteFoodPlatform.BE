@@ -1,4 +1,4 @@
-namespace Core.Constants;
+namespace Core.Constants.StringConstants;
 
 /// <summary>
 /// This class defines the user roles constants.

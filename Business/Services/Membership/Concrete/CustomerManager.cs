@@ -172,7 +172,7 @@ public class CustomerManager : ICustomerService
             var filters = filterModel?.ToExpression();
             var customers = await _customerDal.GetAllAsync(filters);
             var customerGetDtos = _mapper.Map<List<CustomerGetDto>>(customers);
-            result.SetData(customerGetDtos, page, pageSize, CustomerServiceMessages.ListRetrieved);
+            result.SetData(customerGetDtos, CustomerServiceMessages.ListRetrieved, page, pageSize);
         }
         catch (ValidationException e)
         {

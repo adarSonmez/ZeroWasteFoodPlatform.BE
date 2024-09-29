@@ -1,8 +1,7 @@
-using Core.Constants;
+using Core.Constants.StringConstants;
 using Core.Domain.Abstract;
 using Core.Utils.Auth;
 using Core.Utils.IoC;
-using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 
@@ -69,10 +68,10 @@ public class EfDbContextBase : DbContext
                 ((EntityBase)entityEntry.Entity).CreatedUserId = currentUserId ?? Guid.Empty;
             }
 
-            if (entityEntry.State != EntityState.Deleted)
+            // Soft delete handling
+            if (entityEntry.Property("IsDeleted")?.CurrentValue is not bool isDeleted || !isDeleted)
                 continue;
 
-            // TODO:Handle soft delete
             entityEntry.Property(CommonShadowProperties.DeletedAt).CurrentValue = DateTime.UtcNow;
             entityEntry.Property(CommonShadowProperties.DeletedUserId).CurrentValue = currentUserId;
         }

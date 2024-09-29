@@ -1,4 +1,4 @@
-using Core.Constants;
+using Core.Constants.StringConstants;
 using Core.Context.EntityFramework;
 using Core.Domain.Abstract;
 using Domain.Entities.Analytics;
