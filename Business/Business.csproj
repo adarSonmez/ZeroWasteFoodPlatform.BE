@@ -7,11 +7,12 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\DataAccess\DataAccess.csproj"/>
+        <ProjectReference Include="..\DataAccess\DataAccess.csproj" />
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="Accord.Math" Version="3.8.2-alpha"/>
+        <PackageReference Include="Accord.Math" Version="3.8.2-alpha" />
+        <PackageReference Include="System.Text.Json" Version="8.0.5" />
     </ItemGroup>
 
 </Project>
