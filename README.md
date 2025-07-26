@@ -1,6 +1,6 @@
-# SmartMarket Solution
+# ZeroWasteFoodPlatform
 
-SmartMarket is a modular, scalable .NET 8 solution for modern retail and analytics platforms. It provides robust APIs, business logic, data access, and domain modeling for supermarket chains, product management, customer engagement, and AI-driven recommendations.
+ZeroWasteFoodPlatform is a modular, scalable .NET 8 solution for modern retail and analytics platforms. It provides robust APIs, business logic, data access, and domain modeling for supermarket chains, product management, customer engagement, and AI-driven recommendations.
 
 ## Solution Structure
 
